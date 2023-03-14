@@ -1,0 +1,20 @@
+Package: variationalDCM
+Type: Package
+Title: performs variational Bayesian estimation for DCMs
+Version: 0.0.0.9000
+Authors@R: c(person("Keiichiro", "Hijikata", email = "k.hijikata.1120@outlook.jp", role = c("aut", "cre")),
+    person("Motonori", "Oka", role = "aut"),
+    person("Kazuhiro", "Yamaguchi", role = "aut"),
+    person("Kensuke", "Okada", role = "aut"))
+Description: This package enables fast estimations by variational Bayesian methods for various DCMs and can be applied to large-scale data.
+Depends: R (>= 4.2.0)
+License: GPL-3
+Encoding: UTF-8
+Imports: mvtnorm
+Suggests: 
+    knitr
+VignetteBuilder: knitr
+RoxygenNote: 7.2.2
+URL: http://github.com/khijikata/variationalDCM
+BugReports: http://github.com/khijikata/variationalDCM/issues
+Config/testthat/edition: 3
