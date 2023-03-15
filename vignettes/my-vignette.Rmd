@@ -70,4 +70,4 @@ knitr::opts_chunk$set(
 * Oka, M., & Okada, K. (2022). Scalable estimation algorithm for the DINA Q-matrix combining stochastic optimization and variational inference. _Psychometrika_, in press. <doi: 
 https://doi.org/10.48550/arXiv.2105.09495>;
 
-* Yamaguchi, K., & Martinez, A. J. (2021). Variational Bayesian Inference Posterior Approximation Algorithm for Hidden Markov Diagnostic Classification Models. <doi: https://doi.org/10.31234/osf.io/28jkf>
+* Yamaguchi, K., & Martinez, A. J. (preprint). Variational Bayesian Inference Posterior Approximation Algorithm for Hidden Markov Diagnostic Classification Models. <doi: https://doi.org/10.31234/osf.io/28jkf>

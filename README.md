@@ -16,4 +16,4 @@ devtools::install_github("khijikata/variationalDCM")
 
 - Yamaguchi, K. (2020). Variational Bayesian inference for the multiple-choice DINA model. _Behaviormetrika_, 47(1), 159-187. <doi: https://doi.org/10.1007/s41237-020-00104-w>;
 
-- Yamaguchi, K., & Martinez, A. J. (2021). Variational Bayesian Inference Posterior Approximation Algorithm for Hidden Markov Diagnostic Classification Models. <doi: https://doi.org/10.31234/osf.io/28jkf>
+- Yamaguchi, K., & Martinez, A. J. (preprint). Variational Bayesian Inference Posterior Approximation Algorithm for Hidden Markov Diagnostic Classification Models. <doi: https://doi.org/10.31234/osf.io/28jkf>
