@@ -103,7 +103,8 @@ satu_dcm = function(X,Q,
   m = 1
   for(m in 1:max_it){
     if(verbose){
-      cat("seed = ",seed ,": m = ",m,": l_lb = ",l_lb[m],"\n")
+      #cat("seed = ",seed ,": m = ",m,": l_lb = ",l_lb[m],"\n")
+      cat("\riteration = ", m, sprintf(": l_lb = %.05f", l_lb[m]))
     }
 
     # VM-step

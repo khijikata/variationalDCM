@@ -298,7 +298,8 @@ hmdcm_diff_q = function(X,Q,
 
   for(m in 1:max_it){
     if(verbose){
-      cat("m = ",m,": l_lb = ",l_lb[m],"\n")
+      #cat("m = ",m,": l_lb = ",l_lb[m],"\n")
+      cat("\riteration = ", m, sprintf(": l_lb = %.05f", l_lb[m]))
     }
 
     #

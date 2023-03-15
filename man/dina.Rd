@@ -63,7 +63,7 @@ A list including:
   \item{A}{all of the possible attribute mastery patterns}
   \item{Q}{the entered Q-matrix}
   \item{X}{the entered data matrix}
-  \item{eta_lj}{the resulted ideal responce}
+  \item{eta_lj}{the computed ideal responce}
   \item{m}{the number of performed iterations}
 }
 }

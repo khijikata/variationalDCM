@@ -38,7 +38,7 @@ A list including:
   \item{Q}{the entered Q-matrix}
   \item{X}{the entered data matrix}
   \item{G_j}{the computed G-matrix}
-  \item{m}{the number of performed iterations}
+  \item{m}{the number of the performed iterations}
   \item{seed}{the entered seed number}
 }
 }

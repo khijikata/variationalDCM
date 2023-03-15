@@ -123,7 +123,7 @@ dino = function(X,Q,max_it  = 500,
   l_lb[1] = 100
   for(m in 1:max_it){
     if(verbose){
-      cat("m = ",m,": l_lb = ",l_lb[m],"\n")
+      cat("\riteration = ", m, sprintf(": l_lb = %.05f", l_lb[m]))
     }
 
     #
