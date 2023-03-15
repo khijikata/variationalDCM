@@ -27,7 +27,7 @@
 #'   \item{Q}{the entered Q-matrix}
 #'   \item{X}{the entered data matrix}
 #'   \item{G_j}{the computed G-matrix}
-#'   \item{m}{the number of performed iterations}
+#'   \item{m}{the number of the performed iterations}
 #'   \item{seed}{the entered seed number}
 #' }
 #'
@@ -44,7 +44,6 @@ satu_dcm = function(X,Q,
                     seed = 123,
                     verbose = TRUE
 ){
-
   set.seed(seed);  I <- nrow(X);  J <- nrow(Q);  K <- ncol(Q);  L <- 2^K
   not_zero_q <- apply(Q, 1, function(x) which(x != 0))
 
