@@ -2,17 +2,18 @@
 % Please edit documentation in R/hmdcm_vb_diff_q.R
 \name{hmdcm_diff_q}
 \alias{hmdcm_diff_q}
-\title{estimates attributes mastery patterns for hidden Markov DCM.}
+\title{for the hidden Markov DCM.}
 \usage{
 hmdcm_diff_q(
   X,
   Q,
+  max_it = 500,
+  epsilon = 1e-05,
+  verbose = TRUE,
   A_0 = NULL,
   B_0 = NULL,
   delta_0 = NULL,
   ommega_0 = NULL,
-  max_it = 500,
-  epsilon = 0.001,
   Test_versions,
   test_order,
   model = "General",
@@ -20,9 +21,15 @@ hmdcm_diff_q(
 )
 }
 \arguments{
-\item{X}{N by J by T binary 3-dimension array, item response data}
+\item{X}{I by J by T binary 3-dimension array, item response data}
 
 \item{Q}{J by k by T binary 3-dimension array, Q-matrix}
+
+\item{max_it}{Maximum number of iterations (default: 500)}
+
+\item{epsilon}{convergence tolerance for iterations (default: 10E-6)}
+
+\item{verbose}{logical (default: TRUE)}
 
 \item{A_0}{the initial value of A}
 
@@ -32,25 +39,21 @@ hmdcm_diff_q(
 
 \item{ommega_0}{the initial value of}
 
-\item{max_it}{Maximum number of iterations}
-
-\item{epsilon}{convergence tolerance for iterations}
-
 \item{Test_versions}{test version}
 
 \item{test_order}{test order}
 
-\item{model}{"general" or "DINA"}
+\item{model}{"general" or "DINA" (default: "gengeral")}
 
-\item{random_start}{logical}
+\item{random_start}{logical (default: "FALSE")}
 }
 \value{
 A list including:
 \describe{
-  \item{theta_est}{}
-  \item{theta_sd}{}
-  \item{pi_est}{}
-  \item{pi_sd}{}
+  \item{theta_est}{estimated conditional probability of taking a wrong response}
+  \item{theta_sd}{estimated standard deviation of theta}
+  \item{pi_est}{the estimates of variational parameter for class indicator}
+  \item{pi_sd}{estimatd standard deviation of pi}
   \item{Tau_est}{}
   \item{Tau_sd}{}
   \item{post_max_class}{}
@@ -74,11 +77,10 @@ A list including:
   \item{X}{the entered data matrix}
   \item{G_jt}{the computed G-matrix}
   \item{m}{the number of performed iterations}
-  \item{seed}{the entered seed number}
 }
 }
 \description{
-\code{hmdcm_diff_q()} returns variational Bayesian estimates for hidden
+\code{hmdcm_diff_q()} returns variational Bayesian estimates for the hidden
 Markov DCM.
 }
 \references{

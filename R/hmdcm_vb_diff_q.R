@@ -1,20 +1,21 @@
-#' estimates attributes mastery patterns for hidden Markov DCM.
+#' for the hidden Markov DCM.
 #'
-#' \code{hmdcm_diff_q()} returns variational Bayesian estimates for hidden
+#' \code{hmdcm_diff_q()} returns variational Bayesian estimates for the hidden
 #' Markov DCM.
 #'
-#' @param X N by J by T binary 3-dimension array, item response data
+#' @param X I by J by T binary 3-dimension array, item response data
 #' @param Q J by k by T binary 3-dimension array, Q-matrix
+#' @param max_it Maximum number of iterations (default: 500)
+#' @param epsilon convergence tolerance for iterations (default: 10E-6)
+#' @param verbose logical (default: TRUE)
 #' @param A_0 the initial value of A
 #' @param B_0 the initial value of B
 #' @param delta_0 the initial value
 #' @param ommega_0 the initial value of
-#' @param max_it Maximum number of iterations
-#' @param epsilon convergence tolerance for iterations
 #' @param Test_versions test version
 #' @param test_order test order
-#' @param model "general" or "DINA"
-#' @param random_start logical
+#' @param model "general" or "DINA" (default: "gengeral")
+#' @param random_start logical (default: "FALSE")
 #'
 #' @return A list including:
 #' \describe{
@@ -45,7 +46,6 @@
 #'   \item{X}{the entered data matrix}
 #'   \item{G_jt}{the computed G-matrix}
 #'   \item{m}{the number of performed iterations}
-#'   \item{seed}{the entered seed number}
 #' }
 #'
 #' @references Yamaguchi, K., & Martinez, A. J. (2021). Variational Bayesian
@@ -55,12 +55,19 @@
 #' @export
 
 hmdcm_diff_q = function(X,Q,
+                        max_it  = 500,
+                        epsilon = 10E-6,
+                        verbose = TRUE,
+                        #
+                        # Hyper parameters
+                        #
                         A_0 = NULL,
                         B_0 = NULL,
                         delta_0 = NULL,
                         ommega_0 = NULL,
-                        max_it  = 500,
-                        epsilon = 10E-4,
+                        #
+                        # Other settings
+                        #
                         Test_versions,
                         test_order,
                         model="General",
@@ -284,16 +291,15 @@ hmdcm_diff_q = function(X,Q,
     }
   }
 
-
-
   m = 1
 
   l_lb = rep(NA_real_, max_it+1)
   l_lb[1] = 100
 
-
   for(m in 1:max_it){
-    cat("m = ",m,": l_lb = ",l_lb[m],"\n")
+    if(verbose){
+      cat("m = ",m,": l_lb = ",l_lb[m],"\n")
+    }
 
     #
     # M-step and Calculation of Expectations

@@ -8,7 +8,8 @@ dino(
   X,
   Q,
   max_it = 500,
-  epsilon = 1e-99,
+  epsilon = 1e-05,
+  verbose = TRUE,
   delta_0 = rep(1, L),
   alpha_s = 1,
   beta_s = 1,
@@ -21,12 +22,14 @@ dino(
 
 \item{Q}{J by K binary matrix, Q-matrix}
 
-\item{max_it}{Maximum number of iterations}
+\item{max_it}{Maximum number of iterations (default: 500)}
 
-\item{epsilon}{convergence tolerance for iterations}
+\item{epsilon}{convergence tolerance for iterations (default: 10E-6)}
 
-\item{delta_0}{L by 1 vector, variational parameter of Dirichlet
-distribution.}
+\item{verbose}{logical (default: TRUE)}
+
+\item{delta_0}{L by 1 vector, initial value for variational parameter of Dirichlet
+distribution}
 
 \item{alpha_s}{Positive scalar, variational parameter that determines the
 shape of  prior beta distribution for slip parameter \emph{s_j}.}

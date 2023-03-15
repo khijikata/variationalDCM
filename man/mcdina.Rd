@@ -2,20 +2,22 @@
 % Please edit documentation in R/mcdina_vb.R
 \name{mcdina}
 \alias{mcdina}
-\title{for multiple-choice deterministic input noisy AND gate (MC-DINA) model.}
+\title{for the multiple-choice deterministic input noisy AND gate (MC-DINA) model.}
 \usage{
-mcdina(X, Q, max_it = 500, epsilon = 1e-05, seed = 123)
+mcdina(X, Q, max_it = 500, epsilon = 1e-05, seed = 123, verbose = TRUE)
 }
 \arguments{
 \item{X}{I by J binary matrix, item response data}
 
-\item{Q}{J by K binary matrix, Q-matrix}
+\item{Q}{J by (K+2) binary matrix, Q-matrix}
 
-\item{max_it}{Maximum number of iterations}
+\item{max_it}{Maximum number of iterations (default: 500)}
 
-\item{epsilon}{convergence tolerance for iterations}
+\item{epsilon}{convergence tolerance for iterations (default: 10E-6)}
 
-\item{seed}{seed value}
+\item{seed}{seed value (default: 123)}
+
+\item{verbose}{logical (default: TRUE)}
 }
 \value{
 A list including:
@@ -31,7 +33,7 @@ A list including:
   \item{delta_0}{the estimates of Dirichlet distribution's parameters, which is the prior for pi}
   \item{l_lb}{the computed evidence of lower bound}
   \item{att_pat_est}{the estimated attribute mastery patterns}
-  \item{A}{all of the possible attribute mastery patterns}
+  \item{A}{all the possible attribute mastery patterns}
   \item{Q}{the entered Q-matrix}
   \item{X}{the entered data matrix}
   \item{G-mat}{the computed G-matrix}
@@ -40,7 +42,7 @@ A list including:
 }
 }
 \description{
-\code{mcdina()} returns variational Bayesian estimates for MC-DINA model.
+\code{mcdina()} returns variational Bayesian estimates for the MC-DINA model.
 }
 \references{
 Yamaguchi, K. (2020). Variational Bayesian inference for the

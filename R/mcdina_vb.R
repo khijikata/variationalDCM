@@ -2,15 +2,11 @@
 # Variational inference algorithm for Multiple choise DINA model
 #
 
-
-
-#
 # Q matrix for MC-DINA
 # Column 1：Item number
 # Column 2：Stem
 # Column 3 to end：Attributes
 # Q <- read.csv("Q_sim.csv")
-
 
 #
 # Make G matrix funciton -----
@@ -218,15 +214,16 @@ extend_X <- function(X){
   X_ijh
 }
 
-#' for multiple-choice deterministic input noisy AND gate (MC-DINA) model.
+#' for the multiple-choice deterministic input noisy AND gate (MC-DINA) model.
 #'
-#' \code{mcdina()} returns variational Bayesian estimates for MC-DINA model.
+#' \code{mcdina()} returns variational Bayesian estimates for the MC-DINA model.
 #'
 #' @param X I by J binary matrix, item response data
-#' @param Q J by K binary matrix, Q-matrix
-#' @param max_it Maximum number of iterations
-#' @param epsilon convergence tolerance for iterations
-#' @param seed seed value
+#' @param Q J by (K+2) binary matrix, Q-matrix
+#' @param max_it Maximum number of iterations (default: 500)
+#' @param epsilon convergence tolerance for iterations (default: 10E-6)
+#' @param seed seed value (default: 123)
+#' @param verbose logical (default: TRUE)
 #'
 #' @return A list including:
 #' \describe{
@@ -241,7 +238,7 @@ extend_X <- function(X){
 #'   \item{delta_0}{the estimates of Dirichlet distribution's parameters, which is the prior for pi}
 #'   \item{l_lb}{the computed evidence of lower bound}
 #'   \item{att_pat_est}{the estimated attribute mastery patterns}
-#'   \item{A}{all of the possible attribute mastery patterns}
+#'   \item{A}{all the possible attribute mastery patterns}
 #'   \item{Q}{the entered Q-matrix}
 #'   \item{X}{the entered data matrix}
 #'   \item{G-mat}{the computed G-matrix}
@@ -255,13 +252,13 @@ extend_X <- function(X){
 #'
 #' @export
 
-
 #
 # VB script
 #
 mcdina = function(X,Q,max_it  = 500,
                   epsilon = 10E-6,
-                  seed = 123
+                  seed = 123,
+                  verbose = TRUE
 ){
 
   set.seed(seed)
@@ -324,7 +321,9 @@ mcdina = function(X,Q,max_it  = 500,
   l_lb = rep(NA, max_it+1)
   l_lb[1] = 100
   for(m in 1:max_it){
-    cat("seed = ",seed ,": m = ",m,": l_lb = ",l_lb[m],"\n")
+    if(verbose){
+      cat("seed = ",seed ,": m = ",m,": l_lb = ",l_lb[m],"\n")
+    }
 
     #
     # Expectations

@@ -2,13 +2,13 @@
 #'
 #' \code{dino()} returns variational Bayesian estimates for the DINO model.
 #'
-#'
 #' @param X I by J binary matrix, item response data
 #' @param Q J by K binary matrix, Q-matrix
-#' @param max_it Maximum number of iterations
-#' @param epsilon convergence tolerance for iterations
-#' @param delta_0 L by 1 vector, variational parameter of Dirichlet
-#'   distribution.
+#' @param max_it Maximum number of iterations (default: 500)
+#' @param epsilon convergence tolerance for iterations (default: 10E-6)
+#' @param delta_0 L by 1 vector, initial value for variational parameter of Dirichlet
+#'   distribution
+#' @param verbose logical (default: TRUE)
 #' @param alpha_s Positive scalar, variational parameter that determines the
 #'   shape of  prior beta distribution for slip parameter \emph{s_j}.
 #' @param beta_s Positive scalar, variational parameter that determines the
@@ -29,6 +29,8 @@
 #'   shape of  prior beta distribution for guessing parameter \emph{g_j}.
 #' @param beta_g Positive scalar, variational parameter that determines the
 #'   shape of  prior beta distribution for guessing parameter \emph{g_j}.
+#'
+#'
 #' @return A list including:
 #' \describe{
 #'   \item{s_est}{the posterior mean of slip parameter.}
@@ -60,7 +62,8 @@
 
 
 dino = function(X,Q,max_it  = 500,
-                epsilon = 10E-100,
+                epsilon = 10E-6,
+                verbose = TRUE,
                 #
                 # Hyper parameters
                 #
@@ -119,7 +122,9 @@ dino = function(X,Q,max_it  = 500,
   l_lb = rep(NA, max_it+1)
   l_lb[1] = 100
   for(m in 1:max_it){
-    # cat("m = ",m,": l_lb",l_lb[m] ,"\n")
+    if(verbose){
+      cat("m = ",m,": l_lb = ",l_lb[m],"\n")
+    }
 
     #
     # M-step

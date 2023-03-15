@@ -1,12 +1,13 @@
-#' estimates attributes mastery patterns for saturated DCM.
+#' for the saturated DCM.
 #'
-#' \code{satu_dcm()} returns variational Bayesian estimates for saturated DCM.
+#' \code{satu_dcm()} returns variational Bayesian estimates for the saturated DCM.
 #'
 #' @param X I by J binary matrix, item response data
 #' @param Q J by K binary matrix, Q-matrix
-#' @param max_it Maximum number of iterations
-#' @param epsilon convergence tolerance for iterations
-#' @param seed seed value
+#' @param max_it Maximum number of iterations (default: 500)
+#' @param epsilon convergence tolerance for iterations (default: 10E-6)
+#' @param seed seed value (default: 123)
+#' @param verbose logical (default: TRUE)
 #'
 #' @return A list including:
 #' \describe{
@@ -39,8 +40,9 @@
 
 satu_dcm = function(X,Q,
                     max_it  = 500,
-                    epsilon = 1E-5,
-                    seed = 123
+                    epsilon = 1E-6,
+                    seed = 123,
+                    verbose = TRUE
 ){
 
   set.seed(seed);  I <- nrow(X);  J <- nrow(Q);  K <- ncol(Q);  L <- 2^K
@@ -101,6 +103,10 @@ satu_dcm = function(X,Q,
 
   m = 1
   for(m in 1:max_it){
+    if(verbose){
+      cat("seed = ",seed ,": m = ",m,": l_lb = ",l_lb[m],"\n")
+    }
+
     # VM-step
     delta_ast <- colSums(r_il) + delta_0
     A_ast  <- lapply(1:J, function(j) t(G_j[[j]] %*% t(r_il) %*% X[,j]     + A_0[[j]] ))
