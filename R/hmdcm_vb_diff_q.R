@@ -8,40 +8,40 @@
 #' @param max_it Maximum number of iterations (default: 500)
 #' @param epsilon convergence tolerance for iterations (default: 10E-6)
 #' @param verbose logical (default: TRUE)
-#' @param A_0 the initial value of A
-#' @param B_0 the initial value of B
-#' @param delta_0 the initial value
-#' @param ommega_0 the initial value of
+#' @param A_0 the value of hyperparameter A_0
+#' @param B_0 the value of hyperparameter B_0
+#' @param delta_0 the value of hyperparameter delta_0
+#' @param ommega_0 the value of hyperparameter ommega_0
 #' @param Test_versions test version
 #' @param test_order test order
 #' @param model "general" or "DINA" (default: "gengeral")
-#' @param random_start logical (default: "FALSE")
+#' @param random_start Logical, controls whether to print progress (default: "FALSE")
 #'
 #' @return A list including:
 #' \describe{
-#'   \item{theta_est}{estimated conditional probability of taking a wrong response}
-#'   \item{theta_sd}{estimated standard deviation of theta}
+#'   \item{theta_est}{the estimated conditional probability of taking a wrong response}
+#'   \item{theta_sd}{the estimated standard deviation of theta}
 #'   \item{pi_est}{the estimates of variational parameter for class indicator}
-#'   \item{pi_sd}{estimatd standard deviation of pi}
-#'   \item{Tau_est}{}
-#'   \item{Tau_sd}{}
-#'   \item{post_max_class}{}
-#'   \item{MAP_att_pat}{}
-#'   \item{att_master_prob}{}
-#'   \item{EAP_att_pat}{}
-#'   \item{A_ast}{}
-#'   \item{delta_ast}{}
-#'   \item{ommega_ast}{}
-#'   \item{E_z_itl}{}
-#'   \item{E_z_itl_z_itm1l}{}
-#'   \item{A_0}{}
-#'   \item{B_0}{}
-#'   \item{delta_0}{}
-#'   \item{ommega_0}{}
+#'   \item{pi_sd}{the estimatd standard deviation of pi}
+#'   \item{Tau_est}{the estimated transition probability}
+#'   \item{Tau_sd}{the estimated standard deviation of the transition probability}
+#'   \item{post_max_class}{the result of class analysis}
+#'   \item{MAP_att_pat}{the MAP estimates of attribute mastery patterns}
+#'   \item{att_master_prob}{the estimated attribute mastery probabilities}
+#'   \item{EAP_att_pat}{the EAP estimates of attribute mastery patterns}
+#'   \item{A_ast}{the estimated A_ast}
+#'   \item{delta_ast}{the estimated delta_ast}
+#'   \item{ommega_ast}{the estimated ommega_ast}
+#'   \item{E_z_itl}{the resulted expectations of  attribute mastery pattern}
+#'   \item{E_z_itl_z_itm1l}{the resulted expectations of  attribute mastery pattern at the time point t and t-1}
+#'   \item{A_0}{the entered value of A_0}
+#'   \item{B_0}{the entered value of B_0}
+#'   \item{delta_0}{the entered value of delta_0}
+#'   \item{ommega_0}{the entered value of ommega_0}
 #'   \item{l_lb}{the computed lower bound of each iteration}
-#'   \item{gamma_t_x_it}{}
-#'   \item{log_zeta_sum}{}
-#'   \item{A}{all of the possible attribute mastery patterns}
+#'   \item{gamma_t_x_it}{the computed value of the normalizing constant for calculating zeta}
+#'   \item{log_zeta_sum}{the computed value of the normalizing constant for calculating variational posterior for class indicator}
+#'   \item{A}{all the possible attribute mastery patterns}
 #'   \item{Q}{the entered Q-matrix}
 #'   \item{X}{the entered data matrix}
 #'   \item{G_jt}{the computed G-matrix}
@@ -56,7 +56,7 @@
 
 hmdcm_diff_q = function(X,Q,
                         max_it  = 500,
-                        epsilon = 10E-6,
+                        epsilon = 1e-05,
                         verbose = TRUE,
                         #
                         # Hyper parameters
@@ -93,9 +93,6 @@ hmdcm_diff_q = function(X,Q,
   # Unique correct item response probability label for each time point and item.
   #
   A_red_uni <- lapply(  A_jt,function(z)lapply(z , function(x) unique(apply(x,1,function(y) paste0(y,collapse = "")))))
-
-
-
 
   #
   # Make G-matrix
@@ -417,6 +414,9 @@ hmdcm_diff_q = function(X,Q,
     l_lb[m+1] <- llb_fun(delta_ast,delta_0,ommega_ast,ommega_0, A_ast, A_0, B_ast, B_0, log_zeta_sum)
 
     if(abs(l_lb[m] - l_lb[m+1]) < epsilon){
+      if(verbose){
+        cat("\nreached convergence.")
+      }
       break()
     }
 

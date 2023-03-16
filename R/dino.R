@@ -4,32 +4,31 @@
 #'
 #' @param X I by J binary matrix, item response data
 #' @param Q J by K binary matrix, Q-matrix
-#' @param max_it Maximum number of iterations (default: 500)
-#' @param epsilon convergence tolerance for iterations (default: 10E-6)
+#' @param max_it The maximum number of iterations (default: 500)
+#' @param epsilon The convergence tolerance for iterations (default: 10E-6)
+#' @param verbose Logical, controls whether to print progress (default: TRUE)
 #' @param delta_0 L by 1 vector, initial value for variational parameter of Dirichlet
 #'   distribution
-#' @param verbose logical (default: TRUE)
-#' @param alpha_s Positive scalar, variational parameter that determines the
-#'   shape of  prior beta distribution for slip parameter \emph{s_j}.
-#' @param beta_s Positive scalar, variational parameter that determines the
-#'   shape of  prior beta distribution for slip parameter \emph{s_j}.
-#' @param beta_s Positive scalar, variational parameter that determines the
-#'   shape of  prior beta distribution for slip parameter \emph{s_j}.
-#' @param beta_s Positive scalar, variational parameter that determines the
-#'   shape of  prior beta distribution for slip parameter \emph{s_j}.
-#' @param beta_s Positive scalar, variational parameter that determines the
-#'   shape of  prior beta distribution for slip parameter \emph{s_j}.
-#' @param beta_s Positive scalar, variational parameter that determines the
-#'   shape of  prior beta distribution for slip parameter \emph{s_j}.
-#' @param beta_s Positive scalar, variational parameter that determines the
-#'   shape of  prior beta distribution for slip parameter \emph{s_j}.
-#' @param alpha_g Positive scalar, variational parameter that determines the
-#'   shape of  prior beta distribution for guessing parameter \emph{g_j}.
-#' @param beta_g Positive scalar, variational parameter that determines the
-#'   shape of  prior beta distribution for guessing parameter \emph{g_j}.
-#' @param beta_g Positive scalar, variational parameter that determines the
-#'   shape of  prior beta distribution for guessing parameter \emph{g_j}.
-#'
+#' @param alpha_s A positive scalar, variational parameter that determines the
+#'   shape of  prior beta distribution for slip parameter.
+#' @param beta_s A positive scalar, variational parameter that determines the
+#'   shape of  prior beta distribution for slip parameter.
+#' @param beta_s A positive scalar, variational parameter that determines the
+#'   shape of  prior beta distribution for slip parameter.
+#' @param beta_s A positive scalar, variational parameter that determines the
+#'   shape of  prior beta distribution for slip parameter.
+#' @param beta_s A positive scalar, variational parameter that determines the
+#'   shape of  prior beta distribution for slip parameter.
+#' @param beta_s A positive scalar, variational parameter that determines the
+#'   shape of  prior beta distribution for slip parameter.
+#' @param beta_s A positive scalar, variational parameter that determines the
+#'   shape of  prior beta distribution for slip parameter.
+#' @param alpha_g A positive scalar, variational parameter that determines the
+#'   shape of  prior beta distribution for guessing parameter.
+#' @param beta_g A positive scalar, variational parameter that determines the
+#'   shape of  prior beta distribution for guessing parameter.
+#' @param beta_g A positive scalar, variational parameter that determines the
+#'   shape of  prior beta distribution for guessing parameter.
 #'
 #' @return A list including:
 #' \describe{
@@ -62,7 +61,7 @@
 
 
 dino = function(X,Q,max_it  = 500,
-                epsilon = 10E-6,
+                epsilon = 1e-05,
                 verbose = TRUE,
                 #
                 # Hyper parameters
@@ -73,6 +72,13 @@ dino = function(X,Q,max_it  = 500,
                 alpha_g = 1, # For g_j
                 beta_g  = 1 # For g_j
 ){
+
+  if(class(X) != "matrix"){
+    X <- as.matrix(X)
+  }
+  if(class(Q) != "matrix"){
+    Q <- as.matrix(Q)
+  }
 
   # Index
   I <- nrow(X)
@@ -185,6 +191,9 @@ dino = function(X,Q,max_it  = 500,
     l_lb[m+1] = tmp1 + tmp2 +tmp3+tmp4+tmp5
 
     if(abs(l_lb[m] -l_lb[m+1]) < epsilon){
+      if(verbose){
+        cat("\nreached convergence.")
+      }
       break()
     }
 

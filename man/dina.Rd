@@ -22,26 +22,26 @@ dina(
 
 \item{Q}{J by K binary matrix, Q-matrix}
 
-\item{max_it}{Maximum number of iterations (default: 500)}
+\item{max_it}{the maximum number of iterations (default: 500)}
 
-\item{epsilon}{convergence tolerance for iterations (default: 10E-6)}
+\item{epsilon}{the convergence tolerance for iterations (default: 10E-6)}
 
-\item{verbose}{logical (default: TRUE)}
+\item{verbose}{Logical, controls whether to print progress (default: TRUE)}
 
 \item{delta_0}{L by 1 vector, initial value for variational parameter of Dirichlet
 distribution.}
 
-\item{alpha_s}{Positive scalar, variational parameter that determines the
-shape of  prior beta distribution for slip parameter \emph{s_j}.}
+\item{alpha_s}{A positive scalar, variational parameter that determines the
+shape of  prior beta distribution for slip parameter.}
 
-\item{beta_s}{Positive scalar, variational parameter that determines the
-shape of  prior beta distribution for slip parameter \emph{s_j}.}
+\item{beta_s}{A positive scalar, variational parameter that determines the
+shape of  prior beta distribution for slip parameter.}
 
-\item{alpha_g}{Positive scalar, variational parameter that determines the
-shape of  prior beta distribution for guessing parameter \emph{g_j}.}
+\item{alpha_g}{A positive scalar, variational parameter that determines the
+shape of  prior beta distribution for guessing parameter.}
 
-\item{beta_g}{Positive scalar, variational parameter that determines the
-shape of  prior beta distribution for guessing parameter \emph{g_j}.}
+\item{beta_g}{A positive scalar, variational parameter that determines the
+shape of  prior beta distribution for guessing parameter.}
 }
 \value{
 A list including:

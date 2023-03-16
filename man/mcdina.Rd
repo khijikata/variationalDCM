@@ -11,13 +11,13 @@ mcdina(X, Q, max_it = 500, epsilon = 1e-05, seed = 123, verbose = TRUE)
 
 \item{Q}{J by (K+2) binary matrix, Q-matrix}
 
-\item{max_it}{Maximum number of iterations (default: 500)}
+\item{max_it}{The maximum number of iterations (default: 500)}
 
-\item{epsilon}{convergence tolerance for iterations (default: 10E-6)}
+\item{epsilon}{The convergence tolerance for iterations (default: 10E-6)}
 
-\item{seed}{seed value (default: 123)}
+\item{seed}{The seed value (default: 123)}
 
-\item{verbose}{logical (default: TRUE)}
+\item{verbose}{Logical, controls whether to print progress (default: TRUE)}
 }
 \value{
 A list including:

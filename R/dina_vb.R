@@ -2,34 +2,33 @@
 #'
 #' \code{dina()} returns variational Bayesian estimates for the DINA model.
 #'
-#'
 #' @param X I by J binary matrix, item response data
 #' @param Q J by K binary matrix, Q-matrix
-#' @param max_it Maximum number of iterations (default: 500)
-#' @param epsilon convergence tolerance for iterations (default: 10E-6)
-#' @param verbose logical (default: TRUE)
+#' @param max_it the maximum number of iterations (default: 500)
+#' @param epsilon the convergence tolerance for iterations (default: 10E-6)
+#' @param verbose Logical, controls whether to print progress (default: TRUE)
 #' @param delta_0 L by 1 vector, initial value for variational parameter of Dirichlet
 #'   distribution.
-#' @param alpha_s Positive scalar, variational parameter that determines the
-#'   shape of  prior beta distribution for slip parameter \emph{s_j}.
-#' @param beta_s Positive scalar, variational parameter that determines the
-#'   shape of  prior beta distribution for slip parameter \emph{s_j}.
-#' @param beta_s Positive scalar, variational parameter that determines the
-#'   shape of  prior beta distribution for slip parameter \emph{s_j}.
-#' @param beta_s Positive scalar, variational parameter that determines the
-#'   shape of  prior beta distribution for slip parameter \emph{s_j}.
-#' @param beta_s Positive scalar, variational parameter that determines the
-#'   shape of  prior beta distribution for slip parameter \emph{s_j}.
-#' @param beta_s Positive scalar, variational parameter that determines the
-#'   shape of  prior beta distribution for slip parameter \emph{s_j}.
-#' @param beta_s Positive scalar, variational parameter that determines the
-#'   shape of  prior beta distribution for slip parameter \emph{s_j}.
-#' @param alpha_g Positive scalar, variational parameter that determines the
-#'   shape of  prior beta distribution for guessing parameter \emph{g_j}.
-#' @param beta_g Positive scalar, variational parameter that determines the
-#'   shape of  prior beta distribution for guessing parameter \emph{g_j}.
-#' @param beta_g Positive scalar, variational parameter that determines the
-#'   shape of  prior beta distribution for guessing parameter \emph{g_j}.
+#' @param alpha_s A positive scalar, variational parameter that determines the
+#'   shape of  prior beta distribution for slip parameter.
+#' @param beta_s A positive scalar, variational parameter that determines the
+#'   shape of  prior beta distribution for slip parameter.
+#' @param beta_s A positive scalar, variational parameter that determines the
+#'   shape of  prior beta distribution for slip parameter.
+#' @param beta_s A positive scalar, variational parameter that determines the
+#'   shape of  prior beta distribution for slip parameter.
+#' @param beta_s A positive scalar, variational parameter that determines the
+#'   shape of  prior beta distribution for slip parameter.
+#' @param beta_s A positive scalar, variational parameter that determines the
+#'   shape of  prior beta distribution for slip parameter.
+#' @param beta_s A positive scalar, variational parameter that determines the
+#'   shape of  prior beta distribution for slip parameter.
+#' @param alpha_g A positive scalar, variational parameter that determines the
+#'   shape of  prior beta distribution for guessing parameter.
+#' @param beta_g A positive scalar, variational parameter that determines the
+#'   shape of  prior beta distribution for guessing parameter.
+#' @param beta_g A positive scalar, variational parameter that determines the
+#'   shape of  prior beta distribution for guessing parameter.
 #'
 #' @return A list including:
 #' \describe{
@@ -66,7 +65,7 @@
 
 
 dina = function(X,Q,max_it  = 500,
-                epsilon = 10E-6,
+                epsilon = 1e-05,
                 verbose = TRUE,
                 #
                 # Hyper parameters
@@ -77,6 +76,13 @@ dina = function(X,Q,max_it  = 500,
                 alpha_g = 1, # For g_j
                 beta_g  = 1 # For g_j
 ){
+
+  if(class(X) != "matrix"){
+    X <- as.matrix(X)
+  }
+  if(class(Q) != "matrix"){
+    Q <- as.matrix(Q)
+  }
 
   # Index
   I <- nrow(X)
@@ -109,17 +115,13 @@ dina = function(X,Q,max_it  = 500,
   log_rho_il <- matrix(0,ncol=L, nrow = I)
   # z_il <- r_il
 
-
-
   delta_ast  <- rep(0,L)
   alpha_s_ast <- rep(0,J)
   beta_s_ast  <- rep(0,J)
   alpha_g_ast <- rep(0,J)
   beta_g_ast  <- rep(0,J)
 
-  #
   one_vec  = matrix(1,nrow=I,ncol=1)
-
 
   m = 1
   #
@@ -149,15 +151,11 @@ dina = function(X,Q,max_it  = 500,
     E_log_1_g = digamma(beta_g_ast)  - digamma(alpha_g_ast + beta_g_ast)
     E_log_pi  = digamma(delta_ast)   - digamma(sum(delta_ast))
 
-
     #
     # E-step
     #
 
-    #
-    #
     # Fast
-    #
     log_rho_il <- t(eta_lj %*% t(t((E_log_1_s - E_log_g) * t(X)) + t((E_log_s - E_log_1_g) * t(1-X)) ) ) + one_vec %*% E_log_pi
     # Slow
     # log_rho_il <- t(eta_lj %*% t(X %*% diag(E_log_1_s - E_log_g) + (1-X)%*% diag(E_log_s - E_log_1_g)) ) + one_vec %*% E_log_pi
@@ -189,6 +187,9 @@ dina = function(X,Q,max_it  = 500,
     l_lb[m+1] = tmp1 + tmp2 +tmp3+tmp4+tmp5
 
     if(abs(l_lb[m] -l_lb[m+1]) < epsilon){
+      if(verbose){
+        cat("\nreached convergence.")
+      }
       break()
     }
 

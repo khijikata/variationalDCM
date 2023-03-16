@@ -4,10 +4,11 @@
 #'
 #' @param X I by J binary matrix, item response data
 #' @param Q J by K binary matrix, Q-matrix
-#' @param max_it Maximum number of iterations (default: 500)
-#' @param epsilon convergence tolerance for iterations (default: 10E-6)
-#' @param seed seed value (default: 123)
-#' @param verbose logical (default: TRUE)
+#' @param max_it The maximum number of iterations (default: 500)
+#' @param epsilon The convergence tolerance for iterations (default: 10E-6)
+#' @param seed The seed value (default: 123)
+#' @param verbose Logical, controls whether to print progress (default: TRUE)
+#'
 #'
 #' @return A list including:
 #' \describe{
@@ -40,10 +41,17 @@
 
 satu_dcm = function(X,Q,
                     max_it  = 500,
-                    epsilon = 1E-6,
+                    epsilon = 1e-05,
                     seed = 123,
                     verbose = TRUE
 ){
+  if(class(X) != "matrix"){
+    X <- as.matrix(X)
+  }
+  if(class(Q) != "matrix"){
+    Q <- as.matrix(Q)
+  }
+
   set.seed(seed);  I <- nrow(X);  J <- nrow(Q);  K <- ncol(Q);  L <- 2^K
   not_zero_q <- apply(Q, 1, function(x) which(x != 0))
 
@@ -126,6 +134,9 @@ satu_dcm = function(X,Q,
     l_lb[m+1] <- llb_fun(X,G_j,delta_ast,delta_0, A_ast, A_0, B_ast,B_0, r_il)
 
     if(abs(l_lb[m] - l_lb[m+1]) < epsilon){
+      if(verbose){
+        cat("\nreached convergence.")
+      }
       break()
     }
   }
