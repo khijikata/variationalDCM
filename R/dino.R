@@ -46,9 +46,9 @@
 #'   \item{delta_sd}{the standard diviation of hyper parameter for pi}
 #'   \item{l_lb}{the computed lower bound of each iteration}
 #'   \item{att_pat_est}{the estimated attribute mastery patterns}
-#'   \item{A}{all of the possible attribute mastery patterns}
-#'   \item{Q}{the entered Q-matrix}
-#'   \item{X}{the entered data matrix}
+#   \item{A}{all of the possible attribute mastery patterns}
+#   \item{Q}{the entered Q-matrix}
+#   \item{X}{the entered data matrix}
 #'   \item{eta_lj}{the computed ideal responce}
 #'   \item{m}{the number of performed iterations}
 #' }
@@ -229,9 +229,9 @@ dino = function(X,Q,max_it  = 500,
        delta_sd    = delta_sd,
        l_lb = l_lb,
        att_pat_est = A[apply(r_il, 1, which.max),],
-       A = A,
-       Q = Q,
-       X = X,
+       #A = A,
+       #Q = Q,
+       #X = X,
        eta_lj = eta_lj,
        m = m)
 }

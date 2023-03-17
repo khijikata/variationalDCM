@@ -24,9 +24,9 @@
 #'   \item{delta_0}{the estimates of Dirichlet distribution's parameter, which is the prior for pi}
 #'   \item{l_lb}{the computed lower bound of each iteration}
 #'   \item{att_pat_est}{the estimated attribute mastery patterns}
-#'   \item{A}{all of the possible attribute mastery patterns}
-#'   \item{Q}{the entered Q-matrix}
-#'   \item{X}{the entered data matrix}
+#   \item{A}{all of the possible attribute mastery patterns}
+#   \item{Q}{the entered Q-matrix}
+#   \item{X}{the entered data matrix}
 #'   \item{G_j}{the computed G-matrix}
 #'   \item{m}{the number of the performed iterations}
 #'   \item{seed}{the entered seed number}
@@ -160,9 +160,9 @@ satu_dcm = function(X,Q,
        delta_0 = delta_0,
        l_lb = l_lb,
        att_pat_est = A[apply(r_il, 1, which.max),],
-       A = A,
-       Q = Q,
-       X = X,
+       #A = A,
+       #Q = Q,
+       #X = X,
        G_j = G_j,
        m = m,
        seed = seed)

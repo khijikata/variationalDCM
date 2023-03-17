@@ -60,9 +60,6 @@ A list including:
   \item{delta_sd}{the standard diviation of hyper parameter for pi}
   \item{l_lb}{the computed lower bound of each iteration}
   \item{att_pat_est}{the estimated attribute mastery patterns}
-  \item{A}{all of the possible attribute mastery patterns}
-  \item{Q}{the entered Q-matrix}
-  \item{X}{the entered data matrix}
   \item{eta_lj}{the computed ideal responce}
   \item{m}{the number of performed iterations}
 }

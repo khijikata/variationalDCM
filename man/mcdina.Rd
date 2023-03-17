@@ -33,9 +33,6 @@ A list including:
   \item{delta_0}{the estimates of Dirichlet distribution's parameters, which is the prior for pi}
   \item{l_lb}{the computed evidence of lower bound}
   \item{att_pat_est}{the estimated attribute mastery patterns}
-  \item{A}{all the possible attribute mastery patterns}
-  \item{Q}{the entered Q-matrix}
-  \item{X}{the entered data matrix}
   \item{G-mat}{the computed G-matrix}
   \item{m}{the number of performed iterations}
   \item{seed}{the entered seed number}

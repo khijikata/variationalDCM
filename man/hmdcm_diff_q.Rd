@@ -60,21 +60,17 @@ A list including:
   \item{MAP_att_pat}{the MAP estimates of attribute mastery patterns}
   \item{att_master_prob}{the estimated attribute mastery probabilities}
   \item{EAP_att_pat}{the EAP estimates of attribute mastery patterns}
-  \item{A_ast}{the estimated A_ast}
-  \item{delta_ast}{the estimated delta_ast}
-  \item{ommega_ast}{the estimated ommega_ast}
+  \item{A_ast}{the computed A_ast}
+  \item{B_ast}{the computed B_ast}
+  \item{delta_ast}{the computed delta_ast}
+  \item{ommega_ast}{the computed ommega_ast}
   \item{E_z_itl}{the resulted expectations of  attribute mastery pattern}
   \item{E_z_itl_z_itm1l}{the resulted expectations of  attribute mastery pattern at the time point t and t-1}
-  \item{A_0}{the entered value of A_0}
-  \item{B_0}{the entered value of B_0}
-  \item{delta_0}{the entered value of delta_0}
-  \item{ommega_0}{the entered value of ommega_0}
+  \item{A_0}{the computed or entered value of A_0}
+  \item{B_0}{the computed or entered value of B_0}
+  \item{delta_0}{the computed or entered value of delta_0}
+  \item{ommega_0}{the computed or entered value of ommega_0}
   \item{l_lb}{the computed lower bound of each iteration}
-  \item{gamma_t_x_it}{the computed value of the normalizing constant for calculating zeta}
-  \item{log_zeta_sum}{the computed value of the normalizing constant for calculating variational posterior for class indicator}
-  \item{A}{all the possible attribute mastery patterns}
-  \item{Q}{the entered Q-matrix}
-  \item{X}{the entered data matrix}
   \item{G_jt}{the computed G-matrix}
   \item{m}{the number of performed iterations}
 }
