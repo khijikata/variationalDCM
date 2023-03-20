@@ -255,7 +255,8 @@ extend_X <- function(X){
 #
 # VB script
 #
-mc_dina = function(X,Q,
+mc_dina = function(X,
+                   Q,
                    max_it  = 500,
                    epsilon = 1e-05,
                    seed = 123,

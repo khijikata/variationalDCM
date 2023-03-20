@@ -9,7 +9,7 @@ if(!require(devtools)){
 }
 devtools::install_github("khijikata/variationalDCM")
 ```
-# References
+## References
 - Yamaguchi, K., & Okada, K. (2020). Variational Bayes Inference for the DINA Model. _Journal of Educational and Behavioral Statistics_, 45(5), 569–597. <doi: https://doi.org/10.3102/1076998620911934>;
 
 - Yamaguchi, K., Okada, K. (2020). Variational Bayes Inference Algorithm for the Saturated Diagnostic Classification Model. _Psychometrika_, 85(4), 973–995. <doi: https://doi.org/10.1007/s11336-020-09739-w>;

@@ -60,7 +60,9 @@
 #
 
 
-dino = function(X,Q,max_it  = 500,
+dino = function(X,
+                Q,
+                max_it  = 500,
                 epsilon = 1e-05,
                 verbose = TRUE,
                 #

@@ -6,7 +6,8 @@ Authors@R: c(person("Keiichiro", "Hijikata", email = "k.hijikata.1120@outlook.jp
     person("Motonori", "Oka", role = "aut"),
     person("Kazuhiro", "Yamaguchi", role = "aut"),
     person("Kensuke", "Okada", role = "aut"))
-Description: This package enables fast estimations by variational Bayesian methods for various DCMs and can be applied to large-scale data.
+Description: This package enables fast estimations by variational Bayesian 
+    methods for various DCMs and can be applied to large-scale data.
 Depends: R (>= 4.2.0)
 License: GPL-3
 Encoding: UTF-8
