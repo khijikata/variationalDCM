@@ -27,7 +27,7 @@ hmdcm_diff_q(
 
 \item{max_it}{Maximum number of iterations (default: 500)}
 
-\item{epsilon}{convergence tolerance for iterations (default: 10E-6)}
+\item{epsilon}{convergence tolerance for iterations (default: 1e-5)}
 
 \item{verbose}{logical (default: TRUE)}
 

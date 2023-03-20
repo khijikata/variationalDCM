@@ -13,7 +13,7 @@ satu_dcm(X, Q, max_it = 500, epsilon = 1e-05, seed = 123, verbose = TRUE)
 
 \item{max_it}{The maximum number of iterations (default: 500)}
 
-\item{epsilon}{The convergence tolerance for iterations (default: 10E-6)}
+\item{epsilon}{The convergence tolerance for iterations (default: 1e-5)}
 
 \item{seed}{The seed value (default: 123)}
 

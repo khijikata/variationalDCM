@@ -5,7 +5,7 @@
 #' @param X I by J binary matrix, item response data
 #' @param Q J by K binary matrix, Q-matrix
 #' @param max_it the maximum number of iterations (default: 500)
-#' @param epsilon the convergence tolerance for iterations (default: 10E-6)
+#' @param epsilon the convergence tolerance for iterations (default: 1e-5)
 #' @param verbose Logical, controls whether to print progress (default: TRUE)
 #' @param delta_0 L by 1 vector, initial value for variational parameter of Dirichlet
 #'   distribution.

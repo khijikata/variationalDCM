@@ -5,10 +5,9 @@
 #' @param X I by J binary matrix, item response data
 #' @param Q J by K binary matrix, Q-matrix
 #' @param max_it The maximum number of iterations (default: 500)
-#' @param epsilon The convergence tolerance for iterations (default: 10E-6)
+#' @param epsilon The convergence tolerance for iterations (default: 1e-5)
 #' @param seed The seed value (default: 123)
 #' @param verbose Logical, controls whether to print progress (default: TRUE)
-#'
 #'
 #' @return A list including:
 #' \describe{

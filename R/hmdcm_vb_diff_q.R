@@ -6,7 +6,7 @@
 #' @param X I by J by T binary 3-dimension array, item response data
 #' @param Q J by k by T binary 3-dimension array, Q-matrix
 #' @param max_it Maximum number of iterations (default: 500)
-#' @param epsilon convergence tolerance for iterations (default: 10E-6)
+#' @param epsilon convergence tolerance for iterations (default: 1e-5)
 #' @param verbose logical (default: TRUE)
 #' @param A_0 the value of hyperparameter A_0
 #' @param B_0 the value of hyperparameter B_0

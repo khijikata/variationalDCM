@@ -24,7 +24,7 @@ dina(
 
 \item{max_it}{the maximum number of iterations (default: 500)}
 
-\item{epsilon}{the convergence tolerance for iterations (default: 10E-6)}
+\item{epsilon}{the convergence tolerance for iterations (default: 1e-5)}
 
 \item{verbose}{Logical, controls whether to print progress (default: TRUE)}
 
