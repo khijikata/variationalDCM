@@ -73,10 +73,10 @@ dino = function(X,Q,max_it  = 500,
                 beta_g  = 1 # For g_j
 ){
 
-  if(class(X) != "matrix"){
+  if(!inherits(X, "matrix")){
     X <- as.matrix(X)
   }
-  if(class(Q) != "matrix"){
+  if(!inherits(Q, "matrix")){
     Q <- as.matrix(Q)
   }
 

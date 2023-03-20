@@ -216,7 +216,7 @@ extend_X <- function(X){
 
 #' for the multiple-choice deterministic input noisy AND gate (MC-DINA) model.
 #'
-#' \code{mcdina()} returns variational Bayesian estimates for the MC-DINA model.
+#' \code{mc_dina()} returns variational Bayesian estimates for the MC-DINA model.
 #'
 #' @param X I by J binary matrix, item response data
 #' @param Q J by (K+2) binary matrix, Q-matrix
@@ -255,17 +255,18 @@ extend_X <- function(X){
 #
 # VB script
 #
-mcdina = function(X,Q,max_it  = 500,
-                  epsilon = 1e-05,
-                  seed = 123,
-                  verbose = TRUE
+mc_dina = function(X,Q,
+                   max_it  = 500,
+                   epsilon = 1e-05,
+                   seed = 123,
+                   verbose = TRUE
 ){
   set.seed(seed)
 
-  if(class(X) != "matrix"){
+  if(!inherits(X, "matrix")){
     X <- as.matrix(X)
   }
-  if(class(Q) != "matrix"){
+  if(!inherits(Q, "matrix")){
     Q <- as.matrix(Q)
   }
 

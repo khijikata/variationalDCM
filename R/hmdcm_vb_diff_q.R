@@ -1,6 +1,6 @@
 #' for the hidden Markov DCM.
 #'
-#' \code{hmdcm_diff_q()} returns variational Bayesian estimates for the hidden
+#' \code{hm_dcm()} returns variational Bayesian estimates for the hidden
 #' Markov DCM.
 #'
 #' @param X I by J by T binary 3-dimension array, item response data
@@ -55,24 +55,24 @@
 #'
 #' @export
 
-hmdcm_diff_q = function(X,Q,
-                        max_it  = 500,
-                        epsilon = 1e-05,
-                        verbose = TRUE,
-                        #
-                        # Hyper parameters
-                        #
-                        A_0 = NULL,
-                        B_0 = NULL,
-                        delta_0 = NULL,
-                        ommega_0 = NULL,
-                        #
-                        # Other settings
-                        #
-                        Test_versions,
-                        test_order,
-                        model="General",
-                        random_start = FALSE
+hm_dcm = function(X,Q,
+                  max_it  = 500,
+                  epsilon = 1e-05,
+                  verbose = TRUE,
+                  #
+                  # Hyper parameters
+                  #
+                  A_0 = NULL,
+                  B_0 = NULL,
+                  delta_0 = NULL,
+                  ommega_0 = NULL,
+                  #
+                  # Other settings
+                  #
+                  Test_versions,
+                  test_order,
+                  model="General",
+                  random_start = FALSE
 ){
 
   indI <- sapply(X, nrow)[1] # Assume all individuals take all tests.

@@ -44,10 +44,10 @@ satu_dcm = function(X,Q,
                     seed = 123,
                     verbose = TRUE
 ){
-  if(class(X) != "matrix"){
+  if(!inherits(X, "matrix")){
     X <- as.matrix(X)
   }
-  if(class(Q) != "matrix"){
+  if(!inherits(Q, "matrix")){
     Q <- as.matrix(Q)
   }
 

@@ -2,6 +2,6 @@
 
 export(dina)
 export(dino)
-export(hmdcm_diff_q)
-export(mcdina)
+export(hm_dcm)
+export(mc_dina)
 export(satu_dcm)
