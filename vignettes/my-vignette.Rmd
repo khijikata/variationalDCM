@@ -61,13 +61,12 @@ knitr::opts_chunk$set(
 
 # References
 
-* Yamaguchi, K., & Okada, K. (2020). Variational Bayes Inference for the DINA Model. _Journal of Educational and Behavioral Statistics_, 45(5), 569–597. <doi: https://doi.org/10.3102/1076998620911934>;
+* Yamaguchi, K., & Okada, K. (2020). Variational Bayes Inference for the DINA Model. _Journal of Educational and Behavioral Statistics_, 45(5), 569–597. https://doi.org/10.3102/1076998620911934.
 
-* Yamaguchi, K., Okada, K. (2020). Variational Bayes Inference Algorithm for the Saturated Diagnostic Classification Model. _Psychometrika_, 85(4), 973–995. <doi: https://doi.org/10.1007/s11336-020-09739-w>;
+* Yamaguchi, K., Okada, K. (2020). Variational Bayes Inference Algorithm for the Saturated Diagnostic Classification Model. _Psychometrika_, 85(4), 973–995. https://doi.org/10.1007/s11336-020-09739-w.
 
-* Yamaguchi, K. (2020). Variational Bayesian inference for the multiple-choice DINA model. _Behaviormetrika_, 47(1), 159-187. <doi: https://doi.org/10.1007/s41237-020-00104-w>;
+* Yamaguchi, K. (2020). Variational Bayesian inference for the multiple-choice DINA model. _Behaviormetrika_, 47(1), 159-187.  https://doi.org/10.1007/s41237-020-00104-w.
 
-* Oka, M., & Okada, K. (2022). Scalable estimation algorithm for the DINA Q-matrix combining stochastic optimization and variational inference. _Psychometrika_, in press. <doi: 
-https://doi.org/10.48550/arXiv.2105.09495>;
+* Oka, M., & Okada, K. (2022). Scalable estimation algorithm for the DINA Q-matrix combining stochastic optimization and variational inference. _Psychometrika_, in press. https://doi.org/10.1007/s11336-022-09884-4.
 
-* Yamaguchi, K., & Martinez, A. J. (preprint). Variational Bayesian Inference Posterior Approximation Algorithm for Hidden Markov Diagnostic Classification Models. <doi: https://doi.org/10.31234/osf.io/28jkf>
+* Yamaguchi, K., & Martinez, A. J. (preprint). Variational Bayesian Inference Posterior Approximation Algorithm for Hidden Markov Diagnostic Classification Models. https://doi.org/10.31234/osf.io/28jkf.
