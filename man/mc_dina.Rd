@@ -39,7 +39,7 @@ A list including:
 }
 }
 \description{
-\code{mcdina()} returns variational Bayesian estimates for the MC-DINA model.
+\code{mc_dina()} returns variational Bayesian estimates for the MC-DINA model.
 }
 \references{
 Yamaguchi, K. (2020). Variational Bayesian inference for the

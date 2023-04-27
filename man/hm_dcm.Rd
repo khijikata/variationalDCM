@@ -7,45 +7,39 @@
 hm_dcm(
   X,
   Q,
-  max_it = 500,
-  epsilon = 1e-05,
-  verbose = TRUE,
   A_0 = NULL,
   B_0 = NULL,
   delta_0 = NULL,
   ommega_0 = NULL,
-  Test_versions,
-  test_order,
-  model = "General",
-  random_start = FALSE
+  max_it = 500,
+  epsilon = 1e-05,
+  random_start = FALSE,
+  model = "general",
+  verbose = TRUE
 )
 }
 \arguments{
-\item{X}{I by J by T binary 3-dimension array, item response data}
+\item{X}{T-length list whose each element contains I by J/T binary item response}
 
-\item{Q}{J by k by T binary 3-dimension array, Q-matrix}
+\item{Q}{T-length list whose each element contains J/T by K Q-matrix}
+
+\item{A_0}{the value of hyperparameter A_0 (default: NULL)}
+
+\item{B_0}{the value of hyperparameter B_0 (default: NULL)}
+
+\item{delta_0}{the value of hyperparameter delta_0 (default: NULL)}
+
+\item{ommega_0}{the value of hyperparameter ommega_0 (default: NULL)}
 
 \item{max_it}{Maximum number of iterations (default: 500)}
 
 \item{epsilon}{convergence tolerance for iterations (default: 1e-5)}
 
-\item{verbose}{logical (default: TRUE)}
-
-\item{A_0}{the value of hyperparameter A_0}
-
-\item{B_0}{the value of hyperparameter B_0}
-
-\item{delta_0}{the value of hyperparameter delta_0}
-
-\item{ommega_0}{the value of hyperparameter ommega_0}
-
-\item{Test_versions}{test version}
-
-\item{test_order}{test order}
+\item{random_start}{Logical, controls whether to print progress (default: "FALSE")}
 
 \item{model}{"general" or "DINA" (default: "gengeral")}
 
-\item{random_start}{Logical, controls whether to print progress (default: "FALSE")}
+\item{verbose}{logical (default: TRUE)}
 }
 \value{
 A list including:
@@ -76,7 +70,7 @@ A list including:
 }
 }
 \description{
-\code{hmdcm_diff_q()} returns variational Bayesian estimates for the hidden
+\code{hm_dcm()} returns variational Bayesian estimates for the hidden
 Markov DCM.
 }
 \references{
