@@ -329,9 +329,6 @@ mc_dina = function(X,
   l_lb = rep(NA, max_it+1)
   l_lb[1] = 100
   for(m in 1:max_it){
-    if(verbose){
-      cat("\riteration = ", m, sprintf(": l_lb = %.05f", l_lb[m]))
-    }
 
     #
     # Expectations
@@ -406,6 +403,10 @@ mc_dina = function(X,
     tmp3 <- -sum(r_il*log(r_il+10E-100))
 
     l_lb[m+1] <- tmp1 + tmp2 + tmp3
+
+    if(verbose){
+      cat("\riteration = ", m+1, sprintf(": l_lb = %.05f", l_lb[m+1]), sprintf(": last change = %.05f", abs(l_lb[m] - l_lb[m+1])))
+    }
 
     if(abs(l_lb[m] - l_lb[m+1]) < epsilon){
       if(verbose){

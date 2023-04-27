@@ -131,9 +131,6 @@ dina = function(X,
   l_lb = rep(NA, max_it+1)
   l_lb[1] = 100
   for(m in 1:max_it){
-    if(verbose){
-      cat("\riteration = ", m, sprintf(": l_lb = %.05f", l_lb[m]))
-    }
 
     #
     # M-step
@@ -188,6 +185,10 @@ dina = function(X,
     tmp5 <- sum(lbeta(alpha_g_ast,beta_g_ast)-lbeta(alpha_g,beta_g) + (alpha_g - alpha_g_ast)*E_log_g + (beta_g - beta_g_ast)*E_log_1_g )
 
     l_lb[m+1] = tmp1 + tmp2 +tmp3+tmp4+tmp5
+
+    if(verbose){
+      cat("\riteration = ", m+1, sprintf(": l_lb = %.05f", l_lb[m+1]), sprintf(": last change = %.05f", abs(l_lb[m] - l_lb[m+1])))
+    }
 
     if(abs(l_lb[m] -l_lb[m+1]) < epsilon){
       if(verbose){
