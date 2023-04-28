@@ -142,6 +142,7 @@ hm_dcm = function(X,
   #
   number_of_attributes <- lapply(A_red_uni,function(y)lapply(y, function(x) sapply(strsplit(x, ""), function(y)sum(as.numeric(y))) ) )
 
+  if(model == "DINA") {number_of_attributes <- lapply(1:indT,function(time_t){lapply(1:indJt[time_t],function(j)c(0,1))})}
 
   if(is.null(A_0)){
     A_0_hyperparam <- lapply(number_of_attributes, function(x)seq(from = 1+epsilon, to = 2, length.out = max(unlist( x))+1) )
