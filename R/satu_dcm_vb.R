@@ -130,7 +130,7 @@ satu_dcm = function(X,
     l_lb[m+1] <- llb_fun(X,G_j,delta_ast,delta_0, A_ast, A_0, B_ast,B_0, r_il)
 
     if(verbose){
-      cat("\riteration = ", m+1, sprintf(": l_lb = %.05f", l_lb[m+1]), sprintf(": last change = %.05f", abs(l_lb[m] - l_lb[m+1])))
+      cat("\riteration = ", m+1, sprintf(": lower bound = %.05f", l_lb[m+1]), sprintf(": last change = %.05f", abs(l_lb[m] - l_lb[m+1])))
     }
 
     if(abs(l_lb[m] - l_lb[m+1]) < epsilon){

@@ -187,7 +187,7 @@ dina = function(X,
     l_lb[m+1] = tmp1 + tmp2 +tmp3+tmp4+tmp5
 
     if(verbose){
-      cat("\riteration = ", m+1, sprintf(": l_lb = %.05f", l_lb[m+1]), sprintf(": last change = %.05f", abs(l_lb[m] - l_lb[m+1])))
+      cat("\riteration = ", m+1, sprintf(": lower bound = %.05f", l_lb[m+1]), sprintf(": last change = %.05f", abs(l_lb[m] - l_lb[m+1])))
     }
 
     if(abs(l_lb[m] -l_lb[m+1]) < epsilon){
