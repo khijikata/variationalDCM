@@ -4,7 +4,7 @@
 \alias{satu_dcm}
 \title{for the saturated DCM.}
 \usage{
-satu_dcm(X, Q, max_it = 500, epsilon = 1e-05, seed = 123, verbose = TRUE)
+satu_dcm(X, Q, max_it = 500, epsilon = 1e-04, seed = 123, verbose = TRUE)
 }
 \arguments{
 \item{X}{I by J binary matrix, item response data}

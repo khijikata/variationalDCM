@@ -41,10 +41,17 @@
 satu_dcm = function(X,
                     Q,
                     max_it  = 500,
-                    epsilon = 1e-05,
+                    epsilon = 1e-04,
                     seed = 123,
                     verbose = TRUE
 ){
+
+  if(!all(X %in% c(0,1)))
+    stop("item response data should only contain 0/1. \n")
+
+  if(!all(Q %in% c(0,1)))
+    stop("Q-matrix should only contain 0/1. \n")
+
   if(!inherits(X, "matrix")){
     X <- as.matrix(X)
   }

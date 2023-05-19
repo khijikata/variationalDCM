@@ -12,7 +12,7 @@ hm_dcm(
   delta_0 = NULL,
   ommega_0 = NULL,
   max_it = 500,
-  epsilon = 1e-05,
+  epsilon = 1e-04,
   random_start = FALSE,
   model = "general",
   verbose = TRUE

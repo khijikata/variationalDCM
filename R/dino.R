@@ -63,7 +63,7 @@
 dino = function(X,
                 Q,
                 max_it  = 500,
-                epsilon = 1e-05,
+                epsilon = 1e-04,
                 verbose = TRUE,
                 #
                 # Hyper parameters
@@ -74,6 +74,12 @@ dino = function(X,
                 alpha_g = 1, # For g_j
                 beta_g  = 1 # For g_j
 ){
+
+  if(!all(X %in% c(0,1)))
+    stop("item response data should only contain 0/1. \n")
+
+  if(!all(Q %in% c(0,1)))
+    stop("Q-matrix should only contain 0/1. \n")
 
   if(!inherits(X, "matrix")){
     X <- as.matrix(X)

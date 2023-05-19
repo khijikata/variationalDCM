@@ -8,7 +8,7 @@ dina(
   X,
   Q,
   max_it = 500,
-  epsilon = 1e-05,
+  epsilon = 1e-04,
   verbose = TRUE,
   delta_0 = rep(1, L),
   alpha_s = 1,

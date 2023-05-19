@@ -4,7 +4,7 @@
 \alias{mc_dina}
 \title{for the multiple-choice deterministic input noisy AND gate (MC-DINA) model.}
 \usage{
-mc_dina(X, Q, max_it = 500, epsilon = 1e-05, seed = 123, verbose = TRUE)
+mc_dina(X, Q, max_it = 500, epsilon = 1e-04, seed = 123, verbose = TRUE)
 }
 \arguments{
 \item{X}{I by J binary matrix, item response data}

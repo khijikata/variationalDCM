@@ -62,7 +62,7 @@ hm_dcm = function(X,
                   delta_0 = NULL,
                   ommega_0 = NULL,
                   max_it  = 500,
-                  epsilon = 1e-5,
+                  epsilon = 1e-04,
                   random_start = FALSE,
                   model = "general",
                   verbose = TRUE
@@ -119,7 +119,7 @@ hm_dcm = function(X,
       }
     }
   }else {
-    cat("Error: Specify model General or DINA.\n")
+    stop("Error: Specify model General or DINA.\n")
     #break()
   }
 
