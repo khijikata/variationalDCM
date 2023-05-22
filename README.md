@@ -1,5 +1,5 @@
 # variationalDCM
-variationalDCM is provided, an R package that performs recently developed variational Bayesian estimation methods for diagnostic classification models (DCMs).
+**variationalDCM** is an R package that performs recently-developed variational Bayesian inference diagnostic classification models (DCMs), which are a family of statistical models for collecting, analyzing, and reporting diagnostic information in education and psychology. 
 
 To install this package, use the following commands.
 
