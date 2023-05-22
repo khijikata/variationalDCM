@@ -9,6 +9,18 @@ if(!require(devtools)){
 }
 devtools::install_github("khijikata/variationalDCM")
 ```
+
+## Models
+The following groups of models are currently supported:
+- DINA model
+- DINO model
+- Multiple-choice-DINA model
+- Saturated DCM
+- Hidden Markov DCM
+
+## Acknowledgements
+This package was developed as part of the project supported by JST, PRESTO Grant Number JPMJPR21C3, Japan and JSPS KAKENHI Grant Number 21H00936.
+
 ## References
 - Yamaguchi, K., & Okada, K. (2020). Variational Bayes Inference for the DINA Model. _Journal of Educational and Behavioral Statistics_, 45(5), 569–597. https://doi.org/10.3102/1076998620911934.
 
