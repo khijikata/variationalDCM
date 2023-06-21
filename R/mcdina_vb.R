@@ -264,18 +264,18 @@ mc_dina = function(X,
 ){
   set.seed(seed)
 
+  if(!inherits(X, "matrix")){
+      X <- as.matrix(X)
+    }
+    if(!inherits(Q, "matrix")){
+      Q <- as.matrix(Q)
+    }
+
   if(!all(X %in% c(0,1)))
     stop("item response data should only contain 0/1. \n")
 
   if(!all(Q %in% c(0,1)))
     stop("Q-matrix should only contain 0/1. \n")
-
-  if(!inherits(X, "matrix")){
-    X <- as.matrix(X)
-  }
-  if(!inherits(Q, "matrix")){
-    Q <- as.matrix(Q)
-  }
 
   # Index
   I <- nrow(X)

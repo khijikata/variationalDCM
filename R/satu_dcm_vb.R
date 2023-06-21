@@ -46,18 +46,18 @@ satu_dcm = function(X,
                     verbose = TRUE
 ){
 
-  if(!all(X %in% c(0,1)))
-    stop("item response data should only contain 0/1. \n")
-
-  if(!all(Q %in% c(0,1)))
-    stop("Q-matrix should only contain 0/1. \n")
-
   if(!inherits(X, "matrix")){
     X <- as.matrix(X)
   }
   if(!inherits(Q, "matrix")){
     Q <- as.matrix(Q)
   }
+
+  if(!all(X %in% c(0,1)))
+    stop("item response data should only contain 0/1. \n")
+
+  if(!all(Q %in% c(0,1)))
+    stop("Q-matrix should only contain 0/1. \n")
 
   set.seed(seed);  I <- nrow(X);  J <- nrow(Q);  K <- ncol(Q);  L <- 2^K
   not_zero_q <- apply(Q, 1, function(x) which(x != 0))

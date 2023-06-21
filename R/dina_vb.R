@@ -79,12 +79,6 @@ dina = function(X,
                 beta_g  = 1 # For g_j
 ){
 
-  if(!all(X %in% c(0,1)))
-    stop("item response data should only contain 0/1. \n")
-
-  if(!all(Q %in% c(0,1)))
-    stop("Q-matrix should only contain 0/1. \n")
-
   if(!inherits(X, "matrix")){
     X <- as.matrix(X)
   }
@@ -92,6 +86,11 @@ dina = function(X,
     Q <- as.matrix(Q)
   }
 
+  if(!all(X %in% c(0,1)))
+    stop("item response data should only contain 0/1. \n")
+
+  if(!all(Q %in% c(0,1)))
+    stop("Q-matrix should only contain 0/1. \n")
 
   # Index
   I <- nrow(X)

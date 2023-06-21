@@ -49,9 +49,10 @@
 #'   \item{m}{the number of performed iterations}
 #' }
 #'
-#' @references Yamaguchi, K., & Martinez, A. J. (2021). Variational Bayesian
-#'   Inference Posterior Approximation Algorithm for Hidden Markov Diagnostic
-#'   Classification Models. \url{https://doi.org/10.31234/osf.io/28jkf}.
+#' @references Yamaguchi, K., & Martinez, A. J. (2023). Variational Bayes
+#' inference for hidden Markov diagnostic classification models. British Journal
+#' of Mathematical and Statistical Psychology, 00, 1– 25.
+#' \url{https://doi.org/10.1111/bmsp.12308}.
 #'
 #' @export
 
