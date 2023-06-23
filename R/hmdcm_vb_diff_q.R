@@ -11,7 +11,7 @@
 #' @param ommega_0 the value of hyperparameter ommega_0 (default: NULL)
 #' @param Test_versions test version
 #' @param test_order test order
-#' @param model "general" or "DINA" (default: "gengeral")
+#' @param model "General" or "DINA" (default: "Gengeral")
 #' @param max_it Maximum number of iterations (default: 500)
 #' @param epsilon convergence tolerance for iterations (default: 1e-4)
 #' @param verbose logical (default: TRUE)
