@@ -7,14 +7,16 @@
 hm_dcm(
   X,
   Q,
+  Test_versions,
+  Test_order,
   A_0 = NULL,
   B_0 = NULL,
   delta_0 = NULL,
   ommega_0 = NULL,
   max_it = 500,
   epsilon = 1e-04,
+  model = "General",
   random_start = FALSE,
-  model = "general",
   verbose = TRUE
 )
 }
@@ -22,6 +24,8 @@ hm_dcm(
 \item{X}{T-length list whose each element contains I by J/T binary item response}
 
 \item{Q}{T-length list whose each element contains J/T by K Q-matrix}
+
+\item{Test_versions}{test version}
 
 \item{A_0}{the value of hyperparameter A_0 (default: NULL)}
 
@@ -33,13 +37,15 @@ hm_dcm(
 
 \item{max_it}{Maximum number of iterations (default: 500)}
 
-\item{epsilon}{convergence tolerance for iterations (default: 1e-5)}
-
-\item{random_start}{Logical, controls whether to print progress (default: "FALSE")}
+\item{epsilon}{convergence tolerance for iterations (default: 1e-4)}
 
 \item{model}{"general" or "DINA" (default: "gengeral")}
 
+\item{random_start}{Logical, controls whether to print progress (default: "FALSE")}
+
 \item{verbose}{logical (default: TRUE)}
+
+\item{test_order}{test order}
 }
 \value{
 A list including:
@@ -74,7 +80,8 @@ A list including:
 Markov DCM.
 }
 \references{
-Yamaguchi, K., & Martinez, A. J. (2021). Variational Bayesian
-  Inference Posterior Approximation Algorithm for Hidden Markov Diagnostic
-  Classification Models. \url{https://doi.org/10.31234/osf.io/28jkf}.
+Yamaguchi, K., & Martinez, A. J. (2023). Variational Bayes
+inference for hidden Markov diagnostic classification models. British Journal
+of Mathematical and Statistical Psychology, 00, 1– 25.
+\url{https://doi.org/10.1111/bmsp.12308}.
 }

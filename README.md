@@ -13,7 +13,12 @@ devtools::install_github("khijikata/variationalDCM")
 
 ## Models
 
-The following groups of models are currently supported: - DINA model - DINO model - Multiple-choice-DINA model - Saturated DCM - Hidden Markov DCM
+The following groups of models are currently supported: 
+- DINA model 
+- DINO model 
+- Multiple-choice-DINA model 
+- Saturated DCM 
+- Hidden Markov DCM
 
 ## Acknowledgements
 
