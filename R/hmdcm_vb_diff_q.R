@@ -291,7 +291,6 @@ hm_dcm = function(X,
 
 
   for(m in 1:max_it){
-    cat("m = ",m,": l_lb = ",l_lb[m],"\n")
 
     #
     # M-step and Calculation of Expectations
