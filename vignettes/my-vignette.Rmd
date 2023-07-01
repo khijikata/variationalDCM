@@ -27,13 +27,13 @@ The deterministic input noisy OR gate (DINO) model is another popular model. The
 
 ## saturated DCM
 The saturated DCM is the generalized model that includes many DCMs such as DINA and DINO model as the special case. 
-So, saturated DCM can be used when relationships among attributes are unknown.
+Especially, saturated DCM can be used when relationships among attributes are unknown.
 
 ## multiple choices DINA model
 The multiple choices DINA (MC-DINA) model is the generalization of usual DINA model. MC-DINA model assumes the item response data contains polytomous values, in that, test items have multiple options. MC-DINA model , and assumes attributes on each multiple choice option.
 
 ## hidden Markov DCM
-The hidden Markov DCM (HMDCM) is a tool for a longitudinal item response data.
+The hidden Markov DCM (HM-DCM) is a extended model for a longitudinal item response data.
 
 # names
 
@@ -42,8 +42,8 @@ The hidden Markov DCM (HMDCM) is a tool for a longitudinal item response data.
 |`dina()`|estimates parameters for the DINA model|
 |`dino()`|estimates parameters for the DINO model|
 |`satu_dcm()`|estimates parameters for the saturated DCM|
-|`mcdina()`|estimates parameters for the multiple-choice DINA model|
-|`hmdcm_diff_q()`|estimates parameters for the hidden Markov DCM|
+|`mc_dina()`|estimates parameters for the multiple-choice DINA model|
+|`hm_dcm()`|estimates parameters for the hidden Markov DCM|
 
 detailed explanation of functions such as augument, return and so on is given in .R script of each function. 
 
@@ -60,6 +60,8 @@ knitr::opts_chunk$set(
 
 
 # References
+
+* Hijikata, K., Oka, M., Yamaguchi, K., & Okada, K. (2023). variationalDCM: An R package for variational Bayesian inference in diagnostic classification models. PsyArXive. https://psyarxiv.com/f2sqd.
 
 * Yamaguchi, K., & Okada, K. (2020). Variational Bayes Inference for the DINA Model. _Journal of Educational and Behavioral Statistics_, 45(5), 569–597. https://doi.org/10.3102/1076998620911934.
 
