@@ -3,19 +3,19 @@
 #' \code{hm_dcm()} returns variational Bayesian estimates for the hidden
 #' Markov DCM.
 #'
-#' @param X  T-length list whose each element contains I by J/T binary item response
-#' @param Q  T-length list whose each element contains J/T by K Q-matrix
+#' @param X  T-length list whose each element is I by J/T binary item response data matrix
+#' @param Q  T-length list whose each element is J/T by K Q-matrix
 #' @param A_0 the value of hyperparameter A_0 (default: NULL)
 #' @param B_0 the value of hyperparameter B_0 (default: NULL)
 #' @param delta_0 the value of hyperparameter delta_0 (default: NULL)
 #' @param ommega_0 the value of hyperparameter ommega_0 (default: NULL)
-#' @param Test_versions test version
+#' @param Test_versions test version which indicates respondents
 #' @param test_order test order
-#' @param model "General" or "DINA" (default: "Gengeral")
+#' @param model "General" or "DINA" (default: "Gengeral"), specifying the measurement model
 #' @param max_it Maximum number of iterations (default: 500)
-#' @param epsilon convergence tolerance for iterations (default: 1e-4)
-#' @param verbose logical (default: TRUE)
-#' @param random_start Logical, controls whether to print progress (default: "FALSE")
+#' @param epsilon convergence tolerance for iterations (default: 1e-5)
+#' @param verbose logical, controls whether to print progress (default: TRUE)
+#' @param random_start logical (default: FALSE)
 #'
 #' @return A list including:
 #' \describe{
@@ -65,7 +65,7 @@ hm_dcm = function(X,
                   delta_0 = NULL,
                   ommega_0 = NULL,
                   max_it  = 500,
-                  epsilon = 1e-04,
+                  epsilon = 1e-05,
                   model="General",
                   random_start = FALSE,
                   verbose = TRUE

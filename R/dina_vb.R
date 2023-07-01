@@ -7,27 +7,26 @@
 #' @param max_it the maximum number of iterations (default: 500)
 #' @param epsilon the convergence tolerance for iterations (default: 1e-5)
 #' @param verbose Logical, controls whether to print progress (default: TRUE)
-#' @param delta_0 L by 1 vector, initial value for variational parameter of Dirichlet
-#'   distribution.
-#' @param alpha_s A positive scalar, variational parameter that determines the
+#' @param delta_0 L by 1 vector, hyperparameter of prior dirichlet distribution for the class mixing parameter.
+#' @param alpha_s A positive scalar, hyperparameter that determines the
 #'   shape of  prior beta distribution for slip parameter.
-#' @param beta_s A positive scalar, variational parameter that determines the
+#' @param beta_s A positive scalar, hyperparameter that determines the
 #'   shape of  prior beta distribution for slip parameter.
-#' @param beta_s A positive scalar, variational parameter that determines the
+#' @param beta_s A positive scalar, hyperparameter that determines the
 #'   shape of  prior beta distribution for slip parameter.
-#' @param beta_s A positive scalar, variational parameter that determines the
+#' @param beta_s A positive scalar, hyperparameter that determines the
 #'   shape of  prior beta distribution for slip parameter.
-#' @param beta_s A positive scalar, variational parameter that determines the
+#' @param beta_s A positive scalar, hyperparameter that determines the
 #'   shape of  prior beta distribution for slip parameter.
-#' @param beta_s A positive scalar, variational parameter that determines the
+#' @param beta_s A positive scalar, hyperparameter that determines the
 #'   shape of  prior beta distribution for slip parameter.
-#' @param beta_s A positive scalar, variational parameter that determines the
+#' @param beta_s A positive scalar, hyperparameter that determines the
 #'   shape of  prior beta distribution for slip parameter.
-#' @param alpha_g A positive scalar, variational parameter that determines the
+#' @param alpha_g A positive scalar, hyperparameter that determines the
 #'   shape of  prior beta distribution for guessing parameter.
-#' @param beta_g A positive scalar, variational parameter that determines the
+#' @param beta_g A positive scalar, hyperparameter that determines the
 #'   shape of  prior beta distribution for guessing parameter.
-#' @param beta_g A positive scalar, variational parameter that determines the
+#' @param beta_g A positive scalar, hyperparameter that determines the
 #'   shape of  prior beta distribution for guessing parameter.
 #'
 #' @return A list including:
