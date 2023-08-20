@@ -5,9 +5,12 @@
 #' @param X I by J binary matrix, item response data
 #' @param Q J by K binary matrix, Q-matrix
 #' @param max_it The maximum number of iterations (default: 500)
-#' @param epsilon The convergence tolerance for iterations (default: 1e-5)
+#' @param epsilon The convergence tolerance for iterations (default: 1e-4)
 #' @param seed The seed value (default: 123)
 #' @param verbose Logical, controls whether to print progress (default: TRUE)
+#' @param {delta_0} {the value of hyperparameter \eqn{\delta^0} (default: NULL)}
+#' @param {A_0} {the value of hyperparameter \eqn{A^0} (default: NULL)}
+#' @param {B_0} {the value of hyperparameter \eqn{B^0} (default: NULL)}
 #'
 #' @return A list including:
 #' \describe{
@@ -44,7 +47,11 @@ satu_dcm = function(X,
                     max_it  = 500,
                     epsilon = 1e-04,
                     seed = 123,
-                    verbose = TRUE
+                    verbose = TRUE,
+                    # hyperparameter
+                    delta_0 = NULL,
+                    A_0 = NULL,
+                    B_0 = NULL
 ){
 
   if(!inherits(X, "matrix")){
@@ -63,6 +70,7 @@ satu_dcm = function(X,
   set.seed(seed);  I <- nrow(X);  J <- nrow(Q);  K <- ncol(Q);  L <- 2^K
   not_zero_q <- apply(Q, 1, function(x) which(x != 0))
 
+
   # Attribute pattern matrix
 
   A <- as.matrix(expand.grid(lapply(1:K, function(x)rep(0:1))))
@@ -80,20 +88,25 @@ satu_dcm = function(X,
 
   # Hyper parameters
 
-  delta_0 = rep(1,L)# For π
+  if(is.null(delta_0)){
+    delta_0 = rep(1,L) # For π
+  }
 
   # Weekly informative prior
 
   number_of_attributes <- lapply(A_red_uni, function(x) sapply(strsplit(x, ""), function(y)sum(as.numeric(y))) )
-  A_0_hyperparam <- seq(from = 1+epsilon, to = 2, length.out = max(unlist( number_of_attributes))+1)
-  B_0_hyperparam <- seq(from = 2, to = 1+epsilon, length.out = max(unlist( number_of_attributes))+1)
-  A_0 <- lapply( number_of_attributes , function(x){A_0_hyperparam[x + 1] })
-  B_0 <- lapply( number_of_attributes , function(x){B_0_hyperparam[x + 1] })
+  if(is.null(A_0)){
+    A_0_hyperparam <- seq(from = 1+epsilon, to = 2, length.out = max(unlist( number_of_attributes))+1)
+    A_0 <- lapply( number_of_attributes , function(x){A_0_hyperparam[x + 1] })
+  }
+  if(is.null(B_0)){
+    B_0_hyperparam <- seq(from = 2, to = 1+epsilon, length.out = max(unlist( number_of_attributes))+1)
+    B_0 <- lapply( number_of_attributes , function(x){B_0_hyperparam[x + 1] })
+  }
 
   # Initialization
 
   r_il <- matrix(1/L ,ncol=L, nrow = I)
-
   one_vec  = matrix(1,nrow=I,ncol=1)
 
   # lower bound of log marginal likelihood

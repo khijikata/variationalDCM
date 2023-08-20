@@ -10,11 +10,11 @@ dino(
   max_it = 500,
   epsilon = 1e-04,
   verbose = TRUE,
-  delta_0 = rep(1, L),
-  alpha_s = 1,
-  beta_s = 1,
-  alpha_g = 1,
-  beta_g = 1
+  delta_0 = NULL,
+  alpha_s = NULL,
+  beta_s = NULL,
+  alpha_g = NULL,
+  beta_g = NULL
 )
 }
 \arguments{
@@ -24,24 +24,24 @@ dino(
 
 \item{max_it}{the maximum number of iterations (default: 500)}
 
-\item{epsilon}{the convergence tolerance for iterations (default: 1e-5)}
+\item{epsilon}{the convergence tolerance for iterations (default: 1e-4)}
 
 \item{verbose}{Logical, controls whether to print progress (default: TRUE)}
 
 \item{delta_0}{L by 1 vector, hyperparameter of prior dirichlet distribution
-for the class mixing parameter \eqn{\pi}.}
+for the class mixing parameter \eqn{\pi} (default: NULL).}
 
 \item{alpha_s}{A positive scalar, hyperparameter that determines the
-shape of  prior beta distribution for slip parameter.}
+shape of  prior beta distribution for slip parameter (default: NULL).}
 
 \item{beta_s}{A positive scalar, hyperparameter that determines the
-shape of  prior beta distribution for slip parameter.}
+shape of  prior beta distribution for slip parameter (default: NULL).}
 
 \item{alpha_g}{A positive scalar, hyperparameter that determines the
-shape of  prior beta distribution for guessing parameter.}
+shape of  prior beta distribution for guessing parameter (default: NULL).}
 
 \item{beta_g}{A positive scalar, hyperparameter that determines the
-shape of  prior beta distribution for guessing parameter.}
+shape of  prior beta distribution for guessing parameter (default: NULL).}
 }
 \value{
 A list including:

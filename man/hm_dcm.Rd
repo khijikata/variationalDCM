@@ -27,9 +27,9 @@ hm_dcm(
 
 \item{Test_versions}{test version which indicates respondents}
 
-\item{A_0}{the value of hyperparameter A_0 (default: NULL)}
+\item{A_0}{the value of hyperparameter \eqn{A^0} (default: NULL)}
 
-\item{B_0}{the value of hyperparameter B_0 (default: NULL)}
+\item{B_0}{the value of hyperparameter \eqn{B^0} (default: NULL)}
 
 \item{delta_0}{the value of hyperparameter delta_0 (default: NULL)}
 
@@ -37,7 +37,7 @@ hm_dcm(
 
 \item{max_it}{Maximum number of iterations (default: 500)}
 
-\item{epsilon}{convergence tolerance for iterations (default: 1e-5)}
+\item{epsilon}{convergence tolerance for iterations (default: 1e-4)}
 
 \item{model}{"General" or "DINA" (default: "General"), specifies the measurement model}
 

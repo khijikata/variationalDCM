@@ -4,7 +4,17 @@
 \alias{satu_dcm}
 \title{for the saturated DCM.}
 \usage{
-satu_dcm(X, Q, max_it = 500, epsilon = 1e-04, seed = 123, verbose = TRUE)
+satu_dcm(
+  X,
+  Q,
+  max_it = 500,
+  epsilon = 1e-04,
+  seed = 123,
+  verbose = TRUE,
+  delta_0 = NULL,
+  A_0 = NULL,
+  B_0 = NULL
+)
 }
 \arguments{
 \item{X}{I by J binary matrix, item response data}
@@ -13,11 +23,17 @@ satu_dcm(X, Q, max_it = 500, epsilon = 1e-04, seed = 123, verbose = TRUE)
 
 \item{max_it}{The maximum number of iterations (default: 500)}
 
-\item{epsilon}{The convergence tolerance for iterations (default: 1e-5)}
+\item{epsilon}{The convergence tolerance for iterations (default: 1e-4)}
 
 \item{seed}{The seed value (default: 123)}
 
 \item{verbose}{Logical, controls whether to print progress (default: TRUE)}
+
+\item{{delta_0}}{{the value of hyperparameter \eqn{\delta^0} (default: NULL)}}
+
+\item{{A_0}}{{the value of hyperparameter \eqn{A^0} (default: NULL)}}
+
+\item{{B_0}}{{the value of hyperparameter \eqn{B^0} (default: NULL)}}
 }
 \value{
 A list including:

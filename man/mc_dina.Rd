@@ -4,7 +4,16 @@
 \alias{mc_dina}
 \title{for the multiple-choice deterministic input noisy AND gate (MC-DINA) model.}
 \usage{
-mc_dina(X, Q, max_it = 500, epsilon = 1e-04, seed = 123, verbose = TRUE)
+mc_dina(
+  X,
+  Q,
+  max_it = 500,
+  epsilon = 1e-04,
+  seed = 123,
+  verbose = TRUE,
+  delta_0 = NULL,
+  a_0 = NULL
+)
 }
 \arguments{
 \item{X}{I by J binary matrix, item response data}
@@ -13,11 +22,15 @@ mc_dina(X, Q, max_it = 500, epsilon = 1e-04, seed = 123, verbose = TRUE)
 
 \item{max_it}{The maximum number of iterations (default: 500)}
 
-\item{epsilon}{The convergence tolerance for iterations (default: 1e-5)}
+\item{epsilon}{The convergence tolerance for iterations (default: 1e-4)}
 
 \item{seed}{The seed value (default: 123)}
 
 \item{verbose}{Logical, controls whether to print progress (default: TRUE)}
+
+\item{{delta_0}}{{the value of hyperparameter \eqn{\delta^0} (default: NULL)}}
+
+\item{{a_0}}{{the value of hyperparameter \eqn{a^0} (default: NULL)}}
 }
 \value{
 A list including:

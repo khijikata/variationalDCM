@@ -221,9 +221,11 @@ extend_X <- function(X){
 #' @param X I by J binary matrix, item response data
 #' @param Q J by (K+2) binary matrix, Q-matrix
 #' @param max_it The maximum number of iterations (default: 500)
-#' @param epsilon The convergence tolerance for iterations (default: 1e-5)
+#' @param epsilon The convergence tolerance for iterations (default: 1e-4)
 #' @param seed The seed value (default: 123)
 #' @param verbose Logical, controls whether to print progress (default: TRUE)
+#' @param {delta_0} {the value of hyperparameter \eqn{\delta^0} (default: NULL)}
+#' @param {a_0} {the value of hyperparameter \eqn{a^0} (default: NULL)}
 #'
 #' @return A list including:
 #' \describe{
@@ -260,7 +262,10 @@ mc_dina = function(X,
                    max_it  = 500,
                    epsilon = 1e-04,
                    seed = 123,
-                   verbose = TRUE
+                   verbose = TRUE,
+                   # hyperparameter
+                   delta_0 = NULL,
+                   a_0 = NULL
 ){
   set.seed(seed)
 
@@ -299,9 +304,12 @@ mc_dina = function(X,
   #
   # Hyper parameters
   #
-  delta_0 = rep(1, L)
-  a_0 = lapply(1:J, function(j) matrix(1, nrow = max(H[[j]]), ncol=nrow(G_mat[[j]]) ))
-
+  if(is.null(delta_0)){
+    delta_0 = rep(1, L)
+  }
+  if(is.null(a_0)){
+    a_0 = lapply(1:J, function(j) matrix(1, nrow = max(H[[j]]), ncol=nrow(G_mat[[j]]) ))
+  }
 
 
   #

@@ -5,15 +5,15 @@
 #'
 #' @param X  T-length list whose each element is I by J/T binary item response data matrix
 #' @param Q  T-length list whose each element is J/T by K Q-matrix
-#' @param A_0 the value of hyperparameter A_0 (default: NULL)
-#' @param B_0 the value of hyperparameter B_0 (default: NULL)
+#' @param A_0 the value of hyperparameter \eqn{A^0} (default: NULL)
+#' @param B_0 the value of hyperparameter \eqn{B^0} (default: NULL)
 #' @param delta_0 the value of hyperparameter delta_0 (default: NULL)
 #' @param ommega_0 the value of hyperparameter ommega_0 (default: NULL)
 #' @param Test_versions test version which indicates respondents
 #' @param test_order test order
 #' @param model "General" or "DINA" (default: "General"), specifies the measurement model
 #' @param max_it Maximum number of iterations (default: 500)
-#' @param epsilon convergence tolerance for iterations (default: 1e-5)
+#' @param epsilon convergence tolerance for iterations (default: 1e-4)
 #' @param verbose logical, controls whether to print progress (default: TRUE)
 #' @param random_start logical (default: FALSE)
 #'

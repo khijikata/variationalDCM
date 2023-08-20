@@ -5,30 +5,18 @@
 #' @param X I by J binary matrix, item response data
 #' @param Q J by K binary matrix, Q-matrix
 #' @param max_it the maximum number of iterations (default: 500)
-#' @param epsilon the convergence tolerance for iterations (default: 1e-5)
+#' @param epsilon the convergence tolerance for iterations (default: 1e-4)
 #' @param verbose Logical, controls whether to print progress (default: TRUE)
 #' @param delta_0 L by 1 vector, hyperparameter of prior dirichlet distribution
-#'   for the class mixing parameter \eqn{\pi}.
+#'   for the class mixing parameter \eqn{\pi} (default: NULL).
 #' @param alpha_s A positive scalar, hyperparameter that determines the
-#'   shape of  prior beta distribution for slip parameter.
+#'   shape of  prior beta distribution for slip parameter (default: NULL).
 #' @param beta_s A positive scalar, hyperparameter that determines the
-#'   shape of  prior beta distribution for slip parameter.
-#' @param beta_s A positive scalar, hyperparameter that determines the
-#'   shape of  prior beta distribution for slip parameter.
-#' @param beta_s A positive scalar, hyperparameter that determines the
-#'   shape of  prior beta distribution for slip parameter.
-#' @param beta_s A positive scalar, hyperparameter that determines the
-#'   shape of  prior beta distribution for slip parameter.
-#' @param beta_s A positive scalar, hyperparameter that determines the
-#'   shape of  prior beta distribution for slip parameter.
-#' @param beta_s A positive scalar, hyperparameter that determines the
-#'   shape of  prior beta distribution for slip parameter.
+#'   shape of  prior beta distribution for slip parameter (default: NULL).
 #' @param alpha_g A positive scalar, hyperparameter that determines the
-#'   shape of  prior beta distribution for guessing parameter.
+#'   shape of  prior beta distribution for guessing parameter (default: NULL).
 #' @param beta_g A positive scalar, hyperparameter that determines the
-#'   shape of  prior beta distribution for guessing parameter.
-#' @param beta_g A positive scalar, hyperparameter that determines the
-#'   shape of  prior beta distribution for guessing parameter.
+#'   shape of  prior beta distribution for guessing parameter (default: NULL).
 #'
 #' @return A list including:
 #' \describe{
@@ -72,11 +60,11 @@ dina = function(X,
                 #
                 # Hyper parameters
                 #
-                delta_0 = rep(1, L), # For π
-                alpha_s = 1, # For s_j
-                beta_s  = 1, # For s_j
-                alpha_g = 1, # For g_j
-                beta_g  = 1 # For g_j
+                delta_0 = NULL, # For π
+                alpha_s = NULL, # For s_j
+                beta_s  = NULL, # For s_j
+                alpha_g = NULL, # For g_j
+                beta_g  = NULL # For g_j
 ){
 
   if(!inherits(X, "matrix")){
@@ -98,13 +86,31 @@ dina = function(X,
   K <- ncol(Q)
   L <- 2^K
 
-
   #
   # All attribute pattern matrix
   #
   A <- as.matrix(expand.grid(lapply(1:K, function(x)rep(0:1))))
   eta_lj <- A %*% t(Q)
   QQ <- diag(Q  %*% t(Q))
+
+  #
+  # hyperparameter
+  #
+  if(is.null(delta_0)){
+    delta_0 = rep(1, L) # For π
+  }
+  if(is.null(alpha_s)){
+    alpha_s = 1 # For s_j
+  }
+  if(is.null(beta_s)){
+    beta_s = 1 # For s_j
+  }
+  if(is.null(alpha_g)){
+    alpha_g = 1 # For g_j
+  }
+  if(is.null(beta_g)){
+    beta_g = 1 # For g_j
+  }
 
   #
   # Convert
