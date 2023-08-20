@@ -14,18 +14,18 @@ hm_dcm(
   delta_0 = NULL,
   ommega_0 = NULL,
   max_it = 500,
-  epsilon = 1e-04,
+  epsilon = 1e-05,
   model = "General",
   random_start = FALSE,
   verbose = TRUE
 )
 }
 \arguments{
-\item{X}{T-length list whose each element contains I by J/T binary item response}
+\item{X}{T-length list whose each element is I by J/T binary item response data matrix}
 
-\item{Q}{T-length list whose each element contains J/T by K Q-matrix}
+\item{Q}{T-length list whose each element is J/T by K Q-matrix}
 
-\item{Test_versions}{test version}
+\item{Test_versions}{test version which indicates respondents}
 
 \item{A_0}{the value of hyperparameter A_0 (default: NULL)}
 
@@ -37,41 +37,41 @@ hm_dcm(
 
 \item{max_it}{Maximum number of iterations (default: 500)}
 
-\item{epsilon}{convergence tolerance for iterations (default: 1e-4)}
+\item{epsilon}{convergence tolerance for iterations (default: 1e-5)}
 
-\item{model}{"general" or "DINA" (default: "gengeral")}
+\item{model}{"General" or "DINA" (default: "General"), specifies the measurement model}
 
-\item{random_start}{Logical, controls whether to print progress (default: "FALSE")}
+\item{random_start}{logical (default: FALSE)}
 
-\item{verbose}{logical (default: TRUE)}
+\item{verbose}{logical, controls whether to print progress (default: TRUE)}
 
 \item{test_order}{test order}
 }
 \value{
 A list including:
 \describe{
-  \item{theta_est}{the estimated conditional probability of taking a wrong response}
-  \item{theta_sd}{the estimated standard deviation of theta}
-  \item{pi_est}{the estimates of variational parameter for class indicator}
-  \item{pi_sd}{the estimatd standard deviation of pi}
-  \item{Tau_est}{the estimated transition probability}
-  \item{Tau_sd}{the estimated standard deviation of the transition probability}
+  \item{theta_est}{the estimate of conditional response probability parameter \eqn{\Theta}}
+  \item{theta_sd}{the posterior standard deviation of parameter \eqn{\Theta}}
+  \item{pi_est}{the estimate of class mixing parameter \eqn{\pi}}
+  \item{pi_sd}{the posterior standard deviation of parameter \eqn{\pi}}
+  \item{Tau_est}{the estimate of class-transition probability parameter \eqn{\Tau}}
+  \item{Tau_sd}{the posterior standard deviation of parameter \eqn{\Tau}}
   \item{post_max_class}{the result of class analysis}
-  \item{MAP_att_pat}{the MAP estimates of attribute mastery patterns}
+  \item{MAP_att_pat}{the MAP estimate of attribute mastery patterns}
   \item{att_master_prob}{the estimated attribute mastery probabilities}
-  \item{EAP_att_pat}{the EAP estimates of attribute mastery patterns}
-  \item{A_ast}{the computed A_ast}
-  \item{B_ast}{the computed B_ast}
-  \item{delta_ast}{the computed delta_ast}
-  \item{ommega_ast}{the computed ommega_ast}
+  \item{EAP_att_pat}{the EAP estimate of attribute mastery patterns}
+  \item{A_ast}{the estimate of variational parameter \eqn{A^*}}
+  \item{B_ast}{the estimate of variational parameter \eqn{B^*}}
+  \item{delta_ast}{the estimate of variational posterior \eqn{\delta^*}}
+  \item{ommega_ast}{the estimate of variational posterior \eqn{\Omega^*}}
   \item{E_z_itl}{the resulted expectations of  attribute mastery pattern}
   \item{E_z_itl_z_itm1l}{the resulted expectations of  attribute mastery pattern at the time point t and t-1}
-  \item{A_0}{the computed or entered value of A_0}
-  \item{B_0}{the computed or entered value of B_0}
+  \item{A_0}{the value of hyperparameter \eqn{A^0}}
+  \item{B_0}{the value of hyperparameter \eqn{B^0}}
   \item{delta_0}{the computed or entered value of delta_0}
   \item{ommega_0}{the computed or entered value of ommega_0}
-  \item{l_lb}{the computed lower bound of each iteration}
-  \item{G_jt}{the computed G-matrix}
+  \item{l_lb}{the list of the values of evidence lower bound in each itertion}
+  \item{G_jt}{the computed G-matrices}
   \item{m}{the number of performed iterations}
 }
 }

@@ -22,16 +22,15 @@ mc_dina(X, Q, max_it = 500, epsilon = 1e-04, seed = 123, verbose = TRUE)
 \value{
 A list including:
 \describe{
-  \item{theta_est}{the estimates of the conditional response probabilities}
-  \item{theta_sd}{the standard deviations of theta}
-  \item{pi_est}{the estimates of categorical distribution's parameters, which is the prior for the attribute mastery indicator}
-  \item{pi_sd}{the standard deviations of pi}
-  \item{r_il}{the expectation of the attribute mastery pattern conditioned by the categorical distribution}
-  \item{a_ast}{the estimated variational Bayesian posterior for theta}
-  \item{delta_ast}{the estimated variational Bayesian posterior for pi}
-  \item{a_0}{the estimates of Dirichlet distribution's parameters, which is the prior for theta}
-  \item{delta_0}{the estimates of Dirichlet distribution's parameters, which is the prior for pi}
-  \item{l_lb}{the computed evidence of lower bound}
+  \item{theta_est}{the estimate of the conditional response probability parameter \eqn{\Theta}}
+  \item{theta_sd}{the posterior standard deviation of parameter \eqn{\Theta}}
+  \item{pi_est}{the estimates of class mixing parameter \eqn{\pi}}
+  \item{pi_sd}{the posterior standard deviations of class mixing parameter \eqn{\pi}}
+  \item{a_ast}{the estimate of variational parameter \eqn{a^*}}
+  \item{delta_ast}{the estimate of variational parameter \eqn{\delta^*}}
+  \item{a_0}{the value of hyperparameter \eqn{a^0}}
+  \item{delta_0}{the value of hyperparamter \eqn{\delta^0}}
+  \item{l_lb}{the list of the values of evidence lower bound in each itertion}
   \item{att_pat_est}{the estimated attribute mastery patterns}
   \item{G-mat}{the computed G-matrix}
   \item{m}{the number of performed iterations}

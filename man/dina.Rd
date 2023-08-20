@@ -28,19 +28,19 @@ dina(
 
 \item{verbose}{Logical, controls whether to print progress (default: TRUE)}
 
-\item{delta_0}{L by 1 vector, initial value for variational parameter of Dirichlet
-distribution.}
+\item{delta_0}{L by 1 vector, hyperparameter of prior dirichlet distribution
+for the class mixing parameter \eqn{\pi}.}
 
-\item{alpha_s}{A positive scalar, variational parameter that determines the
+\item{alpha_s}{A positive scalar, hyperparameter that determines the
 shape of  prior beta distribution for slip parameter.}
 
-\item{beta_s}{A positive scalar, variational parameter that determines the
+\item{beta_s}{A positive scalar, hyperparameter that determines the
 shape of  prior beta distribution for slip parameter.}
 
-\item{alpha_g}{A positive scalar, variational parameter that determines the
+\item{alpha_g}{A positive scalar, hyperparameter that determines the
 shape of  prior beta distribution for guessing parameter.}
 
-\item{beta_g}{A positive scalar, variational parameter that determines the
+\item{beta_g}{A positive scalar, hyperparameter that determines the
 shape of  prior beta distribution for guessing parameter.}
 }
 \value{
@@ -50,15 +50,14 @@ A list including:
   \item{g_est}{the posterior mean of guessing parameter.}
   \item{s_sd}{the posterior standard diviation of slip parameter.}
   \item{g_sd}{the posterior standard diviation of guessing parameter.}
-  \item{r_il}{the etimates of parameter for categorical distribution that is optimal variational posterior for \emph{\strong{z}_i}.}
   \item{alpha_s_ast}{the estimates of variational parameter for slip parameter}
   \item{beta_s_ast}{the estimates of variational parameter for slip parameter}
   \item{alpha_g_ast}{the estimates of variational parameter for guessing parameter}
   \item{beta_g_ast}{the estimates of variational parameter for guessing parameter}
-  \item{pi_est}{the estimates of variational parameter for class-indicator \emph{z_i}}
-  \item{delta_ast}{the estimates of hyper parameter for pi}
-  \item{delta_sd}{the standard diviation of hyper parameter for pi}
-  \item{l_lb}{the computed lower bound of each iteration}
+  \item{pi_est}{the estimates of class mixing parameter \eqn{\pi}}
+  \item{delta_ast}{the estimates of variational parameter \eqn{\delta^*}}
+  \item{delta_sd}{the standard diviation of variational parameter \eqn{\delta^*}}
+  \item{l_lb}{the list of the values of evidence lower bound in each itertion}
   \item{att_pat_est}{the estimated attribute mastery patterns}
   \item{eta_lj}{the computed ideal responce}
   \item{m}{the number of performed iterations}

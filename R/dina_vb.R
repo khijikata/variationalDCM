@@ -7,7 +7,8 @@
 #' @param max_it the maximum number of iterations (default: 500)
 #' @param epsilon the convergence tolerance for iterations (default: 1e-5)
 #' @param verbose Logical, controls whether to print progress (default: TRUE)
-#' @param delta_0 L by 1 vector, hyperparameter of prior dirichlet distribution for the class mixing parameter.
+#' @param delta_0 L by 1 vector, hyperparameter of prior dirichlet distribution
+#'   for the class mixing parameter \eqn{\pi}.
 #' @param alpha_s A positive scalar, hyperparameter that determines the
 #'   shape of  prior beta distribution for slip parameter.
 #' @param beta_s A positive scalar, hyperparameter that determines the
@@ -35,15 +36,15 @@
 #'   \item{g_est}{the posterior mean of guessing parameter.}
 #'   \item{s_sd}{the posterior standard diviation of slip parameter.}
 #'   \item{g_sd}{the posterior standard diviation of guessing parameter.}
-#'   \item{r_il}{the etimates of parameter for categorical distribution that is optimal variational posterior for \emph{\strong{z}_i}.}
+#   \item{r_il}{the estimates of parameter for categorical distribution that is optimal variational posterior for \emph{\strong{z}_i}.}
 #'   \item{alpha_s_ast}{the estimates of variational parameter for slip parameter}
 #'   \item{beta_s_ast}{the estimates of variational parameter for slip parameter}
 #'   \item{alpha_g_ast}{the estimates of variational parameter for guessing parameter}
 #'   \item{beta_g_ast}{the estimates of variational parameter for guessing parameter}
-#'   \item{pi_est}{the estimates of variational parameter for class-indicator \emph{z_i}}
-#'   \item{delta_ast}{the estimates of hyper parameter for pi}
-#'   \item{delta_sd}{the standard diviation of hyper parameter for pi}
-#'   \item{l_lb}{the computed lower bound of each iteration}
+#'   \item{pi_est}{the estimates of class mixing parameter \eqn{\pi}}
+#'   \item{delta_ast}{the estimates of variational parameter \eqn{\delta^*}}
+#'   \item{delta_sd}{the standard diviation of variational parameter \eqn{\delta^*}}
+#'   \item{l_lb}{the list of the values of evidence lower bound in each itertion}
 #'   \item{att_pat_est}{the estimated attribute mastery patterns}
 #   \item{A}{all of the possible attribute mastery patterns}
 #   \item{Q}{the entered Q-matrix}
@@ -223,7 +224,7 @@ dina = function(X,
        g_est = g_est,
        s_sd  = s_sd,
        g_sd  = g_sd,
-       r_il  = r_il,
+       #r_il  = r_il,
        alpha_s_ast = alpha_s_ast,
        beta_s_ast  = beta_s_ast,
        alpha_g_ast = alpha_g_ast,

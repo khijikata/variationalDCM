@@ -11,7 +11,7 @@
 #' @param ommega_0 the value of hyperparameter ommega_0 (default: NULL)
 #' @param Test_versions test version which indicates respondents
 #' @param test_order test order
-#' @param model "General" or "DINA" (default: "Gengeral"), specifying the measurement model
+#' @param model "General" or "DINA" (default: "General"), specifies the measurement model
 #' @param max_it Maximum number of iterations (default: 500)
 #' @param epsilon convergence tolerance for iterations (default: 1e-5)
 #' @param verbose logical, controls whether to print progress (default: TRUE)
@@ -19,33 +19,33 @@
 #'
 #' @return A list including:
 #' \describe{
-#'   \item{theta_est}{the estimated conditional probability of taking a wrong response}
-#'   \item{theta_sd}{the estimated standard deviation of theta}
-#'   \item{pi_est}{the estimates of variational parameter for class indicator}
-#'   \item{pi_sd}{the estimatd standard deviation of pi}
-#'   \item{Tau_est}{the estimated transition probability}
-#'   \item{Tau_sd}{the estimated standard deviation of the transition probability}
+#'   \item{theta_est}{the estimate of conditional response probability parameter \eqn{\Theta}}
+#'   \item{theta_sd}{the posterior standard deviation of parameter \eqn{\Theta}}
+#'   \item{pi_est}{the estimate of class mixing parameter \eqn{\pi}}
+#'   \item{pi_sd}{the posterior standard deviation of parameter \eqn{\pi}}
+#'   \item{Tau_est}{the estimate of class-transition probability parameter \eqn{\Tau}}
+#'   \item{Tau_sd}{the posterior standard deviation of parameter \eqn{\Tau}}
 #'   \item{post_max_class}{the result of class analysis}
-#'   \item{MAP_att_pat}{the MAP estimates of attribute mastery patterns}
+#'   \item{MAP_att_pat}{the MAP estimate of attribute mastery patterns}
 #'   \item{att_master_prob}{the estimated attribute mastery probabilities}
-#'   \item{EAP_att_pat}{the EAP estimates of attribute mastery patterns}
-#'   \item{A_ast}{the computed A_ast}
-#'   \item{B_ast}{the computed B_ast}
-#'   \item{delta_ast}{the computed delta_ast}
-#'   \item{ommega_ast}{the computed ommega_ast}
+#'   \item{EAP_att_pat}{the EAP estimate of attribute mastery patterns}
+#'   \item{A_ast}{the estimate of variational parameter \eqn{A^*}}
+#'   \item{B_ast}{the estimate of variational parameter \eqn{B^*}}
+#'   \item{delta_ast}{the estimate of variational posterior \eqn{\delta^*}}
+#'   \item{ommega_ast}{the estimate of variational posterior \eqn{\Omega^*}}
 #'   \item{E_z_itl}{the resulted expectations of  attribute mastery pattern}
 #'   \item{E_z_itl_z_itm1l}{the resulted expectations of  attribute mastery pattern at the time point t and t-1}
-#'   \item{A_0}{the computed or entered value of A_0}
-#'   \item{B_0}{the computed or entered value of B_0}
+#'   \item{A_0}{the value of hyperparameter \eqn{A^0}}
+#'   \item{B_0}{the value of hyperparameter \eqn{B^0}}
 #'   \item{delta_0}{the computed or entered value of delta_0}
 #'   \item{ommega_0}{the computed or entered value of ommega_0}
-#'   \item{l_lb}{the computed lower bound of each iteration}
+#'   \item{l_lb}{the list of the values of evidence lower bound in each itertion}
 #   \item{gamma_t_x_it}{the computed value of the normalizing constant for calculating zeta}
 #   \item{log_zeta_sum}{the computed value of the normalizing constant for calculating variational posterior for class indicator}
 #   \item{A}{all the possible attribute mastery patterns}
 #   \item{Q}{the entered Q-matrix}
 #   \item{X}{the entered data matrix}
-#'   \item{G_jt}{the computed G-matrix}
+#'   \item{G_jt}{the computed G-matrices}
 #'   \item{m}{the number of performed iterations}
 #' }
 #'

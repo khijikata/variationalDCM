@@ -11,17 +11,18 @@
 #'
 #' @return A list including:
 #' \describe{
-#'   \item{theta_est}{the estimates of the conditional response probabilities}
-#'   \item{theta_sd}{the standard deviations of theta}
-#'   \item{pi_est}{the estimates of categorical distribution's parameters, which is the prior for the attribute mastery indicator}
-#'   \item{pi_sd}{the standard deviations of pi}
-#'   \item{r_il}{the expectation of the attribute mastery pattern conditioned by the categorical distribution}
-#'   \item{a_ast}{the estimated variational Bayesian posterior for theta}
-#'   \item{delta_ast}{the estimated variational Bayesian posterior for pi}
-#'   \item{A_0}{the estimates of beta distribution's parameter, which is the prior for theta}
-#'   \item{B_0}{the estimates of beta distribution's parameter, which is the prior for theta}
-#'   \item{delta_0}{the estimates of Dirichlet distribution's parameter, which is the prior for pi}
-#'   \item{l_lb}{the computed lower bound of each iteration}
+#'   \item{theta_est}{the estimate of the conditional response probability paramter \eqn{\Theta}}
+#'   \item{theta_sd}{the posterior standard deviation of parameter \eqn{\Theta}}
+#'   \item{pi_est}{the estimates of class mixing parameter \eqn{\pi}}
+#'   \item{pi_sd}{the posterior standard deviations of class mixing parameter \eqn{\pi}}
+#   \item{r_il}{the expectation of the attribute mastery pattern conditioned by the categorical distribution}
+#'   \item{A_ast}{the estimate of variational parameter \eqn{A^*}}
+#'   \item{B_ast}{the estimate of variational parameter \eqn{B^*}}
+#'   \item{delta_ast}{the estimate of variational parameter \eqn{\delta^*}}
+#'   \item{A_0}{the value of hyperparameter \eqn{A^0}}
+#'   \item{B_0}{the value of hyperparameter \eqn{B^0}}
+#'   \item{delta_0}{the value of hyperparameter \eqn{\delta^0}}
+#'   \item{l_lb}{the list of the values of evidence lower bound at each itertion}
 #'   \item{att_pat_est}{the estimated attribute mastery patterns}
 #   \item{A}{all of the possible attribute mastery patterns}
 #   \item{Q}{the entered Q-matrix}
@@ -159,8 +160,9 @@ satu_dcm = function(X,
        theta_sd = theta_sd,
        pi_est = pi_est,
        pi_sd = pi_sd,
-       r_il  = r_il,
+       #r_il  = r_il,
        A_ast = A_ast,
+       B_ast = B_ast,
        delta_ast   = delta_ast,
        A_0 = A_0,
        B_0 = B_0,
