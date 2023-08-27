@@ -26,12 +26,12 @@ This package was developed as part of the project supported by JST, PRESTO Grant
 
 ## References
 
--   Hijikata, K., Oka, M., Yamaguchi, K., & Okada, K. (2023). variationalDCM: An R package for variational Bayesian inference in diagnostic classification models. PsyArXive. <https://psyarxiv.com/f2sqd>.
+-   Hijikata, K., Oka, M., Yamaguchi, K., & Okada, K. (2023). variationalDCM: An R package for variational Bayesian inference in diagnostic classification models. PsyArXive. <https://psyarxiv.com/f2sqd>
 
--   Yamaguchi, K., & Okada, K. (2020). Variational Bayes Inference for the DINA Model. *Journal of Educational and Behavioral Statistics*, 45(5), 569--597. <https://doi.org/10.3102/1076998620911934>.
+-   Yamaguchi, K., & Okada, K. (2020). Variational Bayes Inference for the DINA Model. *Journal of Educational and Behavioral Statistics*. <https://doi.org/10.3102/1076998620911934>
 
--   Yamaguchi, K., & Okada, K. (2020). Variational Bayes Inference Algorithm for the Saturated Diagnostic Classification Model. *Psychometrika*, 85(4), 973--995. <https://doi.org/10.1007/s11336-020-09739-w>.
+-   Yamaguchi, K., & Okada, K. (2020). Variational Bayes Inference Algorithm for the Saturated Diagnostic Classification Model. *Psychometrika*. <https://doi.org/10.1007/s11336-020-09739-w>
 
--   Yamaguchi, K. (2020). Variational Bayesian inference for the multiple-choice DINA model. *Behaviormetrika*, 47(1), 159-187. <https://doi.org/10.1007/s41237-020-00104-w>.
+-   Yamaguchi, K. (2020). Variational Bayesian inference for the multiple-choice DINA model. *Behaviormetrika*. <https://doi.org/10.1007/s41237-020-00104-w>
 
--   Yamaguchi, K., & Martinez, A. J. (2023). Variational Bayes inference for hidden Markov diagnostic classification models. *British Journal of Mathematical and Statistical Psychology*, 00, 1– 25. <https://doi.org/10.1111/bmsp.12308>.
+-   Yamaguchi, K., & Martinez, A. J. (2023). Variational Bayes inference for hidden Markov diagnostic classification models. *British Journal of Mathematical and Statistical Psychology*. <https://doi.org/10.1111/bmsp.12308>
