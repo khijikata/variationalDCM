@@ -7,25 +7,37 @@
 hm_dcm(
   X,
   Q,
-  Test_versions,
-  Test_order,
+  max_it = 500,
+  epsilon = 1e-04,
+  nondecreasing_attribute = FALSE,
+  model = "General",
+  verbose = TRUE,
+  random_block_design = FALSE,
+  Test_versions = NULL,
+  Test_order = NULL,
+  random_start = FALSE,
   A_0 = NULL,
   B_0 = NULL,
   delta_0 = NULL,
-  ommega_0 = NULL,
-  max_it = 500,
-  epsilon = 1e-05,
-  model = "General",
-  random_start = FALSE,
-  verbose = TRUE
+  ommega_0 = NULL
 )
 }
 \arguments{
-\item{X}{T-length list whose each element is I by J/T binary item response data matrix}
+\item{X}{T-length list or 3-dim array whose each element is I by J/T binary item response data matrix}
 
-\item{Q}{T-length list whose each element is J/T by K Q-matrix}
+\item{Q}{T-length list or 3-dim array whose each element is J/T by K Q-matrix}
 
-\item{Test_versions}{test version which indicates respondents}
+\item{max_it}{Maximum number of iterations (default: 500)}
+
+\item{epsilon}{convergence tolerance for iterations (default: 1e-4)}
+
+\item{model}{"General" or "DINA" (default: "General"), specifies the measurement model}
+
+\item{verbose}{logical, controls whether to print progress (default: TRUE)}
+
+\item{Test_versions}{indicates the test module each respondent is assigned}
+
+\item{random_start}{logical (default: FALSE)}
 
 \item{A_0}{the value of hyperparameter \eqn{A^0} (default: NULL)}
 
@@ -35,17 +47,9 @@ hm_dcm(
 
 \item{ommega_0}{the value of hyperparameter ommega_0 (default: NULL)}
 
-\item{max_it}{Maximum number of iterations (default: 500)}
+\item{different_item_order}{logical value; whether the test design adopts different item ordering or not}
 
-\item{epsilon}{convergence tolerance for iterations (default: 1e-4)}
-
-\item{model}{"General" or "DINA" (default: "General"), specifies the measurement model}
-
-\item{random_start}{logical (default: FALSE)}
-
-\item{verbose}{logical, controls whether to print progress (default: TRUE)}
-
-\item{test_order}{test order}
+\item{test_order}{the square matrix of order T that represents item order}
 }
 \value{
 A list including:
