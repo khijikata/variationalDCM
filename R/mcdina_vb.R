@@ -257,15 +257,16 @@ extend_X <- function(X){
 #
 # VB script
 #
-mc_dina = function(X,
-                   Q,
-                   max_it  = 500,
-                   epsilon = 1e-04,
-                   seed = 123,
-                   verbose = TRUE,
-                   # hyperparameter
-                   delta_0 = NULL,
-                   a_0 = NULL
+mc_dina = function(
+    X,
+    Q,
+    max_it  = 500,
+    epsilon = 1e-04,
+    seed = 123,
+    verbose = TRUE,
+    # hyperparameter
+    delta_0 = NULL,
+    a_0 = NULL
 ){
   set.seed(seed)
 

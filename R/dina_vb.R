@@ -52,19 +52,18 @@
 #
 
 
-dina = function(X,
-                Q,
-                max_it  = 500,
-                epsilon = 1e-04,
-                verbose = TRUE,
-                #
-                # Hyper parameters
-                #
-                delta_0 = NULL, # For π
-                alpha_s = NULL, # For s_j
-                beta_s  = NULL, # For s_j
-                alpha_g = NULL, # For g_j
-                beta_g  = NULL # For g_j
+dina = function(
+    X,
+    Q,
+    max_it  = 500,
+    epsilon = 1e-04,
+    verbose = TRUE,
+    # Hyperparameters
+    delta_0 = NULL, # For π
+    alpha_s = NULL, # For s_j
+    beta_s  = NULL, # For s_j
+    alpha_g = NULL, # For g_j
+    beta_g  = NULL # For g_j
 ){
 
   if(!inherits(X, "matrix")){
