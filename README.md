@@ -26,8 +26,6 @@ This package was developed as part of the project supported by JST, PRESTO Grant
 
 ## References
 
--   Hijikata, K., Oka, M., Yamaguchi, K., & Okada, K. (2023). variationalDCM: An R package for variational Bayesian inference in diagnostic classification models. PsyArXive. <https://psyarxiv.com/f2sqd>
-
 -   Yamaguchi, K., & Okada, K. (2020). Variational Bayes Inference for the DINA Model. *Journal of Educational and Behavioral Statistics*. <https://doi.org/10.3102/1076998620911934>
 
 -   Yamaguchi, K., & Okada, K. (2020). Variational Bayes Inference Algorithm for the Saturated Diagnostic Classification Model. *Psychometrika*. <https://doi.org/10.1007/s11336-020-09739-w>
