@@ -29,11 +29,11 @@ satu_dcm(
 
 \item{verbose}{Logical, controls whether to print progress (default: TRUE)}
 
-\item{{delta_0}}{{the value of hyperparameter \eqn{\delta^0} (default: NULL)}}
+\item{delta_0}{the value of hyperparameter \eqn{\delta^0} (default: NULL)}
 
-\item{{A_0}}{{the value of hyperparameter \eqn{A^0} (default: NULL)}}
+\item{A_0}{the value of hyperparameter \eqn{A^0} (default: NULL)}
 
-\item{{B_0}}{{the value of hyperparameter \eqn{B^0} (default: NULL)}}
+\item{B_0}{the value of hyperparameter \eqn{B^0} (default: NULL)}
 }
 \value{
 A list including:

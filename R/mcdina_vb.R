@@ -224,8 +224,8 @@ extend_X <- function(X){
 #' @param epsilon The convergence tolerance for iterations (default: 1e-4)
 #' @param seed The seed value (default: 123)
 #' @param verbose Logical, controls whether to print progress (default: TRUE)
-#' @param {delta_0} {the value of hyperparameter \eqn{\delta^0} (default: NULL)}
-#' @param {a_0} {the value of hyperparameter \eqn{a^0} (default: NULL)}
+#' @param delta_0 the value of hyperparameter \eqn{\delta^0} (default: NULL)
+#' @param a_0 the value of hyperparameter \eqn{a^0} (default: NULL)
 #'
 #' @return A list including:
 #' \describe{

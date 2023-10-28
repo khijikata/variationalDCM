@@ -28,9 +28,9 @@ mc_dina(
 
 \item{verbose}{Logical, controls whether to print progress (default: TRUE)}
 
-\item{{delta_0}}{{the value of hyperparameter \eqn{\delta^0} (default: NULL)}}
+\item{delta_0}{the value of hyperparameter \eqn{\delta^0} (default: NULL)}
 
-\item{{a_0}}{{the value of hyperparameter \eqn{a^0} (default: NULL)}}
+\item{a_0}{the value of hyperparameter \eqn{a^0} (default: NULL)}
 }
 \value{
 A list including:

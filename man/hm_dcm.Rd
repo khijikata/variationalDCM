@@ -37,7 +37,11 @@ hm_dcm(
 
 \item{verbose}{logical, controls whether to print progress (default: TRUE)}
 
+\item{random_block_design}{logical value; whether the test design adopts different item ordering or not (default: FALSE)}
+
 \item{Test_versions}{indicates the test module each respondent is assigned (default: NULL)}
+
+\item{Test_order}{the square matrix of order T that represents item order (default: NULL)}
 
 \item{random_start}{logical (default: FALSE)}
 
@@ -48,10 +52,6 @@ hm_dcm(
 \item{delta_0}{the value of hyperparameter delta_0 (default: NULL)}
 
 \item{ommega_0}{the value of hyperparameter ommega_0 (default: NULL)}
-
-\item{randome_block_design}{logical value; whether the test design adopts different item ordering or not (default: FALSE)}
-
-\item{test_order}{the square matrix of order T that represents item order (default: NULL)}
 }
 \value{
 A list including:

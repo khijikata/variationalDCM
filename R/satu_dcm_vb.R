@@ -8,9 +8,9 @@
 #' @param epsilon The convergence tolerance for iterations (default: 1e-4)
 #' @param seed The seed value (default: 123)
 #' @param verbose Logical, controls whether to print progress (default: TRUE)
-#' @param {delta_0} {the value of hyperparameter \eqn{\delta^0} (default: NULL)}
-#' @param {A_0} {the value of hyperparameter \eqn{A^0} (default: NULL)}
-#' @param {B_0} {the value of hyperparameter \eqn{B^0} (default: NULL)}
+#' @param delta_0 the value of hyperparameter \eqn{\delta^0} (default: NULL)
+#' @param A_0 the value of hyperparameter \eqn{A^0} (default: NULL)
+#' @param B_0 the value of hyperparameter \eqn{B^0} (default: NULL)
 #'
 #' @return A list including:
 #' \describe{

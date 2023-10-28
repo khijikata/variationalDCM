@@ -1,17 +1,21 @@
 Package: variationalDCM
 Type: Package
-Title: performs variational Bayesian estimation for DCMs
-Version: 0.0.0.9000
+Title: variational Bayesian estimation for diagnostic classification models
+Version: 1.0.0
 Authors@R: c(person("Keiichiro", "Hijikata", email = "k.hijikata.1120@outlook.jp", role = c("aut", "cre")),
     person("Motonori", "Oka", role = "aut"),
     person("Kazuhiro", "Yamaguchi", role = "aut"),
     person("Kensuke", "Okada", role = "aut"))
 Description: This package enables fast estimations by variational Bayesian 
-    methods for various DCMs and can be applied to large-scale data.
+    methods for various diagnostic classification models (DCMs). DCMs are a class of discrete latent variable models
+    for classifying respondents into latent classes that typically represent distinct combinations of skills they possess. 
+    Recently, to meet the growing need of large-scale diagnostic measurement in the field of educational, psychological, and psychiatric measurements,
+    variational Bayesian inference has been developed as a computationally efficient alternative to the Markov chain Monte Carlo methods. To facilitate their applications, 
+    the R package variationalDCM is developed to provide a collection of recently-proposed variational Bayesian estimation methods for various DCMs.
 Depends: R (>= 4.2.0)
 License: GPL-3
 Encoding: UTF-8
-Imports: mvtnorm
+Imports: mvtnorm, stats
 Suggests: 
     knitr
 VignetteBuilder: knitr

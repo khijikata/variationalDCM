@@ -118,7 +118,7 @@ hmdcm_vb = function(
   # Initialization
   #
   if(random_start == TRUE){
-    E_z_itl_temp <- lapply(1:indT, function(time_t)matrix(runif(indI*indL) ,ncol=indL, nrow = indI))
+    E_z_itl_temp <- lapply(1:indT, function(time_t)matrix(stats::runif(indI*indL) ,ncol=indL, nrow = indI))
     E_z_itl_temp <- lapply(E_z_itl_temp, function(x)diag(1/rowSums(x)) %*% x)
 
     E_z_itl <-  array(0, dim=c(indI, indL, indT))
@@ -132,7 +132,7 @@ hmdcm_vb = function(
     for(i in 1:indI){
       for(time_t in 1:(indT-1)){
 
-        E_z_itl_z_itm1l_temp <- matrix(runif(indL*indL) ,ncol=indL, nrow = indL)
+        E_z_itl_z_itm1l_temp <- matrix(stats::runif(indL*indL) ,ncol=indL, nrow = indL)
         E_z_itl_z_itm1l_temp <- E_z_itl_z_itm1l_temp/ sum(E_z_itl_z_itm1l_temp)
 
         E_z_itl_z_itm1l[i,,,time_t] <- E_z_itl_z_itm1l_temp
@@ -392,7 +392,7 @@ hmdcm_vb_nondec= function(
     epsilon = 10E-4,
     random_block_design=FALSE,
     Test_versions=NULL,
-    test_order=NULL,
+    Test_order=NULL,
     model="General",
     random_start = FALSE,
     verbose=TRUE
@@ -521,7 +521,7 @@ hmdcm_vb_nondec= function(
   # Initialization
   #
   if(random_start == TRUE){
-    E_z_itl_temp <- lapply(1:indT, function(time_t)matrix(runif(indI*indL) ,ncol=indL, nrow = indI))
+    E_z_itl_temp <- lapply(1:indT, function(time_t)matrix(stats::runif(indI*indL) ,ncol=indL, nrow = indI))
     E_z_itl_temp <- lapply(E_z_itl_temp, function(x)diag(1/rowSums(x)) %*% x)
 
     E_z_itl <-  array(0, dim=c(indI, indL, indT))
@@ -535,7 +535,7 @@ hmdcm_vb_nondec= function(
     for(i in 1:indI){
       for(time_t in 1:(indT-1)){
 
-        E_z_itl_z_itm1l_temp <- matrix(runif(indL*indL) ,ncol=indL, nrow = indL)
+        E_z_itl_z_itm1l_temp <- matrix(stats::runif(indL*indL) ,ncol=indL, nrow = indL)
         E_z_itl_z_itm1l_temp[ommega_0==0] <-0
         E_z_itl_z_itm1l_temp <- E_z_itl_z_itm1l_temp/ sum(E_z_itl_z_itm1l_temp)
 
@@ -608,7 +608,7 @@ hmdcm_vb_nondec= function(
   X_reord <- X
   for(i in 1:indI){
     for(time_t in 1:indT){
-      X_reord[[test_order[Test_versions[i],time_t ]]][i,] <- X[[time_t]][i,]
+      X_reord[[Test_order[Test_versions[i],time_t ]]][i,] <- X[[time_t]][i,]
     }
   }
 
@@ -638,7 +638,7 @@ hmdcm_vb_nondec= function(
     E_z_itl_reord <- E_z_itl
     for(i in 1:indI){
       for(time_t in 1:indT){
-        E_z_itl_reord[i,,test_order[Test_versions[i],time_t]] <-  E_z_itl[i,,time_t]
+        E_z_itl_reord[i,,Test_order[Test_versions[i],time_t]] <-  E_z_itl[i,,time_t]
 
       }
     }
@@ -662,7 +662,7 @@ hmdcm_vb_nondec= function(
 
         for(j in 1:indJt[time_t]){
           #          temp <- temp +  ( X[[time_t]][,j]%*% E_log_theta[[time_t]][[j]] + (1-X[[time_t]][,j]) %*% E_log_1_theta[[time_t]][[j]]) %*% G_jt[[time_t]][[j]]
-          temp[i,] <- temp[i,] +  ( X[[time_t]][i,j]* E_log_theta[[test_order[Test_versions[i],time_t]]][[j]] + (1-X[[time_t]][i,j]) * E_log_1_theta[[test_order[Test_versions[i],time_t]]][[j]]) %*% G_jt[[test_order[Test_versions[i],time_t]]][[j]]
+          temp[i,] <- temp[i,] +  ( X[[time_t]][i,j]* E_log_theta[[Test_order[Test_versions[i],time_t]]][[j]] + (1-X[[time_t]][i,j]) * E_log_1_theta[[Test_order[Test_versions[i],time_t]]][[j]]) %*% G_jt[[Test_order[Test_versions[i],time_t]]][[j]]
         }
       }
       P_til_x_it_z_it[,,time_t] <-  exp(temp)
@@ -827,13 +827,13 @@ hmdcm_vb_nondec= function(
 #'
 #' @param X  T-length list or 3-dim array whose each element is I by J/T binary item response data matrix
 #' @param Q  T-length list or 3-dim array whose each element is J/T by K Q-matrix
-#' @param randome_block_design logical value; whether the test design adopts different item ordering or not (default: FALSE)
+#' @param random_block_design logical value; whether the test design adopts different item ordering or not (default: FALSE)
 #' @param A_0 the value of hyperparameter \eqn{A^0} (default: NULL)
 #' @param B_0 the value of hyperparameter \eqn{B^0} (default: NULL)
 #' @param delta_0 the value of hyperparameter delta_0 (default: NULL)
 #' @param ommega_0 the value of hyperparameter ommega_0 (default: NULL)
 #' @param Test_versions  indicates the test module each respondent is assigned (default: NULL)
-#' @param test_order the square matrix of order T that represents item order (default: NULL)
+#' @param Test_order the square matrix of order T that represents item order (default: NULL)
 #' @param model "General" or "DINA" (default: "General"), specifies the measurement model
 #' @param max_it Maximum number of iterations (default: 500)
 #' @param epsilon convergence tolerance for iterations (default: 1e-4)
@@ -917,13 +917,13 @@ hm_dcm = function(
     res = hmdcm_vb(X=X,Q=Q,max_it=max_it,epsilon=epsilon,model=model,
                    random_block_design=random_block_design,
                    Test_versions=Test_versions,Test_order=Test_order,
-                   verbose=verbose,random_start=random_start,A0=A0,B0=B0,
+                   verbose=verbose,random_start=random_start,A_0=A_0,B_0=B_0,
                    delta_0=delta_0,ommega_0=ommega_0)
   }else{
     res = hmdcm_vb_nondec(X=X,Q=Q,max_it=max_it,epsilon=epsilon,model=model,
                           random_block_design=random_block_design,
                           Test_versions=Test_versions,Test_order=Test_order,
-                          verbose=verbose,random_start=random_start,A0=A0,B0=B0,
+                          verbose=verbose,random_start=random_start,A_0=A_0,B_0=B_0,
                           delta_0=delta_0,ommega_0=ommega_0)
   }
 
