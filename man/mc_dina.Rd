@@ -55,6 +55,6 @@ A list including:
 }
 \references{
 Yamaguchi, K. (2020). Variational Bayesian inference for the
-  multiple-choice DINA model. \emph{Behaviormetrika}, 47(1), 159-187. \url{
-  https://doi.org/10.1007/s41237-020-00104-w}
+  multiple-choice DINA model. \emph{Behaviormetrika}, 47(1), 159-187.
+  \doi{10.1007/s41237-020-00104-w}
 }

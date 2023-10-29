@@ -37,8 +37,7 @@
 #'
 #' @references Yamaguchi, K., Okada, K. (2020). Variational Bayes Inference
 #'   Algorithm for the Saturated Diagnostic Classification Model.
-#'   \emph{Psychometrika}, 85(4), 973–995.
-#'   \url{https://doi.org/10.1007/s11336-020-09739-w}.
+#'   \emph{Psychometrika}, 85(4), 973–995. \doi{10.1007/s11336-020-09739-w}
 #'
 #' @export
 

@@ -69,6 +69,5 @@ A list including:
 \references{
 Yamaguchi, K., & Okada, K. (2020). Variational Bayes inference
   for the DINA model. \emph{Journal of Educational and Behavioral
-  Statistics}, 45(5), 569-597.
-  \url{https://doi.org/10.3102/1076998620911934}.
+  Statistics}, 45(5), 569-597. \doi{10.3102/1076998620911934}
 }

@@ -847,8 +847,8 @@ hmdcm_vb_nondec= function(
 #'   \item{theta_sd}{the posterior standard deviation of parameter \eqn{\Theta}}
 #'   \item{pi_est}{the estimate of class mixing parameter \eqn{\pi}}
 #'   \item{pi_sd}{the posterior standard deviation of parameter \eqn{\pi}}
-#'   \item{Tau_est}{the estimate of class-transition probability parameter \eqn{\Tau}}
-#'   \item{Tau_sd}{the posterior standard deviation of parameter \eqn{\Tau}}
+#'   \item{Tau_est}{the estimate of class-transition probability parameter \eqn{\tau}}
+#'   \item{Tau_sd}{the posterior standard deviation of parameter \eqn{\tau}}
 #'   \item{post_max_class}{the result of class analysis}
 #'   \item{MAP_att_pat}{the MAP estimate of attribute mastery patterns}
 #'   \item{att_master_prob}{the estimated attribute mastery probabilities}
@@ -874,9 +874,8 @@ hmdcm_vb_nondec= function(
 #' }
 #'
 #' @references Yamaguchi, K., & Martinez, A. J. (2023). Variational Bayes
-#' inference for hidden Markov diagnostic classification models. British Journal
-#' of Mathematical and Statistical Psychology, 00, 1– 25.
-#' \url{https://doi.org/10.1111/bmsp.12308}.
+#' inference for hidden Markov diagnostic classification models. \emph{British Journal
+#' of Mathematical and Statistical Psychology}, 00, 1– 25. \doi{10.1111/bmsp.12308}
 #'
 #' @export
 
