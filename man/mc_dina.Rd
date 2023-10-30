@@ -18,7 +18,7 @@ mc_dina(
 \arguments{
 \item{X}{I by J binary matrix, item response data}
 
-\item{Q}{J by (K+2) binary matrix, Q-matrix}
+\item{Q}{J by (K+2)matrix, Q-matrix for MC-DINA, Column 1：Item number, Column 2：Stem, Column 3 to end：Attributes}
 
 \item{max_it}{The maximum number of iterations (default: 500)}
 
@@ -52,6 +52,14 @@ A list including:
 }
 \description{
 \code{mc_dina()} returns variational Bayesian estimates for the MC-DINA model.
+}
+\examples{
+# load a simulated Q-matrix and make simulated data
+mc_Q = mc_sim_Q
+mc_sim_data = variationalDCM:::mc_dina_data_gen(Q=mc_Q,I=250)
+# fit multiple-choice DINA model
+res_mc = mc_dina(X=mc_sim_data$X, Q=mc_Q)
+
 }
 \references{
 Yamaguchi, K. (2020). Variational Bayesian inference for the

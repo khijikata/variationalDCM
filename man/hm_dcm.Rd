@@ -85,6 +85,14 @@ A list including:
 \code{hm_dcm()} returns variational Bayesian estimates for the hidden
 Markov DCM.
 }
+\examples{
+indT = 4
+Q = sim_Q_J30K3
+hm_sim_Q = lapply(1:indT,function(time_point) Q)
+hm_sim_data = variationalDCM:::hmdcm_data_gen(Q=hm_sim_Q,I=250)
+res_hm = hm_dcm(X=hm_sim_data$X,Q=hm_sim_Q)
+
+}
 \references{
 Yamaguchi, K., & Martinez, A. J. (2023). Variational Bayes
 inference for hidden Markov diagnostic classification models. \emph{British Journal

@@ -1,14 +1,4 @@
 #
-# Variational inference algorithm for Multiple choise DINA model
-#
-
-# Q matrix for MC-DINA
-# Column 1：Item number
-# Column 2：Stem
-# Column 3 to end：Attributes
-# Q <- read.csv("Q_sim.csv")
-
-#
 # Make G matrix funciton -----
 #
 make_G_mat <- function(Q){
@@ -22,7 +12,6 @@ make_G_mat <- function(Q){
   # All attribute pattern matrix
   #
   A <- as.matrix(expand.grid(lapply(1:K, function(x)rep(0:1))))
-
 
   G_mat <- vector("list", J)
   for(j in 1:J){
@@ -38,7 +27,6 @@ make_G_mat <- function(Q){
 
     G_j <- matrix(NA,nrow=nrow(Q_j), ncol=L)
 
-
     q_patt <- apply(Q_j[rowSums(Q_j) != 0, ,drop = F], 1, function(x)paste0(x,collapse=""))
     alp_patt <- apply(A_temp, 1, function(x)paste0(x,collapse=""))
     alp_patt_not_in_q_patt <- !(alp_patt %in% q_patt)
@@ -49,13 +37,9 @@ make_G_mat <- function(Q){
           G_j[h,l] <- all(Q_j[h,] == A_temp[l,])*1
         } else {
           G_j[h,l] <- alp_patt_not_in_q_patt[l]*1
-
         }
-
       }
     }
-
-
     G_mat[[j]] <- G_j
   }
 
@@ -219,7 +203,7 @@ extend_X <- function(X){
 #' \code{mc_dina()} returns variational Bayesian estimates for the MC-DINA model.
 #'
 #' @param X I by J binary matrix, item response data
-#' @param Q J by (K+2) binary matrix, Q-matrix
+#' @param Q J by (K+2)matrix, Q-matrix for MC-DINA, Column 1：Item number, Column 2：Stem, Column 3 to end：Attributes
 #' @param max_it The maximum number of iterations (default: 500)
 #' @param epsilon The convergence tolerance for iterations (default: 1e-4)
 #' @param seed The seed value (default: 123)
@@ -252,6 +236,13 @@ extend_X <- function(X){
 #'   multiple-choice DINA model. \emph{Behaviormetrika}, 47(1), 159-187.
 #'   \doi{10.1007/s41237-020-00104-w}
 #'
+#' @examples
+#' # load a simulated Q-matrix and make simulated data
+#' mc_Q = mc_sim_Q
+#' mc_sim_data = variationalDCM:::mc_dina_data_gen(Q=mc_Q,I=250)
+#' # fit multiple-choice DINA model
+#' res_mc = mc_dina(X=mc_sim_data$X, Q=mc_Q)
+#'
 #' @export
 
 #
@@ -276,12 +267,6 @@ mc_dina = function(
     if(!inherits(Q, "matrix")){
       Q <- as.matrix(Q)
     }
-
-  if(!all(X %in% c(0,1)))
-    stop("item response data should only contain 0/1. \n")
-
-  if(!all(Q %in% c(0,1)))
-    stop("Q-matrix should only contain 0/1. \n")
 
   # Index
   I <- nrow(X)

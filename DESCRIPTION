@@ -6,7 +6,7 @@ Authors@R: c(person("Keiichiro", "Hijikata", email = "k.hijikata.1120@outlook.jp
     person("Motonori", "Oka", role = "aut", comment = c(ORCID = "0000-0002-9867-8922")),
     person("Kazuhiro", "Yamaguchi", role = "aut", comment = c(ORCID = "0000-0001-8011-8575")),
     person("Kensuke", "Okada", role = "aut", comment = c(ORCID = "0000-0003-1663-5812")))
-Description: Enables computationally-efficient computation by variational Bayesian 
+Description: Enables computationally efficient parameters-estimation by variational Bayesian 
     methods for various diagnostic classification models (DCMs). DCMs are a class of discrete latent variable models
     for classifying respondents into latent classes that typically represent distinct combinations of skills they possess. 
     Recently, to meet the growing need of large-scale diagnostic measurement in the field of educational, psychological, and psychiatric measurements,
@@ -23,3 +23,4 @@ RoxygenNote: 7.2.2
 URL: https://github.com/khijikata/variationalDCM
 BugReports: https://github.com/khijikata/variationalDCM/issues
 Config/testthat/edition: 3
+LazyData: true

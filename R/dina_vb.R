@@ -1,3 +1,28 @@
+dina_data_gen = function(Q,I,cor=0.1,oneminus_s=0.8,g=0.2,seed=17){
+  set.seed(seed)
+  J = nrow(Q)
+  K = ncol(Q)
+  sigma = (1-cor)*diag(K) + cor*matrix(1,K,K)
+  ch = chol(sigma)
+  u = matrix(stats::rnorm(I*K), I, K)
+  uc = u %*% ch
+  cr = stats::pnorm(uc)
+  alpha = matrix(0,I,K)
+  for (k in 1:K) {
+    alpha[,k] = as.integer(cr[,k] >= k/(K+1))
+  }
+  tm = alpha %*% t(Q)
+  natt = rowSums(Q)
+  eta_ij = matrix(0,I,J)
+  for (i in 1:I) {
+    eta_ij[i,] = ifelse(tm[i,] == natt, 1, 0)
+  }
+  y = ifelse(eta_ij == 1, oneminus_s, g)
+  comp = matrix(stats::rnorm(I*J),I,J)
+  y = ifelse(y >= comp, 1, 0)
+  list(X=y,alpha=alpha)
+}
+
 #' for the deterministic input noisy AND gate (DINA) model.
 #'
 #' \code{dina()} returns variational Bayesian estimates for the DINA model.
@@ -43,6 +68,13 @@
 #' @references Yamaguchi, K., & Okada, K. (2020). Variational Bayes inference
 #'   for the DINA model. \emph{Journal of Educational and Behavioral
 #'   Statistics}, 45(5), 569-597. \doi{10.3102/1076998620911934}
+#'
+#' @examples
+#' # load Q-matrix and create artificial item response data
+#' Q = sim_Q_J80K5
+#' sim_data = variationalDCM:::dina_data_gen(Q=Q,I=1000)
+#' # fit DINO model
+#' res_dina = dina(X=sim_data$X, Q=Q)
 #'
 #' @export
 

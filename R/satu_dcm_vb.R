@@ -39,6 +39,13 @@
 #'   Algorithm for the Saturated Diagnostic Classification Model.
 #'   \emph{Psychometrika}, 85(4), 973–995. \doi{10.1007/s11336-020-09739-w}
 #'
+#' @examples
+#' # load Q-matrix and create artificial item response data
+#' Q = sim_Q_J30K3
+#' sim_data = variationalDCM:::dina_data_gen(Q=Q,I=100)
+#' # fit saturated DCM
+#' res_satu = satu_dcm(X=sim_data$X, Q=Q)
+#'
 #' @export
 
 satu_dcm = function(X,

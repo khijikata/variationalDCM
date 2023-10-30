@@ -1,3 +1,187 @@
+hmdcm_data_gen <- function(I = 500,
+                           Q,
+                           min_theta = 0.2,
+                           max_theta = 0.8,
+                           att_cor = 0.7,
+                           item_par = "random"
+){
+  indI = I
+  indK <- ncol(Q[[1]])
+  indT <- length(Q)
+  indJt <- sapply(Q,nrow)
+  indL <- 2^indK
+  #  cut_offs <- stats::qnorm(c(1:indK)/(indK+1))
+  cut_offs <- stats::qnorm((1:indK+0.5)/(indK+1))
+
+  mean_norm <- rep(0,indK)
+  vcov_norm <- matrix(att_cor,indK,indK)
+  diag(vcov_norm) <- 1
+
+  alpha_cont_t_1 <- mvtnorm::rmvnorm(n = indI, mean = mean_norm,sigma = vcov_norm)
+
+  alpha_true_t_1 <- t((t(alpha_cont_t_1) > cut_offs)*1)
+
+  #
+  # All attribute pattern matrix
+  #
+  K_jt <- sapply(Q,rowSums)
+  H_jt <- 2^K_jt
+  not_zero_q_t <- lapply(Q,function(y)apply(y, 1, function(x) which(x != 0)))
+  A <- as.matrix(expand.grid(lapply(1:indK, function(x)rep(0:1))))
+  A_jt <- lapply(not_zero_q_t, function(y)lapply(y, function(x) A[,x,drop=F]))
+
+  A_red <- lapply(  A_jt, function(z)lapply(z , function(x) apply(x,1,function(y) paste0(y,collapse = ""))))
+
+  #
+  # Unique correct item response probability label for each time point and item.
+  #
+  A_red_uni <- lapply(  A_jt,function(z)lapply(z , function(x) unique(apply(x,1,function(y) paste0(y,collapse = "")))))
+
+  #
+  # Make G-matrix
+  #
+  G_jt <- lapply(1:indT,function(time_t)lapply(1:indJt[[time_t]], function(j) outer(A_red_uni[[time_t]][[j]], A_red[[time_t]][[j]], function(x,y) (x == y)*1  )))
+
+  att_pat <- apply(A, 1, function(x) paste0(x, collapse=""))
+  for(time_t in 1:indT){
+    for(j in 1:indJt[time_t]) {
+      colnames(G_jt[[time_t]][[j]]) <- att_pat
+      row.names(G_jt[[time_t]][[j]]) <- A_red_uni[[time_t]][[j]]
+    }
+  }
+
+  #
+  # Transition matrix: Tau
+  #
+  Tau_true <- matrix(0, indL, indL)
+  colnames(Tau_true) <- att_pat
+  row.names(Tau_true) <- att_pat
+
+  for(l in 1:indL){
+    temp <- rep(0, indL)
+    for(ld in 1:indL){
+      temp <- A[ld,] - A[l,]
+      temp[temp == 1]  <- 3/10
+      temp[temp == -1] <- 1/10
+      temp[temp == 0] <- 6/10
+      Tau_true[l, ld] <- prod(temp)
+
+    }
+
+  }
+
+  Tau_true <- Tau_true / rowSums(Tau_true)
+  # Tau_true
+
+  #
+  # Alpha true, z_i
+  #
+  z_i_true <- vector("list",indT)
+  alpha_patt_true <- vector("list",indT)
+  alpha_true <- vector("list",indT)
+
+  alpha_true[[1]] <- alpha_true_t_1
+  alpha_patt_true[[1]] <- apply(alpha_true[[1]], 1, function(x) paste0(x,collapse = ""))
+  z_i_true[[1]] <- outer(alpha_patt_true[[1]], att_pat, function(x,y) (x == y)*1)
+  colnames(z_i_true[[1]]) <- att_pat
+
+  for(time_t in 1:(indT-1)){
+    tansition_prob <- z_i_true[[time_t]] %*% Tau_true
+    z_i_true[[time_t+1]] <- t(apply(tansition_prob, 1, function(p)stats::rmultinom(1,1,p) ))
+    alpha_true[[time_t+1]] <- z_i_true[[time_t+1]] %*% A
+    alpha_patt_true[[time_t+1]] <- apply(alpha_true[[time_t+1]], 1, function(x) paste0(x,collapse = ""))
+  }
+
+  n_of_att <- lapply(A_red_uni, function(y)lapply(y,function(x) sapply(strsplit(x, ""), function(y)sum(y == "1") )))
+
+  #
+  # π parameter
+  #
+  cut_off_k_dim_list <- lapply(1:indL, function(l){
+    cut_off_k_dim <- matrix(NA, ncol=2, nrow = indK)
+    cut_off_k_dim[A[l,] == 1,1] <- cut_offs[A[l,] == 1]
+    cut_off_k_dim[A[l,] == 1,2] <- Inf
+    cut_off_k_dim[A[l,] == 0,1] <- -Inf
+    cut_off_k_dim[A[l,] == 0,2] <- cut_offs[A[l,] == 0]
+    cut_off_k_dim
+  })
+
+  names(cut_off_k_dim_list) <- att_pat
+
+  pi_true <- sapply(cut_off_k_dim_list, function(x)mvtnorm::pmvnorm(lower = x[,1],upper = x[,2],mean = mean_norm,sigma = vcov_norm))
+  pi_true <- pi_true/sum(pi_true)
+  # pi_true
+
+  #
+  # True theta_jh.
+  #
+  theta_jht_true <- lapply(indJt, function(Jt)vector("list",Jt))
+
+  for(time_t in 1:indT){
+    for(j in 1:indJt[time_t]){
+
+      if(item_par == "random"){
+        true_par_temp <- stats::runif(min = min_theta, max = max_theta, max(n_of_att[[time_t]][[j]])+1)
+        true_par_temp <- true_par_temp[order(true_par_temp)]
+        theta_jht_true[[time_t]][[j]] <-  n_of_att[[time_t]][[j]]
+
+      }else{
+        true_par_temp <- seq(from = min_theta, to = max_theta, length.out = max(n_of_att[[time_t]][[j]])+1)
+      }
+
+      for(k in min(n_of_att[[time_t]][[j]]):max( n_of_att[[time_t]][[j]])){
+        theta_jht_true[[time_t]][[j]][n_of_att[[time_t]][[j]] == k] <- true_par_temp[k+1]
+      }
+      names(theta_jht_true[[time_t]][[j]]) <- A_red_uni[[time_t]][[j]]
+    }
+
+  }
+  # theta_jht_true
+
+  #
+  # Generate item response matrix
+  #
+  X <- rand_mat <- item_res_prob <- vector("list", indT)
+
+  for(time_t in 1:indT){
+    item_res_prob[[time_t]] <- sapply(1:indJt[[time_t]], function(j){z_i_ast <- z_i_true[[time_t]] %*% t(G_jt[[time_t]][[j]])
+    z_i_ast %*%  theta_jht_true[[time_t]][[j]]
+    })
+
+    rand_mat[[time_t]] <- matrix(stats::runif(indI*indJt[[time_t]]),ncol=indJt[[time_t]],nrow=indI)
+
+    X[[time_t]] <- (item_res_prob[[time_t]] > rand_mat[[time_t]])*1
+
+  }
+
+  list(X = X,
+       rand_mat = rand_mat,
+       theta_jht_true = theta_jht_true,
+       pi_true = pi_true,
+       Tau_true = Tau_true,
+       item_res_prob =item_res_prob ,
+       z_i_true = z_i_true,
+       alpha_patt_true = alpha_patt_true,
+       alpha_true = alpha_true,
+       A = A ,
+       G_jt = G_jt,
+       min_theta = min_theta,
+       max_theta = max_theta,
+       indI = indI,
+       indK = indK,
+       indJt = indJt,
+       indL = indL,
+       Q = Q,
+       cut_offs = cut_offs,
+       cut_off_k_dim_list = cut_off_k_dim_list,
+       mean_norm = mean_norm,
+       vcov_norm = vcov_norm,
+       att_cor = att_cor,
+       K_jt = K_jt,
+       H_jt = H_jt
+  )
+}
+
 hmdcm_vb = function(
     X,
     Q,
@@ -876,6 +1060,13 @@ hmdcm_vb_nondec= function(
 #' @references Yamaguchi, K., & Martinez, A. J. (2023). Variational Bayes
 #' inference for hidden Markov diagnostic classification models. \emph{British Journal
 #' of Mathematical and Statistical Psychology}, 00, 1– 25. \doi{10.1111/bmsp.12308}
+#'
+#' @examples
+#' indT = 4
+#' Q = sim_Q_J30K3
+#' hm_sim_Q = lapply(1:indT,function(time_point) Q)
+#' hm_sim_data = variationalDCM:::hmdcm_data_gen(Q=hm_sim_Q,I=250)
+#' res_hm = hm_dcm(X=hm_sim_data$X,Q=hm_sim_Q)
 #'
 #' @export
 
