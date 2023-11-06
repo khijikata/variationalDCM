@@ -12,6 +12,7 @@ Description: Enables computationally efficient parameters-estimation by variatio
     Recently, to meet the growing need of large-scale diagnostic measurement in the field of educational, psychological, and psychiatric measurements,
     variational Bayesian inference has been developed as a computationally efficient alternative to the Markov chain Monte Carlo methods. To facilitate their applications, 
     the R package variationalDCM is developed to provide a collection of recently-proposed variational Bayesian estimation methods for various DCMs.
+Maintainer: Keiichiro Hijikata <k.hijikata.1120@outlook.jp>
 Depends: R (>= 4.2.0)
 License: GPL-3
 Encoding: UTF-8

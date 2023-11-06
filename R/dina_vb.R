@@ -69,13 +69,13 @@ dina_data_gen = function(Q,I,cor=0.1,oneminus_s=0.8,g=0.2,seed=17){
 #'   for the DINA model. \emph{Journal of Educational and Behavioral
 #'   Statistics}, 45(5), 569-597. \doi{10.3102/1076998620911934}
 #'
-#' @examples
-#' # load Q-matrix and create artificial item response data
-#' Q = sim_Q_J80K5
-#' sim_data = variationalDCM:::dina_data_gen(Q=Q,I=1000)
-#' # fit DINO model
-#' res_dina = dina(X=sim_data$X, Q=Q)
-#'
+# @examples
+# # load Q-matrix and create artificial item response data
+# Q = sim_Q_J80K5
+# sim_data = variationalDCM:::dina_data_gen(Q=Q,I=200)
+# # fit DINO model
+# res_dina = dina(X=sim_data$X, Q=Q)
+#
 #' @export
 
 #
@@ -228,7 +228,7 @@ dina = function(
     l_lb[m+1] = tmp1 + tmp2 +tmp3+tmp4+tmp5
 
     if(verbose){
-      cat("\riteration = ", m+1, sprintf(": lower bound = %.05f", l_lb[m+1]), sprintf(": last change = %.05f", abs(l_lb[m] - l_lb[m+1])))
+      cat("\riteration = ", m+1, sprintf(",last change = %.05f", abs(l_lb[m] - l_lb[m+1])))
     }
 
     if(abs(l_lb[m] -l_lb[m+1]) < epsilon){

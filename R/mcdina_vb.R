@@ -203,7 +203,7 @@ extend_X <- function(X){
 #' \code{mc_dina()} returns variational Bayesian estimates for the MC-DINA model.
 #'
 #' @param X I by J binary matrix, item response data
-#' @param Q J by (K+2)matrix, Q-matrix for MC-DINA, Column 1：Item number, Column 2：Stem, Column 3 to end：Attributes
+#' @param Q J by (K+2)matrix, Q-matrix for MC-DINA, Column 1: Item number, Column 2: Stem, Column 3 to end: Attributes
 #' @param max_it The maximum number of iterations (default: 500)
 #' @param epsilon The convergence tolerance for iterations (default: 1e-4)
 #' @param seed The seed value (default: 123)
@@ -239,7 +239,7 @@ extend_X <- function(X){
 #' @examples
 #' # load a simulated Q-matrix and make simulated data
 #' mc_Q = mc_sim_Q
-#' mc_sim_data = variationalDCM:::mc_dina_data_gen(Q=mc_Q,I=250)
+#' mc_sim_data = variationalDCM:::mc_dina_data_gen(Q=mc_Q,I=200)
 #' # fit multiple-choice DINA model
 #' res_mc = mc_dina(X=mc_sim_data$X, Q=mc_Q)
 #'
@@ -405,7 +405,7 @@ mc_dina = function(
     l_lb[m+1] <- tmp1 + tmp2 + tmp3
 
     if(verbose){
-      cat("\riteration = ", m+1, sprintf(": lower bound = %.05f", l_lb[m+1]), sprintf(": last change = %.05f", abs(l_lb[m] - l_lb[m+1])))
+      cat("\riteration = ", m+1,sprintf(",last change = %.05f", abs(l_lb[m] - l_lb[m+1])))
     }
 
     if(abs(l_lb[m] - l_lb[m+1]) < epsilon){

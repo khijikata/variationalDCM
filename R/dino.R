@@ -44,7 +44,7 @@
 #' @examples
 #' # load Q-matrix and create artificial item response data
 #' Q = sim_Q_J80K5
-#' sim_data = variationalDCM:::dina_data_gen(Q=Q,I=1000)
+#' sim_data = variationalDCM:::dina_data_gen(Q=Q,I=200)
 #' # fit DINO model
 #' res_dino = dino(X=sim_data$X, Q=Q)
 #'
@@ -210,7 +210,7 @@ dino = function(
     l_lb[m+1] = tmp1 + tmp2 +tmp3+tmp4+tmp5
 
     if(verbose){
-      cat("\riteration = ", m+1, sprintf(": lower bound = %.05f", l_lb[m+1]), sprintf(": last change = %.05f", abs(l_lb[m] - l_lb[m+1])))
+      cat("\riteration = ", m+1, sprintf(",last change = %.05f", abs(l_lb[m] - l_lb[m+1])))
     }
 
     if(abs(l_lb[m] -l_lb[m+1]) < epsilon){

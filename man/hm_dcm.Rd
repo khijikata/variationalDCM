@@ -86,10 +86,10 @@ A list including:
 Markov DCM.
 }
 \examples{
-indT = 4
+indT = 3
 Q = sim_Q_J30K3
 hm_sim_Q = lapply(1:indT,function(time_point) Q)
-hm_sim_data = variationalDCM:::hmdcm_data_gen(Q=hm_sim_Q,I=250)
+hm_sim_data = variationalDCM:::hmdcm_data_gen(Q=hm_sim_Q,I=200)
 res_hm = hm_dcm(X=hm_sim_data$X,Q=hm_sim_Q)
 
 }

@@ -478,7 +478,7 @@ hmdcm_vb = function(
     l_lb[m+1] <- llb_fun(delta_ast,delta_0,ommega_ast,ommega_0, A_ast, A_0, B_ast, B_0, log_zeta_sum)
 
     if(verbose){
-      cat("\riteration = ", m+1, sprintf(": lower bound = %.05f", l_lb[m+1]), sprintf(": last change = %.05f", abs(l_lb[m] - l_lb[m+1])))
+      cat("\riteration = ", m+1, sprintf(",last change = %.05f", abs(l_lb[m] - l_lb[m+1])))
     }
 
     if(abs(l_lb[m] - l_lb[m+1]) < epsilon){
@@ -605,9 +605,6 @@ hmdcm_vb_nondec= function(
   # Unique correct item response probability label for each time point and item.
   #
   A_red_uni <- lapply(  A_jt,function(z)lapply(z , function(x) unique(apply(x,1,function(y) paste0(y,collapse = "")))))
-
-
-
 
   #
   # Make G-matrix
@@ -914,7 +911,7 @@ hmdcm_vb_nondec= function(
     l_lb[m+1] <- llb_fun(delta_ast,delta_0,ommega_ast,ommega_0, A_ast, A_0, B_ast, B_0, log_zeta_sum)
 
     if(verbose){
-      cat("\riteration = ", m+1, sprintf(": lower bound = %.05f", l_lb[m+1]), sprintf(": last change = %.05f", abs(l_lb[m] - l_lb[m+1])))
+      cat("\riteration = ", m+1, sprintf(",last change = %.05f", abs(l_lb[m] - l_lb[m+1])))
     }
 
     if(abs(l_lb[m] - l_lb[m+1]) < epsilon){
@@ -1062,10 +1059,10 @@ hmdcm_vb_nondec= function(
 #' of Mathematical and Statistical Psychology}, 00, 1– 25. \doi{10.1111/bmsp.12308}
 #'
 #' @examples
-#' indT = 4
+#' indT = 3
 #' Q = sim_Q_J30K3
 #' hm_sim_Q = lapply(1:indT,function(time_point) Q)
-#' hm_sim_data = variationalDCM:::hmdcm_data_gen(Q=hm_sim_Q,I=250)
+#' hm_sim_data = variationalDCM:::hmdcm_data_gen(Q=hm_sim_Q,I=200)
 #' res_hm = hm_dcm(X=hm_sim_data$X,Q=hm_sim_Q)
 #'
 #' @export
