@@ -8,5 +8,4 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 insignificant note (mis-spellings)
-
+0 errors | 0 warnings | some ignorable notes (mis-spellings, example-running time...)
