@@ -46,18 +46,40 @@ make_G_mat <- function(Q){
   list(G_mat = G_mat, H = H,  A  = A)
 }
 
+#' the artificial data generation for the multiple-choice DINA model based on the given Q-matrix
+#' \code{mc_dina_data_gen()} returns the artificially generated item response data for the MC-DINA model
+#' @param Q the J by K binary matrix
+#' @param I the number of assumed respondents
+#' @param att_cor the true value of the correlation among attributes (default: 0.1)
+#' @param seed the seed value used for random number generation (default: 1234)
+#' @return A list including:
+#' \describe{
+#'   \item{X}{the generated artificial item response data}
+#'   \item{att_pat}{the generated true vale of the attribute mastery pattern}
+#' }
+#' @references Yamaguchi, K. (2020). Variational Bayesian inference for the
+#'   multiple-choice DINA model. \emph{Behaviormetrika}, 47(1), 159-187.
+#'   \doi{10.1007/s41237-020-00104-w}
+#'
+#' @examples
+#' # load a simulated Q-matrix
+#' mc_Q = mc_sim_Q
+#' mc_sim_data = mc_dina_data_gen(Q=mc_Q,I=200)
+#'
+#' @export
 
 #
 # Data generation function------
 #
-
-mc_dina_data_gen <- function(I = 500, Q ,match_p=0.80,not_match="equal", att_cor = 0, att_threshold = "rand",seed = 1234){
+mc_dina_data_gen <- function(I, Q, att_cor = 0.1, seed = 1234){
   set.seed(seed)
 
   J <- max(Q[,1])
   K = ncol(Q) - 2
   L = 2^K
+  match_p = 0.80
 
+  att_threshold = "rand"
   tmp <- make_G_mat(Q)
   A <- tmp$A
   H <- tmp$H
@@ -68,6 +90,7 @@ mc_dina_data_gen <- function(I = 500, Q ,match_p=0.80,not_match="equal", att_cor
   #
   i_par <- vector("list", J)
 
+  not_match = "equal"
   if( not_match == "equal"){
     for(j in 1:J){
       Q_j <- as.matrix(Q[Q[,1] == j,-c(1:2)])
@@ -121,15 +144,10 @@ mc_dina_data_gen <- function(I = 500, Q ,match_p=0.80,not_match="equal", att_cor
       i_par_temp[,ncol(i_par_temp)] <- stats::runif(nrow(i_par_temp),min=0.2,max=0.8)
       i_par_temp <- t(t(i_par_temp)/colSums(i_par_temp))
 
-
       i_par[[j]]  <-  i_par_temp %*% G_mat[[j]]
-
     }
-
-
-
   } else {
-    print("Error: You should specify not_match as \"equal\" or \"rand\" ")
+    stop("Error: You should specify not_match as \"equal\" or \"rand\" ")
   }
 
 
@@ -162,22 +180,7 @@ mc_dina_data_gen <- function(I = 500, Q ,match_p=0.80,not_match="equal", att_cor
       X[i,j] <- sample(x = H[[j]],size = 1, prob = jh_prob)
     }
   }
-
-  list(i_par=i_par,
-       X = X,
-       Z = Z,
-       att_pat = att_pat,
-       Q = Q,
-       I = I,
-       J = J,
-       K = K,
-       L = L,
-       A = A,
-       H = H,
-       G_mat = G_mat,
-       cluss_num = cluss_num,
-       att_threshold = att_threshold)
-
+  list(X = X,att_pat = att_pat)
 }
 
 

@@ -1,7 +1,30 @@
-dina_data_gen = function(Q,I,cor=0.1,oneminus_s=0.8,g=0.2,seed=17){
+#' the artificial data generation for the DINA model based on the given Q-matrix
+#' \code{dina_data_gen()} returns the artificially generated item response data for the DINA model
+#' @param Q the J by K binary matrix
+#' @param I the number of assumed respondents
+#' @param cor the true value of the correlation among attributes (default: 0.1)
+#' @param s the true value of the slip parameter (default: 0.2)
+#' @param g the true value of the guessing parameter (default: 0.2)
+#' @param seed the seed value used for random number generation (default: 17)
+#' @return A list including:
+#' \describe{
+#'   \item{X}{the generated artificial item response data}
+#'   \item{att_pat}{the generated true vale of the attribute mastery pattern}
+#' }
+#' @references Oka, M., & Okada, K. (2023). Scalable Bayesian Approach for the Dina
+#'   Q-Matrix Estimation Combining Stochastic Optimization and Variational Inference.
+#'   \emph{Psychometrika}, 88, 302–331. \doi{10.1007/s11336-022-09884-4}
+#' @examples
+#' # load Q-matrix
+#' Q = sim_Q_J80K5
+#' sim_data = dina_data_gen(Q=Q,I=200)
+#' @export
+
+dina_data_gen = function(Q,I,cor=0.1,s=0.2,g=0.2,seed=17){
   set.seed(seed)
   J = nrow(Q)
   K = ncol(Q)
+  oneminus_s = 1 - s
   sigma = (1-cor)*diag(K) + cor*matrix(1,K,K)
   ch = chol(sigma)
   u = matrix(stats::rnorm(I*K), I, K)
@@ -20,7 +43,7 @@ dina_data_gen = function(Q,I,cor=0.1,oneminus_s=0.8,g=0.2,seed=17){
   y = ifelse(eta_ij == 1, oneminus_s, g)
   comp = matrix(stats::rnorm(I*J),I,J)
   y = ifelse(y >= comp, 1, 0)
-  list(X=y,alpha=alpha)
+  list(X=y,att_pat=alpha)
 }
 
 #' for the deterministic input noisy AND gate (DINA) model.
@@ -69,20 +92,18 @@ dina_data_gen = function(Q,I,cor=0.1,oneminus_s=0.8,g=0.2,seed=17){
 #'   for the DINA model. \emph{Journal of Educational and Behavioral
 #'   Statistics}, 45(5), 569-597. \doi{10.3102/1076998620911934}
 #'
-# @examples
-# # load Q-matrix and create artificial item response data
-# Q = sim_Q_J80K5
-# sim_data = variationalDCM:::dina_data_gen(Q=Q,I=200)
-# # fit DINO model
-# res_dina = dina(X=sim_data$X, Q=Q)
-#
+#' @examples
+#' # load Q-matrix and create artificial item response data
+#' Q = sim_Q_J80K5
+#' sim_data = dina_data_gen(Q=Q,I=200)
+#' # fit DINO model
+#' res_dina = dina(X=sim_data$X, Q=Q)
+#'
 #' @export
 
 #
 # DINA VB
 #
-
-
 dina = function(
     X,
     Q,
@@ -116,16 +137,12 @@ dina = function(
   K <- ncol(Q)
   L <- 2^K
 
-  #
   # All attribute pattern matrix
-  #
   A <- as.matrix(expand.grid(lapply(1:K, function(x)rep(0:1))))
   eta_lj <- A %*% t(Q)
   QQ <- diag(Q  %*% t(Q))
 
-  #
   # hyperparameter
-  #
   if(is.null(delta_0)){
     delta_0 = rep(1, L) # For π
   }
@@ -230,14 +247,12 @@ dina = function(
     if(verbose){
       cat("\riteration = ", m+1, sprintf(",last change = %.05f", abs(l_lb[m] - l_lb[m+1])))
     }
-
     if(abs(l_lb[m] -l_lb[m+1]) < epsilon){
       if(verbose){
         cat("\nreached convergence.")
       }
       break()
     }
-
   }
   l_lb <- l_lb[-1]
   # plot(l_lb,type="l")

@@ -1,9 +1,35 @@
+#' the artificial data generation for the hidden-Markov DCM based on the given Q-matrix
+#' \code{hmdcm_data_gen()} returns the artificially generated item response data for the HM-DCM
+#' @param Q the J by K binary matrix
+#' @param I the number of assumed respondents
+#' @param min_theta the minimum value of the item parameter theta
+#' @param max_theta the maximum value of the item parameter theta
+#' @param att_cor the true value of the correlation among attributes (default: 0.1)
+#' @param seed the seed value used for random number generation (default: 17)
+#' @return A list including:
+#' \describe{
+#'   \item{X}{the generated artificial item response data}
+#'   \item{alpha_true}{the generated true vale of the attribute mastery pattern, matrix form}
+#'   \item{alpha_patt_true}{the generated true vale of the attribute mastery pattern, string form}
+#' }
+#' @references Yamaguchi, K., & Martinez, A. J. (2023). Variational Bayes
+#' inference for hidden Markov diagnostic classification models. \emph{British Journal
+#' of Mathematical and Statistical Psychology}, 00, 1– 25. \doi{10.1111/bmsp.12308}
+#'
+#' @examples
+#' indT = 3
+#' Q = sim_Q_J30K3
+#' hm_sim_Q = lapply(1:indT,function(time_point) Q)
+#' hm_sim_data = hmdcm_data_gen(Q=hm_sim_Q,I=200)
+#'
+#' @export
+
 hmdcm_data_gen <- function(I = 500,
                            Q,
                            min_theta = 0.2,
                            max_theta = 0.8,
                            att_cor = 0.7,
-                           item_par = "random"
+                           seed = 17
 ){
   indI = I
   indK <- ncol(Q[[1]])
@@ -12,6 +38,7 @@ hmdcm_data_gen <- function(I = 500,
   indL <- 2^indK
   #  cut_offs <- stats::qnorm(c(1:indK)/(indK+1))
   cut_offs <- stats::qnorm((1:indK+0.5)/(indK+1))
+  item_par = "random"
 
   mean_norm <- rep(0,indK)
   vcov_norm <- matrix(att_cor,indK,indK)
@@ -155,31 +182,8 @@ hmdcm_data_gen <- function(I = 500,
   }
 
   list(X = X,
-       rand_mat = rand_mat,
-       theta_jht_true = theta_jht_true,
-       pi_true = pi_true,
-       Tau_true = Tau_true,
-       item_res_prob =item_res_prob ,
-       z_i_true = z_i_true,
        alpha_patt_true = alpha_patt_true,
-       alpha_true = alpha_true,
-       A = A ,
-       G_jt = G_jt,
-       min_theta = min_theta,
-       max_theta = max_theta,
-       indI = indI,
-       indK = indK,
-       indJt = indJt,
-       indL = indL,
-       Q = Q,
-       cut_offs = cut_offs,
-       cut_off_k_dim_list = cut_off_k_dim_list,
-       mean_norm = mean_norm,
-       vcov_norm = vcov_norm,
-       att_cor = att_cor,
-       K_jt = K_jt,
-       H_jt = H_jt
-  )
+       alpha_true = alpha_true)
 }
 
 hmdcm_vb = function(

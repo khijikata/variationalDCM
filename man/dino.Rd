@@ -69,7 +69,7 @@ A list including:
 \examples{
 # load Q-matrix and create artificial item response data
 Q = sim_Q_J80K5
-sim_data = variationalDCM:::dina_data_gen(Q=Q,I=200)
+sim_data = dina_data_gen(Q=Q,I=200)
 # fit DINO model
 res_dino = dino(X=sim_data$X, Q=Q)
 

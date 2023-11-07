@@ -66,6 +66,14 @@ A list including:
 \description{
 \code{dina()} returns variational Bayesian estimates for the DINA model.
 }
+\examples{
+# load Q-matrix and create artificial item response data
+Q = sim_Q_J80K5
+sim_data = dina_data_gen(Q=Q,I=200)
+# fit DINO model
+res_dina = dina(X=sim_data$X, Q=Q)
+
+}
 \references{
 Yamaguchi, K., & Okada, K. (2020). Variational Bayes inference
   for the DINA model. \emph{Journal of Educational and Behavioral

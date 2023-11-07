@@ -1,4 +1,9 @@
-## This is an initial submission
+## Resubmission
+This is a resubmission. In this version I have:
+* changed package name as single quoted in the description field: variationalDCM -> 'variationalDCM'
+* add references in the description field
+* additionally exported sume functions
+* changed print() -> stop() in the mc_dina.R file
 
 ## Test environments
 
