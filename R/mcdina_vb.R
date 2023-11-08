@@ -242,7 +242,7 @@ extend_X <- function(X){
 #' @examples
 #' # load a simulated Q-matrix and make simulated data
 #' mc_Q = mc_sim_Q
-#' mc_sim_data = variationalDCM:::mc_dina_data_gen(Q=mc_Q,I=200)
+#' mc_sim_data = mc_dina_data_gen(Q=mc_Q,I=200)
 #' # fit multiple-choice DINA model
 #' res_mc = mc_dina(X=mc_sim_data$X, Q=mc_Q)
 #'
