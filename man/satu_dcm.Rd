@@ -2,7 +2,7 @@
 % Please edit documentation in R/satu_dcm_vb.R
 \name{satu_dcm}
 \alias{satu_dcm}
-\title{for the saturated DCM.}
+\title{Variational Bayesian estimation for the saturated DCM.}
 \usage{
 satu_dcm(
   X,

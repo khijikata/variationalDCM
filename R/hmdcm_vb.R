@@ -1,5 +1,7 @@
 #' the artificial data generation for the hidden-Markov DCM based on the given Q-matrix
+#'
 #' \code{hmdcm_data_gen()} returns the artificially generated item response data for the HM-DCM
+#'
 #' @param Q the J by K binary matrix
 #' @param I the number of assumed respondents
 #' @param min_theta the minimum value of the item parameter theta
@@ -1005,7 +1007,7 @@ hmdcm_vb_nondec= function(
 
 
 
-#' for the hidden Markov DCM.
+#' Variational Bayesian estimation for the hidden Markov DCM.
 #'
 #' \code{hm_dcm()} returns variational Bayesian estimates for the hidden
 #' Markov DCM.

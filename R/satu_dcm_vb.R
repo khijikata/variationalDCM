@@ -1,4 +1,4 @@
-#' for the saturated DCM.
+#' Variational Bayesian estimation for the saturated DCM.
 #'
 #' \code{satu_dcm()} returns variational Bayesian estimates for the saturated DCM.
 #'

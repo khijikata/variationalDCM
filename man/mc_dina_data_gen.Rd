@@ -2,8 +2,7 @@
 % Please edit documentation in R/mcdina_vb.R
 \name{mc_dina_data_gen}
 \alias{mc_dina_data_gen}
-\title{the artificial data generation for the multiple-choice DINA model based on the given Q-matrix
-\code{mc_dina_data_gen()} returns the artificially generated item response data for the MC-DINA model}
+\title{the artificial data generation for the multiple-choice DINA model based on the given Q-matrix}
 \usage{
 mc_dina_data_gen(I, Q, att_cor = 0.1, seed = 1234)
 }
@@ -24,7 +23,6 @@ A list including:
 }
 }
 \description{
-the artificial data generation for the multiple-choice DINA model based on the given Q-matrix
 \code{mc_dina_data_gen()} returns the artificially generated item response data for the MC-DINA model
 }
 \examples{

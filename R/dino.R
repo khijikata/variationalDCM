@@ -1,4 +1,4 @@
-#' for the deterministic input noisy OR gate (DINO) model.
+#' Variational Bayesian estimation for the deterministic input noisy OR gate (DINO) model.
 #'
 #' \code{dino()} returns variational Bayesian estimates for the DINO model.
 #'

@@ -2,7 +2,7 @@
 % Please edit documentation in R/dina_vb.R
 \name{dina}
 \alias{dina}
-\title{for the deterministic input noisy AND gate (DINA) model.}
+\title{Variational Bayesian estimation for the deterministic input noisy AND gate (DINA) model.}
 \usage{
 dina(
   X,

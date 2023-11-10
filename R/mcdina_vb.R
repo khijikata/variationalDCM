@@ -47,7 +47,9 @@ make_G_mat <- function(Q){
 }
 
 #' the artificial data generation for the multiple-choice DINA model based on the given Q-matrix
+#'
 #' \code{mc_dina_data_gen()} returns the artificially generated item response data for the MC-DINA model
+#'
 #' @param Q the J by K binary matrix
 #' @param I the number of assumed respondents
 #' @param att_cor the true value of the correlation among attributes (default: 0.1)
@@ -201,7 +203,7 @@ extend_X <- function(X){
   X_ijh
 }
 
-#' for the multiple-choice deterministic input noisy AND gate (MC-DINA) model.
+#' Variational Bayesian estimation for the multiple-choice deterministic input noisy AND gate (MC-DINA) model.
 #'
 #' \code{mc_dina()} returns variational Bayesian estimates for the MC-DINA model.
 #'

@@ -2,7 +2,7 @@
 % Please edit documentation in R/hmdcm_vb.R
 \name{hm_dcm}
 \alias{hm_dcm}
-\title{for the hidden Markov DCM.}
+\title{Variational Bayesian estimation for the hidden Markov DCM.}
 \usage{
 hm_dcm(
   X,

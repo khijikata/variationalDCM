@@ -1,5 +1,7 @@
 #' the artificial data generation for the DINA model based on the given Q-matrix
+#'
 #' \code{dina_data_gen()} returns the artificially generated item response data for the DINA model
+#'
 #' @param Q the J by K binary matrix
 #' @param I the number of assumed respondents
 #' @param cor the true value of the correlation among attributes (default: 0.1)
@@ -46,7 +48,7 @@ dina_data_gen = function(Q,I,cor=0.1,s=0.2,g=0.2,seed=17){
   list(X=y,att_pat=alpha)
 }
 
-#' for the deterministic input noisy AND gate (DINA) model.
+#' Variational Bayesian estimation for the deterministic input noisy AND gate (DINA) model.
 #'
 #' \code{dina()} returns variational Bayesian estimates for the DINA model.
 #'

@@ -2,7 +2,7 @@
 % Please edit documentation in R/mcdina_vb.R
 \name{mc_dina}
 \alias{mc_dina}
-\title{for the multiple-choice deterministic input noisy AND gate (MC-DINA) model.}
+\title{Variational Bayesian estimation for the multiple-choice deterministic input noisy AND gate (MC-DINA) model.}
 \usage{
 mc_dina(
   X,

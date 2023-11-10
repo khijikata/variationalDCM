@@ -2,8 +2,7 @@
 % Please edit documentation in R/hmdcm_vb.R
 \name{hmdcm_data_gen}
 \alias{hmdcm_data_gen}
-\title{the artificial data generation for the hidden-Markov DCM based on the given Q-matrix
-\code{hmdcm_data_gen()} returns the artificially generated item response data for the HM-DCM}
+\title{the artificial data generation for the hidden-Markov DCM based on the given Q-matrix}
 \usage{
 hmdcm_data_gen(
   I = 500,
@@ -36,7 +35,6 @@ A list including:
 }
 }
 \description{
-the artificial data generation for the hidden-Markov DCM based on the given Q-matrix
 \code{hmdcm_data_gen()} returns the artificially generated item response data for the HM-DCM
 }
 \examples{

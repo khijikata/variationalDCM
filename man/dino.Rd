@@ -2,7 +2,7 @@
 % Please edit documentation in R/dino.R
 \name{dino}
 \alias{dino}
-\title{for the deterministic input noisy OR gate (DINO) model.}
+\title{Variational Bayesian estimation for the deterministic input noisy OR gate (DINO) model.}
 \usage{
 dino(
   X,
