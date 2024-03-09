@@ -191,7 +191,7 @@ hmdcm_data_gen <- function(I = 500,
 hmdcm_vb = function(
     X,
     Q,
-    model = "General",
+    measurement_model = "General",
     A_0 = NULL,
     B_0 = NULL,
     delta_0 = NULL,
@@ -388,8 +388,8 @@ hmdcm_vb = function(
 
   m = 1
 
-  l_lb = rep(NA_real_, max_it+1)
-  l_lb[1] = 100
+  l_lb = rep(0, max_it+1)
+  l_lb[1] = -Inf
 
   for(m in 1:max_it){
     #
@@ -486,8 +486,10 @@ hmdcm_vb = function(
     if(verbose){
       cat("\riteration = ", m+1, sprintf(",last change = %.05f", abs(l_lb[m] - l_lb[m+1])))
     }
-
     if(abs(l_lb[m] - l_lb[m+1]) < epsilon){
+      if(verbose){
+        cat("\nreached convergence.\n")
+      }
       break()
     }
 
@@ -583,7 +585,7 @@ hmdcm_vb_nondec= function(
     random_block_design=FALSE,
     Test_versions=NULL,
     Test_order=NULL,
-    model="General",
+    measurement_model="General",
     random_start = FALSE,
     verbose=TRUE
 ){
@@ -801,8 +803,8 @@ hmdcm_vb_nondec= function(
 
   m = 1
 
-  l_lb = rep(NA_real_, max_it+1)
-  l_lb[1] = 100
+  l_lb = rep(0, max_it+1)
+  l_lb[1] = -Inf
 
   for(m in 1:max_it){
     #
@@ -921,6 +923,9 @@ hmdcm_vb_nondec= function(
     }
 
     if(abs(l_lb[m] - l_lb[m+1]) < epsilon){
+      if(verbose){
+        cat("\nreached convergence.\n")
+      }
       break()
     }
 
@@ -1079,7 +1084,7 @@ hm_dcm = function(
     max_it  = 500,
     epsilon = 1e-04,
     nondecreasing_attribute=FALSE,
-    model="General",
+    measurement_model="General",
     verbose = TRUE,
     random_block_design=FALSE,
     Test_versions=NULL,
@@ -1091,6 +1096,10 @@ hm_dcm = function(
     delta_0 = NULL,
     ommega_0 = NULL
 ){
+
+  t1 = Sys.time()
+
+  variationalDCMcall = match.call()
 
   # convert X,Q to list
   if(length(dim(X)) == 3){
@@ -1107,27 +1116,29 @@ hm_dcm = function(
   }
 
   if(!nondecreasing_attribute){
-    res = hmdcm_vb(X=X,Q=Q,max_it=max_it,epsilon=epsilon,model=model,
+    res = hmdcm_vb(X=X,Q=Q,max_it=max_it,epsilon=epsilon,measurement_model=measurement_model,
                    random_block_design=random_block_design,
                    Test_versions=Test_versions,Test_order=Test_order,
                    verbose=verbose,random_start=random_start,A_0=A_0,B_0=B_0,
                    delta_0=delta_0,ommega_0=ommega_0)
   }else{
-    res = hmdcm_vb_nondec(X=X,Q=Q,max_it=max_it,epsilon=epsilon,model=model,
+    res = hmdcm_vb_nondec(X=X,Q=Q,max_it=max_it,epsilon=epsilon,measurement_model=measurement_model,
                           random_block_design=random_block_design,
                           Test_versions=Test_versions,Test_order=Test_order,
                           verbose=verbose,random_start=random_start,A_0=A_0,B_0=B_0,
                           delta_0=delta_0,ommega_0=ommega_0)
   }
 
-  list(theta_est = res$theta_est,
+  t2 = Sys.time()
+
+  res = list(theta_est = res$theta_est,
        theta_sd = res$theta_sd,
        pi_est = res$pi_est,
        pi_sd = res$pi_sd,
        Tau_est = res$Tau_est,
        Tau_sd = res$Tau_sd,
        post_max_class = res$post_max_class,
-       MAP_att_pat = res$MAP_att_pat,
+       att_pat_est = res$MAP_att_pat,
        att_master_prob = res$att_master_prob,
        EAP_att_pat = res$EAP_att_pat,
        A_ast = res$A_ast,
@@ -1140,7 +1151,7 @@ hm_dcm = function(
        B_0 = res$B_0,
        delta_0 = res$delta_0,
        ommega_0 = res$ommega_0,
-       l_lb = res$l_lb,
+       l_lb = res$l_lb[res$l_lb != 0],
        #gamma_t_x_it = res$gamma_t_x_it,
        #log_zeta_sum = res$log_zeta_sum,
        E_z_itl = res$E_z_itl,
@@ -1149,5 +1160,10 @@ hm_dcm = function(
        #Q = res$Q,
        #X = res$X,
        G_jt = res$G_jt,
-       m = res$m)
+       m = res$m,
+       time = t2-t1,
+       call = variationalDCMcall)
+
+  class(res) = "variationalDCM"
+  return(res)
 }

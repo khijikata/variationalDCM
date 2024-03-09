@@ -1,6 +1,6 @@
-#' the artificial data generation for the DINA model based on the given Q-matrix
+#' @title the artificial data generation for the DINA model based on the given Q-matrix
 #'
-#' \code{dina_data_gen()} returns the artificially generated item response data for the DINA model
+#' @description \code{dina_data_gen()} returns the artificially generated item response data for the DINA model
 #'
 #' @param Q the J by K binary matrix
 #' @param I the number of assumed respondents
@@ -48,9 +48,9 @@ dina_data_gen = function(Q,I,cor=0.1,s=0.2,g=0.2,seed=17){
   list(X=y,att_pat=alpha)
 }
 
-#' Variational Bayesian estimation for the deterministic input noisy AND gate (DINA) model.
+#' @title Variational Bayesian estimation for the deterministic input noisy AND gate (DINA) model.
 #'
-#' \code{dina()} returns variational Bayesian estimates for the DINA model.
+#' @description \code{dina()} returns variational Bayesian estimates for the DINA model.
 #'
 #' @param X I by J binary matrix, item response data
 #' @param Q J by K binary matrix, Q-matrix
@@ -120,6 +120,10 @@ dina = function(
     beta_g  = NULL # For g_j
 ){
 
+  t1 = Sys.time()
+
+  variationalDCMcall = match.call()
+
   if(!inherits(X, "matrix")){
     X <- as.matrix(X)
   }
@@ -188,8 +192,8 @@ dina = function(
 
   m = 1
   #
-  l_lb = rep(NA, max_it+1)
-  l_lb[1] = 100
+  l_lb = rep(0, max_it+1)
+  l_lb[1] = -Inf
   for(m in 1:max_it){
 
     #
@@ -226,8 +230,6 @@ dina = function(
     # Slow
     # r_il = diag(1/rowSums(temp )) %*% temp
 
-
-
     #
     # Evidense of Lower Bound
     #
@@ -249,9 +251,9 @@ dina = function(
     if(verbose){
       cat("\riteration = ", m+1, sprintf(",last change = %.05f", abs(l_lb[m] - l_lb[m+1])))
     }
-    if(abs(l_lb[m] -l_lb[m+1]) < epsilon){
+    if(abs(l_lb[m] - l_lb[m+1]) < epsilon){
       if(verbose){
-        cat("\nreached convergence.")
+        cat("\nreached convergence.\n")
       }
       break()
     }
@@ -271,12 +273,18 @@ dina = function(
   #
   delta_sum <- sum(delta_ast)
   pi_est <- delta_ast/delta_sum
-  delta_sd <-sqrt(delta_ast*(delta_sum - delta_ast)/(delta_sum^2*(delta_sum+1)) )
+  delta_sd <-sqrt(delta_ast*(delta_sum - delta_ast)/(delta_sum^2*(delta_sum+1)))
 
-  list(s_est = s_est,
-       g_est = g_est,
-       s_sd  = s_sd,
-       g_sd  = g_sd,
+  t2 = Sys.time()
+
+  model_params = list(
+    s_est = s_est,
+    g_est = g_est,
+    s_sd  = s_sd,
+    g_sd  = g_sd
+  )
+
+  res = list(model_params = model_params,
        #r_il  = r_il,
        alpha_s_ast = alpha_s_ast,
        beta_s_ast  = beta_s_ast,
@@ -285,11 +293,17 @@ dina = function(
        pi_est      = pi_est,
        delta_ast   = delta_ast,
        delta_sd    = delta_sd,
-       l_lb = l_lb,
+       l_lb = l_lb[l_lb != 0],
        att_pat_est = A[apply(r_il, 1, which.max),],
        #A = A,
        #Q = Q,
        #X = X,
        eta_lj = eta_lj,
-       m = m)
+       m = m,
+       time = t2-t1,
+       call = variationalDCMcall)
+
+  class(res) = "variationalDCM"
+  return(res)
+
 }

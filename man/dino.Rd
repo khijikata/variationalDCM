@@ -64,7 +64,7 @@ A list including:
 }
 }
 \description{
-\code{dino()} returns variational Bayesian estimates for the DINO model.
+\code{dino()} fits the DINO model by a VB algorithm.
 }
 \examples{
 # load Q-matrix and create artificial item response data

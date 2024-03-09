@@ -60,6 +60,10 @@ satu_dcm = function(X,
                     B_0 = NULL
 ){
 
+  t1 = Sys.time()
+
+  variationalDCMcall = match.call()
+
   if(!inherits(X, "matrix")){
     X <- as.matrix(X)
   }
@@ -132,8 +136,8 @@ satu_dcm = function(X,
     tmp4 <- sum(lbeta(a =A_ast_unlist,  b=B_ast_unlist) - lbeta(a =A_0_unlist,  b=B_0_unlist) +  (A_0_unlist - A_ast_unlist)*(digamma(A_ast_unlist) - digamma(A_ast_unlist + B_ast_unlist ) ) + (B_0_unlist - B_ast_unlist)*(digamma(B_ast_unlist) - digamma(A_ast_unlist + B_ast_unlist ) ) )
 
     tmp1 + tmp2 + tmp3 + tmp4  }
-  l_lb = rep(NA_real_, max_it+1)
-  l_lb[1] = 100
+  l_lb = rep(0, max_it+1)
+  l_lb[1] = -Inf
 
   m = 1
   for(m in 1:max_it){
@@ -162,7 +166,7 @@ satu_dcm = function(X,
 
     if(abs(l_lb[m] - l_lb[m+1]) < epsilon){
       if(verbose){
-        cat("\nreached convergence.")
+        cat("\nreached convergence.\n")
       }
       break()
     }
@@ -175,7 +179,9 @@ satu_dcm = function(X,
   theta_est <- mapply(function(x,y) x/(x+y), A_ast, B_ast)
   theta_sd <- mapply(function(x,y) sqrt((x*y)/(((x+y)^2) *(x+y+1)) ),  A_ast, B_ast)
 
-  list(theta_est = theta_est,
+  t2 = Sys.time()
+
+  res = list(theta_est = theta_est,
        theta_sd = theta_sd,
        pi_est = pi_est,
        pi_sd = pi_sd,
@@ -186,12 +192,17 @@ satu_dcm = function(X,
        A_0 = A_0,
        B_0 = B_0,
        delta_0 = delta_0,
-       l_lb = l_lb,
+       l_lb = l_lb[l_lb != 0],
        att_pat_est = A[apply(r_il, 1, which.max),],
        #A = A,
        #Q = Q,
        #X = X,
        G_j = G_j,
        m = m,
-       seed = seed)
+       seed = seed,
+       time = t2-t1,
+       call = variationalDCMcall)
+
+  class(res) = "variationalDCM"
+  return(res)
 }

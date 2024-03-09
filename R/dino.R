@@ -1,6 +1,6 @@
 #' Variational Bayesian estimation for the deterministic input noisy OR gate (DINO) model.
 #'
-#' \code{dino()} returns variational Bayesian estimates for the DINO model.
+#' \code{dino()} fits the DINO model by a VB algorithm.
 #'
 #' @param X I by J binary matrix, item response data
 #' @param Q J by K binary matrix, Q-matrix
@@ -67,6 +67,10 @@ dino = function(
     alpha_g = NULL, # For g_j
     beta_g  = NULL # For g_j
 ){
+
+  t1 = Sys.time()
+
+  variationalDCMcall = match.call()
 
   if(!inherits(X, "matrix")){
     X <- as.matrix(X)
@@ -144,12 +148,9 @@ dino = function(
 
   m = 1
   #
-  l_lb = rep(NA, max_it+1)
-  l_lb[1] = 100
+  l_lb = rep(0, max_it+1)
+  l_lb[1] = -Inf
   for(m in 1:max_it){
-    if(verbose){
-      cat("\riteration = ", m, sprintf(": l_lb = %.05f", l_lb[m]))
-    }
 
     #
     # M-step
@@ -212,14 +213,12 @@ dino = function(
     if(verbose){
       cat("\riteration = ", m+1, sprintf(",last change = %.05f", abs(l_lb[m] - l_lb[m+1])))
     }
-
     if(abs(l_lb[m] -l_lb[m+1]) < epsilon){
       if(verbose){
-        cat("\nreached convergence.")
+        cat("\nreached convergence.\n")
       }
       break()
     }
-
   }
   l_lb <- l_lb[-1]
   # plot(l_lb,type="l")
@@ -238,7 +237,9 @@ dino = function(
   pi_est <- delta_ast/delta_sum
   delta_sd <-sqrt(delta_ast*(delta_sum - delta_ast)/(delta_sum^2*(delta_sum+1)) )
 
-  list(s_est = s_est,
+  t2 = Sys.time()
+
+  res = list(s_est = s_est,
        g_est = g_est,
        s_sd  = s_sd,
        g_sd  = g_sd,
@@ -250,11 +251,16 @@ dino = function(
        pi_est      = pi_est,
        delta_ast   = delta_ast,
        delta_sd    = delta_sd,
-       l_lb = l_lb,
+       l_lb = l_lb[l_lb != 0],
        att_pat_est = A[apply(r_il, 1, which.max),],
        #A = A,
        #Q = Q,
        #X = X,
        eta_lj = eta_lj,
-       m = m)
+       m = m,
+       time = t2-t1,
+       call = variationalDCMcall)
+
+  class(res) = "variationalDCM"
+  return(res)
 }

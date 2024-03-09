@@ -264,6 +264,11 @@ mc_dina = function(
     delta_0 = NULL,
     a_0 = NULL
 ){
+
+  t1 = Sys.time()
+
+  variationalDCMcall = match.call()
+
   set.seed(seed)
 
   if(!inherits(X, "matrix")){
@@ -331,8 +336,8 @@ mc_dina = function(
 
 
   m = 1
-  l_lb = rep(NA, max_it+1)
-  l_lb[1] = 100
+  l_lb = rep(0, max_it+1)
+  l_lb[1] = -Inf
   for(m in 1:max_it){
 
     #
@@ -415,7 +420,7 @@ mc_dina = function(
 
     if(abs(l_lb[m] - l_lb[m+1]) < epsilon){
       if(verbose){
-        cat("\nreached convergence.")
+        cat("\nreached convergence.\n")
       }
       break()
     }
@@ -432,8 +437,9 @@ mc_dina = function(
   theta_est <- lapply(1:J, function(j) a_ast[[j]] %*% diag(1/a_ast_sum[[j]]))
   theta_sd <- lapply(1:J, function(j) sqrt(a_ast[[j]]*( matrix(rep(1,max(H[[j]]),ncol=1 )) %*% a_ast_sum[[j]] - a_ast[[j]]) %*% diag(1/(a_ast_sum[[j]]^2*(a_ast_sum[[j]]+1)) )))
 
+  t2 = Sys.time()
 
-  list(theta_est = theta_est,
+  res = list(theta_est = theta_est,
        theta_sd = theta_sd,
        pi_est = pi_est,
        pi_sd = pi_sd,
@@ -442,14 +448,19 @@ mc_dina = function(
        delta_ast   = delta_ast,
        a_0 = a_0,
        delta_0 = delta_0,
-       l_lb = l_lb,
+       l_lb = l_lb[l_lb != 0],
        att_pat_est = A[apply(r_il, 1, which.max),],
        #A = A,
        #Q = Q,
        #X = X,
        G_mat = G_mat,
        m = m,
-       seed = seed)
+       seed = seed,
+       time = t2-t1,
+       call = variationalDCMcall)
+
+  class(res) = "variationalDCM"
+  return(res)
 }
 
 
