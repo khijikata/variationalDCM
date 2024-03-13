@@ -2,14 +2,14 @@
 #' @export
 #' @describeIn variationalDCM print summary information
 
-summary.variationalDCM = function(object){
+summary.variationalDCM = function(object,...){
 
   output = list(
-    Estimated.model.parameters = object$model_params,
-    Attribute.mastery.patterns = object$att_pat_est,
-    ELBO = tail(object$l_lb, n=1),
+    attr_mastery_pat = object$att_pat_est,
+    ELBO = object$l_lb[length(object$l_lb)],
     time = object$time
     )
+  output = c(object$model_params, output)
   class(output) = "summary.variationalDCM"
   output
 }

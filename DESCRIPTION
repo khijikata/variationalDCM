@@ -1,7 +1,7 @@
 Package: variationalDCM
 Type: Package
 Title: Variational Bayesian Estimation for Diagnostic Classification Models
-Version: 1.0.0
+Version: 2.0.0
 Authors@R: c(person("Keiichiro", "Hijikata", email = "k.hijikata.1120@outlook.jp", role = c("aut", "cre")),
     person("Motonori", "Oka", role = "aut", comment = c(ORCID = "0000-0002-9867-8922")),
     person("Kazuhiro", "Yamaguchi", role = "aut", comment = c(ORCID = "0000-0001-8011-8575")),

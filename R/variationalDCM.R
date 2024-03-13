@@ -1,46 +1,105 @@
 #' @title Variational Bayesian estimation for DCMs
-#' @description \code{variationalDCM()} fits DCMs by VB algorithms
+#' @description \code{variationalDCM()} fits DCMs by VB algorithms.
 #'
-#' @section {DINA model}:
-#' The DINA model has two types of model parameters: slip \eqn{s_j} and guessing \eqn{g_j} for \eqn{j=1,\cdots,J}.
-#' The ideal response of the DINA model is given as
-#' \deqn{\eta_{lj}=\prod_k\alpha_{lk}^{q_{jk}}.}
-#' This ideal response equals 1 if the attribute mastery pattern \eqn{\boldsymbol{\alpha}_l} of the \eqn{l}-th class satisfies \eqn{\alpha_{lk} \geq q_{jk}} for all \eqn{k} but 0 otherwise. Using a class indicator vector \eqn{\boldsymbol{z}_i}, the ideal response for respndent \eqn{i} is written as
-#' \deqn{\eta_{ij} = \prod_l\eta_{lj}z_{il}.}
-#' Item response function of the DINA model can be written as
-#' \deqn{P(X_{ij}=1|\eta_{ij},s_j,g_j)=(1-s_j)^{\eta_{ij}}g_j^{1-\eta_{ij}}.}
-#' The guessing parameter represents the probability that a respondent obtains a correct response to an item when the ideal response is zero; the slip parameter represents the probability of a respondent obtaining an incorrect response when the ideal response is one; that is,
-#' \deqn{P(X_{ij}=0|\eta_{ij}=1)=s_j,\\ P(X_{ij}=1|\eta_{ij}=0)=g_j.}
+#' @section {variationalDCM}: The \code{variationalDCM()} function performs recently-developed
+#'   variational Bayesian inference for various DCMs. The current version can
+#'   support the DINA, DINO, MC-DINA, saturated DCM, HM-DCM models. We briefly
+#'   introduce additional arguments that are specific to each model.
 #'
-#' @section {DINO model}:
-#' The DINO model can be represented by slightly modifying the DINA model. The ideal response of the DINO model is given as
-#' \deqn{\eta_{lj}=1-\prod_k(1-\alpha_{lk})^{q_{jk}}.}
-#' The ideal response takes the value of 1 when a respondent masters at least one of the relevant attributes with an item; otherwise, it is 0.
 #'
-#' @section {MC-DINA model}:
-#' The MC-DINA model is a extension of the DINA model to capture nominal item responses. Assume each item has \eqn{C_j} options, and we represent an item response as \eqn{X_{ijc}\in\{0,1\}}.
+#' @section {DINA model}: The DINA model has two types of model parameters: slip
+#'   \eqn{s_j} and guessing \eqn{g_j} for \eqn{j=1,\cdots,J}. We name the
+#'   hyperparameters for the DINA model: \code{delta_0} is a L-dimensional
+#'   vector, which is a hyperparameter \eqn{\boldsymbol{\delta}^0} for the
+#'   Dirichlet distribution for the class mixing parameter
+#'   \eqn{\boldsymbol{\pi}} (default: NULL). When \code{delta_0} is specified as
+#'   \code{NULL}, we set \eqn{\boldsymbol{\delta}^0=\boldsymbol{1}_L}.
+#'   \code{alpha_s}, \code{beta_s}, \code{alpha_g}, and \code{beta_g} are
+#'   positive values. They are hyperparameters \{\eqn{\alpha_s}, \eqn{\beta_s},
+#'   \eqn{\alpha_g}, \eqn{\beta_g}\} that determines the shape of prior beta
+#'   distribution for the slip and guessing parameters (default: NULL). When
+#'   they are specified as \code{NULL}, they are set \eqn{1}.
 #'
-#' @section {Saturated DCM}:
-#' The saturated DCM is a generalized model such as the G-DINA and GDM.
 #'
-#' @param X  N by J item response data for the DINA, DINO, MC-DINA, and
-#'   saturated DCM models. Alternatively, T-length list or 3-dim array whose
-#'   elements are N by J/T binary item response data matrices for the HM-DCM
-#' @param Q  J by K binary Q-matrix for the DINA, DINO, and saturated DCM models. For the MC-DINA model, its size should be J by (K+2). Alternatively, T-length list or 3-dim array whose elements
-#'   are J/T by K Q-matrices for the HM-DCM
+#' @section {DINO model}: The DINO model has the same model parameters
+#' and hyperparameters as the DINA model.  We thus refer the readers to the DINA model.
+#'
+#'
+#' @section {MC-DINA model}: The MC-DINA model has additional arguments
+#'   \code{delta_0} and \code{a_0}. \code{a_0} corresponds to positive hyperparamters
+#'   \eqn{\mathbf{a}_{jc^\prime}^0} for all \eqn{j} and \eqn{c^\prime}. \code{a_0} is by default set to \code{NULL}, and then it is specified as
+#'   \eqn{1} for all elements.
+#'
+#'
+#'
+#'
+#' @section {Saturated DCM}: The saturated DCM is a generalized model such as
+#'   the G-DINA and GDM. In the saturated DCM, we have hyperparameters
+#'   \eqn{\mathbf{A}^0} and \eqn{\mathbf{B}^0} in addition to
+#'   \eqn{\boldsymbol{\delta}^0}, which can be specified as arguments \code{A_0}
+#'   and \code{B_0}. They are specified by default as \code{NULL}, and then we
+#'   set weakly informative priors.
+#'
+#'
+#'
+#'
+#'
+#'
+#' @section {HM-DCM}: When \code{model} is specified as \code{"hm_dcm"}, users
+#'   have additional arguments \code{nondecreasing_attribute},
+#'   \code{measurement_model}, \code{random_block_design}, \code{Test_versions},
+#'   \code{Test_order}, \code{random_start}, \code{A_0}, \code{B_0},
+#'   \code{delta_0}, and \code{ommega_0}. Users can accommodate the
+#'   nondecreasing attribute constraint, which represents the assumption that
+#'   mastered attributes are not forgotten, by setting the logical valued
+#'   argument \code{nondecreasing_attribute} as \code{TRUE} (default:
+#'   \code{FALSE}). Users can also control the measurement model by specifying
+#'   \code{measurement_model} (default: \code{"general"}), and the current
+#'   version can deal with the HM-general DCM (\code{"general"}) and HM-DINA
+#'   (\code{"dina"}) models. This function can also handle the datasets
+#'   collected by a random block design by specifying the logical valued
+#'   argument \code{random_block_design} (default: \code{FALSE}). When it is
+#'   specified as \code{TRUE}, users must enter \code{Test_versions} and
+#'   \code{Test_order}. \code{Test_versions} is an argument indicating which
+#'   version of the test each respondent has been assigned to based on a random
+#'   block design, while \code{Test_order} indicates the sequence in which items
+#'   are rearranged based on the random block design. \code{A_0}, \code{B_0},
+#'   \code{delta_0}, and \code{ommega_0} correspond to hyperparameters
+#'   \eqn{\mathbf{A}^0}, \eqn{\mathbf{B}^0}, \eqn{\boldsymbol{\delta}^0}, and
+#'   \eqn{\boldsymbol{\Omega}^0}. \eqn{\boldsymbol{\Omega}^0} is nonnegative
+#'   hyperparameters of Dirichlet distributions for attribute transition
+#'   probabilities. \code{ommega_0} is by default set to \code{NULL}, and then
+#'   we set \eqn{\boldsymbol{\Omega}^0=\mathbf{1}_L\mathbf{1}_L^\top}.
+#'
+#'
+#'
+#'
+#' @param X  \eqn{N \times J} item response data for the DINA, DINO, MC-DINA,
+#'   and saturated DCM models. Alternatively, \eqn{T}-length list or 3-dim array
+#'   whose elements are \eqn{N \times J/T} binary item response data matrices
+#'   for the HM-DCM
+#' @param Q  \eqn{J \times K} binary Q-matrix for the DINA, DINO, and saturated
+#'   DCM models. For the MC-DINA model, its size should be \eqn{J \times (K+2)}.
+#'   Alternatively, \eqn{T}-length list or 3-dim array whose elements are
+#'   \eqn{J/T \times K} Q-matrices for the HM-DCM
 #' @param model specify one of "dina", "dino", "mc_dina", "satu_dcm", and
 #'   "hm_dcm"
-#' @param max_it Maximum number of iterations (default: 500)
-#' @param epsilon convergence tolerance for iterations (default: 1e-4)
-#' @param verbose logical, controls whether to print progress (default: TRUE)
+#' @param max_it Maximum number of iterations (default: \code{500})
+#' @param epsilon convergence tolerance for iterations (default: \code{1e-4})
+#' @param verbose logical, controls whether to print progress (default:
+#'   \code{TRUE})
 #' @param ... additional arguments such as hyperparameter values
 #'
+#' @param object the return of the \code{variationalDCM} function and the argument of our \code{summary} function
+#'
+#'
+#'
 #' @return \code{variationalDCM} returns an object of class
-#'   \code{variationalDCM}. We provide \code{summary} function to summarize a
+#'   \code{variationalDCM}. We provide the \code{summary} function to summarize a
 #'   result and users can check the following information:
 #' \describe{
-#'   \item{Attribute.mastery.patterns}{scored attribute mastery patterns}
-#'   \item{Estimated.model.parameters}{estimates and posterior standard deviations of model parameters}
+#'   \item{model_params}{estimates of posteror means and posterior standard deviations of model parameters}
+#'   \item{attr_mastery_pat}{MAP etimates of attribute mastery patterns}
 #'   \item{ELBO}{resulting value of evidence lower bound}
 #'   \item{time}{time spent in computation}
 #' }
@@ -57,17 +116,21 @@
 #'   the Saturated Diagnostic Classification Model. \emph{Psychometrika}, 85(4),
 #'   973–995. \doi{10.1007/s11336-020-09739-w}
 #'
-#'   Yamaguchi, K., & Martinez, A. J. (2023). Variational Bayes inference for
+#'   Yamaguchi, K., & Martinez, A. J. (2024). Variational Bayes inference for
 #'   hidden Markov diagnostic classification models. \emph{British Journal of
-#'   Mathematical and Statistical Psychology}, 00, 1– 25.
+#'   Mathematical and Statistical Psychology}, 77(1), 55–79.
 #'   \doi{10.1111/bmsp.12308}
 #'
+#'
 #' @examples
+#'
 #' # fit the DINA model
 #' Q = sim_Q_J80K5
 #' sim_data = dina_data_gen(Q=Q,I=200)
 #' res = variationalDCM(X=sim_data$X, Q=Q, model="dina")
 #' summary(res)
+#'
+#'
 #'
 #' @export
 
@@ -77,7 +140,8 @@ variationalDCM = function(
     model,
     max_it  = 500,
     epsilon = 1e-04,
-    verbose = TRUE,...
+    verbose = TRUE,
+    ...
 ){
 
   t1 = Sys.time()

@@ -1,54 +1,4 @@
-#' Variational Bayesian estimation for the deterministic input noisy OR gate (DINO) model.
-#'
-#' \code{dino()} fits the DINO model by a VB algorithm.
-#'
-#' @param X I by J binary matrix, item response data
-#' @param Q J by K binary matrix, Q-matrix
-#' @param max_it the maximum number of iterations (default: 500)
-#' @param epsilon the convergence tolerance for iterations (default: 1e-4)
-#' @param verbose Logical, controls whether to print progress (default: TRUE)
-#' @param delta_0 L by 1 vector, hyperparameter of prior dirichlet distribution
-#'   for the class mixing parameter \eqn{\pi} (default: NULL).
-#' @param alpha_s A positive scalar, hyperparameter that determines the
-#'   shape of  prior beta distribution for slip parameter (default: NULL).
-#' @param beta_s A positive scalar, hyperparameter that determines the
-#'   shape of  prior beta distribution for slip parameter (default: NULL).
-#' @param alpha_g A positive scalar, hyperparameter that determines the
-#'   shape of  prior beta distribution for guessing parameter (default: NULL).
-#' @param beta_g A positive scalar, hyperparameter that determines the
-#'   shape of  prior beta distribution for guessing parameter (default: NULL).
-#'
-#' @return A list including:
-#' \describe{
-#'   \item{s_est}{the posterior mean of slip parameter.}
-#'   \item{g_est}{the posterior mean of guessing parameter.}
-#'   \item{s_sd}{the posterior standard diviation of slip parameter.}
-#'   \item{g_sd}{the posterior standard diviation of guessing parameter.}
-#   \item{r_il}{the estimates of parameter for categorical distribution that is optimal variational posterior for \emph{\strong{z}_i}.}
-#'   \item{alpha_s_ast}{the estimates of variational parameter for slip parameter}
-#'   \item{beta_s_ast}{the estimates of variational parameter for slip parameter}
-#'   \item{alpha_g_ast}{the estimates of variational parameter for guessing parameter}
-#'   \item{beta_g_ast}{the estimates of variational parameter for guessing parameter}
-#'   \item{pi_est}{the estimates of class mixing parameter \eqn{\pi}}
-#'   \item{delta_ast}{the estimates of variational parameter \eqn{\delta^*}}
-#'   \item{delta_sd}{the standard diviation of variational parameter \eqn{\delta^*}}
-#'   \item{l_lb}{the list of the values of evidence lower bound in each itertion}
-#'   \item{att_pat_est}{the estimated attribute mastery patterns}
-#   \item{A}{all of the possible attribute mastery patterns}
-#   \item{Q}{the entered Q-matrix}
-#   \item{X}{the entered data matrix}
-#'   \item{eta_lj}{the computed ideal responce}
-#'   \item{m}{the number of performed iterations}
-#' }
-#'
-#' @examples
-#' # load Q-matrix and create artificial item response data
-#' Q = sim_Q_J80K5
-#' sim_data = dina_data_gen(Q=Q,I=200)
-#' # fit DINO model
-#' res_dino = dino(X=sim_data$X, Q=Q)
-#'
-#' @export
+
 
 #
 # DINO VB
@@ -68,9 +18,6 @@ dino = function(
     beta_g  = NULL # For g_j
 ){
 
-  t1 = Sys.time()
-
-  variationalDCMcall = match.call()
 
   if(!inherits(X, "matrix")){
     X <- as.matrix(X)
@@ -237,12 +184,14 @@ dino = function(
   pi_est <- delta_ast/delta_sum
   delta_sd <-sqrt(delta_ast*(delta_sum - delta_ast)/(delta_sum^2*(delta_sum+1)) )
 
-  t2 = Sys.time()
+  model_params = list(
+    s_est = s_est,
+    g_est = g_est,
+    s_sd  = s_sd,
+    g_sd  = g_sd
+  )
 
-  res = list(s_est = s_est,
-       g_est = g_est,
-       s_sd  = s_sd,
-       g_sd  = g_sd,
+  res = list(model_params = model_params,
        #r_il  = r_il,
        alpha_s_ast = alpha_s_ast,
        beta_s_ast  = beta_s_ast,
@@ -253,14 +202,8 @@ dino = function(
        delta_sd    = delta_sd,
        l_lb = l_lb[l_lb != 0],
        att_pat_est = A[apply(r_il, 1, which.max),],
-       #A = A,
-       #Q = Q,
-       #X = X,
        eta_lj = eta_lj,
-       m = m,
-       time = t2-t1,
-       call = variationalDCMcall)
+       m = m)
 
-  class(res) = "variationalDCM"
   return(res)
 }

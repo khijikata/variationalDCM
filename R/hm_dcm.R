@@ -1,11 +1,11 @@
-#' the artificial data generation for the hidden-Markov DCM based on the given Q-matrix
+#' @title the artificial data generation for the hidden-Markov DCM based on the given Q-matrix
 #'
-#' \code{hmdcm_data_gen()} returns the artificially generated item response data for the HM-DCM
+#' @description \code{hm_dcm_data_gen()} returns the artificially generated item response data for the HM-DCM
 #'
 #' @param Q the J by K binary matrix
 #' @param I the number of assumed respondents
-#' @param min_theta the minimum value of the item parameter theta
-#' @param max_theta the maximum value of the item parameter theta
+#' @param min_theta the minimum value of the item parameter \eqn{\theta_{jht}}
+#' @param max_theta the maximum value of the item parameter \eqn{\theta_{jht}}
 #' @param att_cor the true value of the correlation among attributes (default: 0.1)
 #' @param seed the seed value used for random number generation (default: 17)
 #' @return A list including:
@@ -22,11 +22,11 @@
 #' indT = 3
 #' Q = sim_Q_J30K3
 #' hm_sim_Q = lapply(1:indT,function(time_point) Q)
-#' hm_sim_data = hmdcm_data_gen(Q=hm_sim_Q,I=200)
+#' hm_sim_data = hm_dcm_data_gen(Q=hm_sim_Q,I=200)
 #'
 #' @export
 
-hmdcm_data_gen <- function(I = 500,
+hm_dcm_data_gen <- function(I = 500,
                            Q,
                            min_theta = 0.2,
                            max_theta = 0.8,
@@ -191,7 +191,7 @@ hmdcm_data_gen <- function(I = 500,
 hmdcm_vb = function(
     X,
     Q,
-    measurement_model = "General",
+    measurement_model = "general",
     A_0 = NULL,
     B_0 = NULL,
     delta_0 = NULL,
@@ -233,7 +233,7 @@ hmdcm_vb = function(
   #
   # Make G-matrix
   #
-  if(model == "General"){
+  if(measurement_model == "general"){
 
     G_jt <- lapply(1:indT,function(time_t)lapply(1:indJt[[time_t]], function(j) outer(A_red_uni[[time_t]][[j]], A_red[[time_t]][[j]], function(x,y) (x == y)*1  )))
 
@@ -245,7 +245,7 @@ hmdcm_vb = function(
       }
     }
 
-  }else if(model == "DINA"){
+  }else if(measurement_model == "dina"){
 
     G_jt <- lapply(1:indT,function(time_t)lapply(1:indJt[time_t], function(j)matrix(0,ncol=indL,nrow=2)))
 
@@ -263,7 +263,7 @@ hmdcm_vb = function(
 
   } else {
 
-    stop("Error: Specify model General or DINA.\n")
+    stop("Error: Specify model general or dina.\n")
 
   }
 
@@ -286,7 +286,7 @@ hmdcm_vb = function(
   #
   number_of_attributes <- lapply(A_red_uni,function(y)lapply(y, function(x) sapply(strsplit(x, ""), function(y)sum(as.numeric(y))) ) )
 
-  if(model == "DINA") {number_of_attributes <- lapply(1:indT,function(time_t){lapply(1:indJt[time_t],function(j)c(0,1))})}
+  if(measurement_model == "dina") {number_of_attributes <- lapply(1:indT,function(time_t){lapply(1:indJt[time_t],function(j)c(0,1))})}
 
   if(is.null(A_0)){
     A_0_hyperparam <- lapply(number_of_attributes, function(x)seq(from = 1+epsilon, to = 2, length.out = max(unlist( x))+1) )
@@ -585,7 +585,7 @@ hmdcm_vb_nondec= function(
     random_block_design=FALSE,
     Test_versions=NULL,
     Test_order=NULL,
-    measurement_model="General",
+    measurement_model="general",
     random_start = FALSE,
     verbose=TRUE
 ){
@@ -619,7 +619,7 @@ hmdcm_vb_nondec= function(
   #
   # G_j <- lapply(1:J, function(j) t(sapply(A_red_uni[[j]], function(x) x == A_red[[j]] ))*1 )
 
-  if(model == "General"){
+  if(measurement_model == "general"){
 
     G_jt <- lapply(1:indT,function(time_t)lapply(1:indJt[[time_t]], function(j) outer(A_red_uni[[time_t]][[j]], A_red[[time_t]][[j]], function(x,y) (x == y)*1  )))
 
@@ -632,7 +632,7 @@ hmdcm_vb_nondec= function(
       }
     }
 
-  }else if(model == "DINA"){
+  }else if(measurement_model == "dina"){
 
     G_jt <- lapply(1:indT,function(time_t)lapply(1:indJt[time_t], function(j)matrix(0,ncol=indL,nrow=2)))
 
@@ -648,9 +648,8 @@ hmdcm_vb_nondec= function(
       }
     }
 
-
   } else {
-    stop("Error: Specify model General or DINA.\n")
+    stop("Error: Specify model general or dina.\n")
   }
 
 
@@ -682,7 +681,7 @@ hmdcm_vb_nondec= function(
   #
   number_of_attributes <- lapply(A_red_uni,function(y)lapply(y, function(x) sapply(strsplit(x, ""), function(y)sum(as.numeric(y))) ) )
 
-  if(model == "DINA") {number_of_attributes <- lapply(1:indT,function(time_t){lapply(1:indJt[time_t],function(j)c(0,1))})}
+  if(measurement_model == "dina") {number_of_attributes <- lapply(1:indT,function(time_t){lapply(1:indJt[time_t],function(j)c(0,1))})}
 
   if(is.null(A_0)){
 
@@ -702,9 +701,6 @@ hmdcm_vb_nondec= function(
     }
 
   }
-
-
-
 
   #
   # Initialization
@@ -1012,71 +1008,7 @@ hmdcm_vb_nondec= function(
 
 
 
-#' Variational Bayesian estimation for the hidden Markov DCM.
-#'
-#' \code{hm_dcm()} returns variational Bayesian estimates for the hidden
-#' Markov DCM.
-#'
-#' @param X  T-length list or 3-dim array whose each element is I by J/T binary item response data matrix
-#' @param Q  T-length list or 3-dim array whose each element is J/T by K Q-matrix
-#' @param random_block_design logical value; whether the test design adopts different item ordering or not (default: FALSE)
-#' @param A_0 the value of hyperparameter \eqn{A^0} (default: NULL)
-#' @param B_0 the value of hyperparameter \eqn{B^0} (default: NULL)
-#' @param delta_0 the value of hyperparameter delta_0 (default: NULL)
-#' @param ommega_0 the value of hyperparameter ommega_0 (default: NULL)
-#' @param Test_versions  indicates the test module each respondent is assigned (default: NULL)
-#' @param Test_order the square matrix of order T that represents item order (default: NULL)
-#' @param model "General" or "DINA" (default: "General"), specifies the measurement model
-#' @param max_it Maximum number of iterations (default: 500)
-#' @param epsilon convergence tolerance for iterations (default: 1e-4)
-#' @param verbose logical, controls whether to print progress (default: TRUE)
-#' @param random_start logical (default: FALSE)
-#' @param nondecreasing_attribute logical; whether the assumption that mastered attributes are not forgotten is adopted or not (default: FALSE)
-#'
-#' @return A list including:
-#' \describe{
-#'   \item{theta_est}{the estimate of conditional response probability parameter \eqn{\Theta}}
-#'   \item{theta_sd}{the posterior standard deviation of parameter \eqn{\Theta}}
-#'   \item{pi_est}{the estimate of class mixing parameter \eqn{\pi}}
-#'   \item{pi_sd}{the posterior standard deviation of parameter \eqn{\pi}}
-#'   \item{Tau_est}{the estimate of class-transition probability parameter \eqn{\tau}}
-#'   \item{Tau_sd}{the posterior standard deviation of parameter \eqn{\tau}}
-#'   \item{post_max_class}{the result of class analysis}
-#'   \item{MAP_att_pat}{the MAP estimate of attribute mastery patterns}
-#'   \item{att_master_prob}{the estimated attribute mastery probabilities}
-#'   \item{EAP_att_pat}{the EAP estimate of attribute mastery patterns}
-#'   \item{A_ast}{the estimate of variational parameter \eqn{A^*}}
-#'   \item{B_ast}{the estimate of variational parameter \eqn{B^*}}
-#'   \item{delta_ast}{the estimate of variational posterior \eqn{\delta^*}}
-#'   \item{ommega_ast}{the estimate of variational posterior \eqn{\Omega^*}}
-#'   \item{E_z_itl}{the resulted expectations of  attribute mastery pattern}
-#'   \item{E_z_itl_z_itm1l}{the resulted expectations of  attribute mastery pattern at the time point t and t-1}
-#'   \item{A_0}{the value of hyperparameter \eqn{A^0}}
-#'   \item{B_0}{the value of hyperparameter \eqn{B^0}}
-#'   \item{delta_0}{the computed or entered value of delta_0}
-#'   \item{ommega_0}{the computed or entered value of ommega_0}
-#'   \item{l_lb}{the list of the values of evidence lower bound in each itertion}
-#   \item{gamma_t_x_it}{the computed value of the normalizing constant for calculating zeta}
-#   \item{log_zeta_sum}{the computed value of the normalizing constant for calculating variational posterior for class indicator}
-#   \item{A}{all the possible attribute mastery patterns}
-#   \item{Q}{the entered Q-matrix}
-#   \item{X}{the entered data matrix}
-#'   \item{G_jt}{the computed G-matrices}
-#'   \item{m}{the number of performed iterations}
-#' }
-#'
-#' @references Yamaguchi, K., & Martinez, A. J. (2023). Variational Bayes
-#' inference for hidden Markov diagnostic classification models. \emph{British Journal
-#' of Mathematical and Statistical Psychology}, 00, 1– 25. \doi{10.1111/bmsp.12308}
-#'
-#' @examples
-#' indT = 3
-#' Q = sim_Q_J30K3
-#' hm_sim_Q = lapply(1:indT,function(time_point) Q)
-#' hm_sim_data = hmdcm_data_gen(Q=hm_sim_Q,I=200)
-#' res_hm = hm_dcm(X=hm_sim_data$X,Q=hm_sim_Q)
-#'
-#' @export
+
 
 hm_dcm = function(
     X,
@@ -1084,7 +1016,7 @@ hm_dcm = function(
     max_it  = 500,
     epsilon = 1e-04,
     nondecreasing_attribute=FALSE,
-    measurement_model="General",
+    measurement_model="general",
     verbose = TRUE,
     random_block_design=FALSE,
     Test_versions=NULL,
@@ -1097,9 +1029,6 @@ hm_dcm = function(
     ommega_0 = NULL
 ){
 
-  t1 = Sys.time()
-
-  variationalDCMcall = match.call()
 
   # convert X,Q to list
   if(length(dim(X)) == 3){
@@ -1129,10 +1058,12 @@ hm_dcm = function(
                           delta_0=delta_0,ommega_0=ommega_0)
   }
 
-  t2 = Sys.time()
+  model_params = list(
+    theta_est = res$theta_est,
+    theta_sd = res$theta_sd
+  )
 
-  res = list(theta_est = res$theta_est,
-       theta_sd = res$theta_sd,
+  res = list(model_params = model_params,
        pi_est = res$pi_est,
        pi_sd = res$pi_sd,
        Tau_est = res$Tau_est,
@@ -1156,14 +1087,8 @@ hm_dcm = function(
        #log_zeta_sum = res$log_zeta_sum,
        E_z_itl = res$E_z_itl,
        E_z_itl_z_itm1l = res$E_z_itl_z_itm1l,
-       #A = res$A,
-       #Q = res$Q,
-       #X = res$X,
        G_jt = res$G_jt,
-       m = res$m,
-       time = t2-t1,
-       call = variationalDCMcall)
+       m = res$m)
 
-  class(res) = "variationalDCM"
   return(res)
 }

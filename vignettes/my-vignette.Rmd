@@ -9,20 +9,6 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{=html}
-<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-```
-```{=html}
-<script type="text/x-mathjax-config">
- MathJax.Hub.Config({
- tex2jax: {
- inlineMath: [['$', '$'] ],
- displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
- }
- });
-</script>
-```
 # Introduction
 
 Diagnostic classification models (DCMs) are a class of discrete latent variable models for classifying respondents into latent classes that typically represent distinct combinations of skills they possess. `variationalDCM` is an `R` package that performs recently-developed variational Bayesian inference for various DCMs.
@@ -49,6 +35,14 @@ The saturated DCM is a saturated formulation of DCMs, which contain as many para
 
 In the saturated DCM, model parameters are $\theta_{jh}$ for all $j$ and $h$ ($=1,\dots,H_j$), which represents the correct item response probability of the $h$-th item-specific attribute mastery pattern for the $j$-th item.
 
+## MC-DINA model
+
+The MC-DINA (Multiple Choice DINA) model is an extension of the DINA model to capture nominal responses. In the MC-DINA model, each item has multiple response options. The model parameter is $\theta_{jcc^\prime}$, the probability that respondents who belong to the $c^\prime$-th attribute mastery pattern choose the $c$-th option of item $j$.
+
+## HM-DCM
+
+HM-DCM was developed by combining the strengths of hidden Markov models and DCMs to extend DCMs to longitudinal data. We assume that the item response data is obtained across $T$ time points. The model parameter is $\theta_{jht}$, which represents the probability that a respondent with the $h$-th item-specific attribute mastery pattern correctly responds to the $j$-th item at time $t$.
+
 ```{r,eval=FALSE}
 Q = sim_Q_J30K3
 sim_data = dina_data_gen(Q=Q,I=200)
@@ -60,13 +54,13 @@ summary(res)
 
 The CRAN version of `variationalDCM` is installed using the following code:
 
-```{r, echo=FALSE, message = FALSE, cache=FALSE}
+```{r, eval=FALSE}
 install.packages("variationalDCM")
 ```
 
 Alternatively, the latest development version on GitHub can be installed via the `devtools` package as follows:
 
-```{r, message = FALSE, cache=FALSE, eval=FALSE}
+```{r, eval=FALSE}
 if(!require(devtools)){
   install.packages("devtools")
   }
@@ -119,4 +113,4 @@ knitr::opts_chunk$set(
 
 -   Yamaguchi, K. (2020). Variational Bayesian inference for the multiple-choice DINA model. *Behaviormetrika*, 47(1), 159-187. <https://doi.org/10.1007/s41237-020-00104-w>
 
--   Yamaguchi, K., & Martinez, A. J. (2023). Variational Bayes inference for hidden Markov diagnostic classification models. *British Journal of Mathematical and Statistical Psychology*. <https://doi.org/10.1111/bmsp.12308>
+-   Yamaguchi, K., & Martinez, A. J. (2023). Variational Bayes inference for hidden Markov diagnostic classification models. *British Journal of Mathematical and Statistical Psychology*, 77(1), 55–79. <https://doi.org/10.1111/bmsp.12308>
