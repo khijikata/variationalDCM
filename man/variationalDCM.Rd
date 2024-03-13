@@ -125,11 +125,14 @@ and hyperparameters as the DINA model.  We thus refer the readers to the DINA mo
 }
 
 \examples{
+
 # fit the DINA model
 Q = sim_Q_J80K5
 sim_data = dina_data_gen(Q=Q,I=200)
 res = variationalDCM(X=sim_data$X, Q=Q, model="dina")
 summary(res)
+
+
 
 }
 \references{
@@ -145,8 +148,8 @@ Yamaguchi, K., & Okada, K. (2020). Variational Bayes inference
   the Saturated Diagnostic Classification Model. \emph{Psychometrika}, 85(4),
   973–995. \doi{10.1007/s11336-020-09739-w}
 
-  Yamaguchi, K., & Martinez, A. J. (2023). Variational Bayes inference for
+  Yamaguchi, K., & Martinez, A. J. (2024). Variational Bayes inference for
   hidden Markov diagnostic classification models. \emph{British Journal of
-  Mathematical and Statistical Psychology}, 77, 55–79.
+  Mathematical and Statistical Psychology}, 77(1), 55–79.
   \doi{10.1111/bmsp.12308}
 }
