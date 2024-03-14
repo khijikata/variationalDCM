@@ -2,7 +2,7 @@
 % Please edit documentation in R/mc_dina.R
 \name{mc_dina_data_gen}
 \alias{mc_dina_data_gen}
-\title{the artificial data generation for the multiple-choice DINA model based on the given Q-matrix}
+\title{Artificial data generating function for the multiple-choice DINA model based on the given Q-matrix}
 \usage{
 mc_dina_data_gen(I, Q, att_cor = 0.1, seed = 17)
 }

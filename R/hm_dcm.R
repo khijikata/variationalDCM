@@ -1,4 +1,4 @@
-#' @title the artificial data generation for the hidden-Markov DCM based on the given Q-matrix
+#' @title Artificial data generating function for the hidden-Markov DCM based on the given Q-matrix
 #'
 #' @description \code{hm_dcm_data_gen()} returns the artificially generated item response data for the HM-DCM
 #'
@@ -14,9 +14,9 @@
 #'   \item{alpha_true}{the generated true vale of the attribute mastery pattern, matrix form}
 #'   \item{alpha_patt_true}{the generated true vale of the attribute mastery pattern, string form}
 #' }
-#' @references Yamaguchi, K., & Martinez, A. J. (2023). Variational Bayes
+#' @references Yamaguchi, K., & Martinez, A. J. (2024). Variational Bayes
 #' inference for hidden Markov diagnostic classification models. \emph{British Journal
-#' of Mathematical and Statistical Psychology}, 00, 1– 25. \doi{10.1111/bmsp.12308}
+#' of Mathematical and Statistical Psychology}, 77(1), 55–79. \doi{10.1111/bmsp.12308}
 #'
 #' @examples
 #' indT = 3
@@ -30,7 +30,7 @@ hm_dcm_data_gen <- function(I = 500,
                            Q,
                            min_theta = 0.2,
                            max_theta = 0.8,
-                           att_cor = 0.7,
+                           att_cor = 0.1,
                            seed = 17
 ){
   indI = I

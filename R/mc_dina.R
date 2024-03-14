@@ -46,7 +46,7 @@ make_G_mat <- function(Q){
   list(G_mat = G_mat, H = H,  A  = A)
 }
 
-#' @title the artificial data generation for the multiple-choice DINA model based on the given Q-matrix
+#' @title Artificial data generating function for the multiple-choice DINA model based on the given Q-matrix
 #'
 #' @description \code{mc_dina_data_gen()} returns the artificially generated item response data for the MC-DINA model
 #'

@@ -1,10 +1,10 @@
-#' @title the artificial data generation for the DINA model based on the given Q-matrix
+#' @title Artificial data generating function for the DINA model based on the given Q-matrix
 #'
 #' @description \code{dina_data_gen()} returns the artificially generated item response data for the DINA model
 #'
 #' @param Q the J by K binary matrix
 #' @param I the number of assumed respondents
-#' @param cor the true value of the correlation among attributes (default: 0.1)
+#' @param atte_cor the true value of the correlation among attributes (default: 0.1)
 #' @param s the true value of the slip parameter (default: 0.2)
 #' @param g the true value of the guessing parameter (default: 0.2)
 #' @param seed the seed value used for random number generation (default: 17)
@@ -22,7 +22,7 @@
 #' sim_data = dina_data_gen(Q=Q,I=200)
 #' @export
 
-dina_data_gen = function(Q,I,cor=0.1,s=0.2,g=0.2,seed=17){
+dina_data_gen = function(Q,I,attr_cor=0.1,s=0.2,g=0.2,seed=17){
   set.seed(seed)
   J = nrow(Q)
   K = ncol(Q)
