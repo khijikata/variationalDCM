@@ -16,7 +16,7 @@ hm_dcm_data_gen(
 \arguments{
 \item{I}{the number of assumed respondents}
 
-\item{Q}{the J by K binary matrix}
+\item{Q}{the \eqn{J \times K} binary matrix}
 
 \item{min_theta}{the minimum value of the item parameter \eqn{\theta_{jht}}}
 

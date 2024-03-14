@@ -2,7 +2,7 @@
 #'
 #' @description \code{dina_data_gen()} returns the artificially generated item response data for the DINA model
 #'
-#' @param Q the J by K binary matrix
+#' @param Q the \eqn{J \times K} binary matrix
 #' @param I the number of assumed respondents
 #' @param atte_cor the true value of the correlation among attributes (default: 0.1)
 #' @param s the true value of the slip parameter (default: 0.2)

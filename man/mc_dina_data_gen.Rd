@@ -9,7 +9,7 @@ mc_dina_data_gen(I, Q, att_cor = 0.1, seed = 17)
 \arguments{
 \item{I}{the number of assumed respondents}
 
-\item{Q}{the J by K binary matrix}
+\item{Q}{the \eqn{J \times K} binary matrix}
 
 \item{att_cor}{the true value of the correlation among attributes (default: 0.1)}
 

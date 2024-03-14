@@ -2,7 +2,7 @@
 #'
 #' @description \code{hm_dcm_data_gen()} returns the artificially generated item response data for the HM-DCM
 #'
-#' @param Q the J by K binary matrix
+#' @param Q the \eqn{J \times K} binary matrix
 #' @param I the number of assumed respondents
 #' @param min_theta the minimum value of the item parameter \eqn{\theta_{jht}}
 #' @param max_theta the maximum value of the item parameter \eqn{\theta_{jht}}

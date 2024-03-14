@@ -7,7 +7,7 @@
 dina_data_gen(Q, I, attr_cor = 0.1, s = 0.2, g = 0.2, seed = 17)
 }
 \arguments{
-\item{Q}{the J by K binary matrix}
+\item{Q}{the \eqn{J \times K} binary matrix}
 
 \item{I}{the number of assumed respondents}
 

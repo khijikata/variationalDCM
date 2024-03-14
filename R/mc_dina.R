@@ -50,7 +50,7 @@ make_G_mat <- function(Q){
 #'
 #' @description \code{mc_dina_data_gen()} returns the artificially generated item response data for the MC-DINA model
 #'
-#' @param Q the J by K binary matrix
+#' @param Q the \eqn{J \times K} binary matrix
 #' @param I the number of assumed respondents
 #' @param att_cor the true value of the correlation among attributes (default: 0.1)
 #' @param seed the seed value used for random number generation (default: 17)
