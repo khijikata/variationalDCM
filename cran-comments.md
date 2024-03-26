@@ -1,6 +1,6 @@
-# Version 2.0.0
+# Version 2.0.1
 
-This is the update from 1.0.0 to 2.0.0 for JSS.
+This is the update from 2.0.0 to 2.0.1 for JSS.
 
 ## Test environments
 

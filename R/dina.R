@@ -4,7 +4,7 @@
 #'
 #' @param Q the \eqn{J \times K} binary matrix
 #' @param I the number of assumed respondents
-#' @param atte_cor the true value of the correlation among attributes (default: 0.1)
+#' @param attr_cor the true value of the correlation among attributes (default: 0.1)
 #' @param s the true value of the slip parameter (default: 0.2)
 #' @param g the true value of the guessing parameter (default: 0.2)
 #' @param seed the seed value used for random number generation (default: 17)
@@ -27,7 +27,7 @@ dina_data_gen = function(Q,I,attr_cor=0.1,s=0.2,g=0.2,seed=17){
   J = nrow(Q)
   K = ncol(Q)
   oneminus_s = 1 - s
-  sigma = (1-cor)*diag(K) + cor*matrix(1,K,K)
+  sigma = (1-attr_cor)*diag(K) + attr_cor*matrix(1,K,K)
   ch = chol(sigma)
   u = matrix(stats::rnorm(I*K), I, K)
   uc = u %*% ch
