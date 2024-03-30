@@ -3,7 +3,7 @@
 #' @description \code{dina_data_gen()} returns the artificially generated item response data for the DINA model
 #'
 #' @param Q the \eqn{J \times K} binary matrix
-#' @param I the number of assumed respondents
+#' @param N the number of assumed respondents
 #' @param attr_cor the true value of the correlation among attributes (default: 0.1)
 #' @param s the true value of the slip parameter (default: 0.2)
 #' @param g the true value of the guessing parameter (default: 0.2)
@@ -11,7 +11,7 @@
 #' @return A list including:
 #' \describe{
 #'   \item{X}{the generated artificial item response data}
-#'   \item{att_pat}{the generated true vale of the attribute mastery pattern}
+#'   \item{attr_pat}{the generated true vale of the attribute mastery pattern}
 #' }
 #' @references Oka, M., & Okada, K. (2023). Scalable Bayesian Approach for the Dina
 #'   Q-Matrix Estimation Combining Stochastic Optimization and Variational Inference.
@@ -19,33 +19,41 @@
 #' @examples
 #' # load Q-matrix
 #' Q = sim_Q_J80K5
-#' sim_data = dina_data_gen(Q=Q,I=200)
+#' sim_data = dina_data_gen(Q=Q,N=200)
 #' @export
 
-dina_data_gen = function(Q,I,attr_cor=0.1,s=0.2,g=0.2,seed=17){
+dina_data_gen = function(
+    Q,
+    N,
+    attr_cor=0.1,
+    s=0.2,
+    g=0.2,
+    seed=17
+    )
+  {
   set.seed(seed)
   J = nrow(Q)
   K = ncol(Q)
   oneminus_s = 1 - s
   sigma = (1-attr_cor)*diag(K) + attr_cor*matrix(1,K,K)
   ch = chol(sigma)
-  u = matrix(stats::rnorm(I*K), I, K)
+  u = matrix(stats::rnorm(N*K), N, K)
   uc = u %*% ch
   cr = stats::pnorm(uc)
-  alpha = matrix(0,I,K)
+  alpha = matrix(0,N,K)
   for (k in 1:K) {
     alpha[,k] = as.integer(cr[,k] >= k/(K+1))
   }
   tm = alpha %*% t(Q)
   natt = rowSums(Q)
-  eta_ij = matrix(0,I,J)
-  for (i in 1:I) {
+  eta_ij = matrix(0,N,J)
+  for (i in 1:N) {
     eta_ij[i,] = ifelse(tm[i,] == natt, 1, 0)
   }
   y = ifelse(eta_ij == 1, oneminus_s, g)
-  comp = matrix(stats::rnorm(I*J),I,J)
+  comp = matrix(stats::rnorm(N*J),N,J)
   y = ifelse(y >= comp, 1, 0)
-  list(X=y,att_pat=alpha)
+  list(X=y,attr_pat=alpha)
 }
 
 

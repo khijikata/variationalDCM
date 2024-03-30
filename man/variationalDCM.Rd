@@ -39,7 +39,7 @@ Alternatively, \eqn{T}-length list or 3-dim array whose elements are
   \code{variationalDCM}. We provide the \code{summary} function to summarize a
   result and users can check the following information:
 \describe{
-  \item{model_params}{estimates of posteror means and posterior standard deviations of model parameters}
+  \item{(model parameters)}{estimates of posteror means and posterior standard deviations of model parameters that vary up to the model}
   \item{attr_mastery_pat}{MAP etimates of attribute mastery patterns}
   \item{ELBO}{resulting value of evidence lower bound}
   \item{time}{time spent in computation}
@@ -128,7 +128,7 @@ and hyperparameters as the DINA model.  We thus refer the readers to the DINA mo
 
 # fit the DINA model
 Q = sim_Q_J80K5
-sim_data = dina_data_gen(Q=Q,I=200)
+sim_data = dina_data_gen(Q=Q,N=200)
 res = variationalDCM(X=sim_data$X, Q=Q, model="dina")
 summary(res)
 

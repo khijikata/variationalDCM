@@ -5,16 +5,16 @@
 \title{Artificial data generating function for the hidden-Markov DCM based on the given Q-matrix}
 \usage{
 hm_dcm_data_gen(
-  I = 500,
+  N,
   Q,
   min_theta = 0.2,
   max_theta = 0.8,
-  att_cor = 0.1,
+  attr_cor = 0.1,
   seed = 17
 )
 }
 \arguments{
-\item{I}{the number of assumed respondents}
+\item{N}{the number of assumed respondents}
 
 \item{Q}{the \eqn{J \times K} binary matrix}
 
@@ -22,7 +22,7 @@ hm_dcm_data_gen(
 
 \item{max_theta}{the maximum value of the item parameter \eqn{\theta_{jht}}}
 
-\item{att_cor}{the true value of the correlation among attributes (default: 0.1)}
+\item{attr_cor}{the true value of the correlation among attributes (default: 0.1)}
 
 \item{seed}{the seed value used for random number generation (default: 17)}
 }
@@ -30,8 +30,8 @@ hm_dcm_data_gen(
 A list including:
 \describe{
   \item{X}{the generated artificial item response data}
-  \item{alpha_true}{the generated true vale of the attribute mastery pattern, matrix form}
-  \item{alpha_patt_true}{the generated true vale of the attribute mastery pattern, string form}
+  \item{attr_pat}{the generated true vale of the attribute mastery pattern, matrix form}
+  \item{attr_pat_string}{the generated true vale of the attribute mastery pattern, string form}
 }
 }
 \description{
@@ -41,7 +41,7 @@ A list including:
 indT = 3
 Q = sim_Q_J30K3
 hm_sim_Q = lapply(1:indT,function(time_point) Q)
-hm_sim_data = hm_dcm_data_gen(Q=hm_sim_Q,I=200)
+hm_sim_data = hm_dcm_data_gen(Q=hm_sim_Q,N=200)
 
 }
 \references{

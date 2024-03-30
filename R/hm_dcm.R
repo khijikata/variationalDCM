@@ -3,16 +3,16 @@
 #' @description \code{hm_dcm_data_gen()} returns the artificially generated item response data for the HM-DCM
 #'
 #' @param Q the \eqn{J \times K} binary matrix
-#' @param I the number of assumed respondents
+#' @param N the number of assumed respondents
 #' @param min_theta the minimum value of the item parameter \eqn{\theta_{jht}}
 #' @param max_theta the maximum value of the item parameter \eqn{\theta_{jht}}
-#' @param att_cor the true value of the correlation among attributes (default: 0.1)
+#' @param attr_cor the true value of the correlation among attributes (default: 0.1)
 #' @param seed the seed value used for random number generation (default: 17)
 #' @return A list including:
 #' \describe{
 #'   \item{X}{the generated artificial item response data}
-#'   \item{alpha_true}{the generated true vale of the attribute mastery pattern, matrix form}
-#'   \item{alpha_patt_true}{the generated true vale of the attribute mastery pattern, string form}
+#'   \item{attr_pat}{the generated true vale of the attribute mastery pattern, matrix form}
+#'   \item{attr_pat_string}{the generated true vale of the attribute mastery pattern, string form}
 #' }
 #' @references Yamaguchi, K., & Martinez, A. J. (2024). Variational Bayes
 #' inference for hidden Markov diagnostic classification models. \emph{British Journal
@@ -22,18 +22,21 @@
 #' indT = 3
 #' Q = sim_Q_J30K3
 #' hm_sim_Q = lapply(1:indT,function(time_point) Q)
-#' hm_sim_data = hm_dcm_data_gen(Q=hm_sim_Q,I=200)
+#' hm_sim_data = hm_dcm_data_gen(Q=hm_sim_Q,N=200)
+#'
 #'
 #' @export
 
-hm_dcm_data_gen <- function(I = 500,
-                           Q,
-                           min_theta = 0.2,
-                           max_theta = 0.8,
-                           att_cor = 0.1,
-                           seed = 17
-){
-  indI = I
+hm_dcm_data_gen <- function(
+    N,
+    Q,
+    min_theta = 0.2,
+    max_theta = 0.8,
+    attr_cor = 0.1,
+    seed = 17
+    )
+  {
+  indI = N
   indK <- ncol(Q[[1]])
   indT <- length(Q)
   indJt <- sapply(Q,nrow)
@@ -43,7 +46,7 @@ hm_dcm_data_gen <- function(I = 500,
   item_par = "random"
 
   mean_norm <- rep(0,indK)
-  vcov_norm <- matrix(att_cor,indK,indK)
+  vcov_norm <- matrix(attr_cor,indK,indK)
   diag(vcov_norm) <- 1
 
   alpha_cont_t_1 <- mvtnorm::rmvnorm(n = indI, mean = mean_norm,sigma = vcov_norm)
@@ -80,11 +83,11 @@ hm_dcm_data_gen <- function(I = 500,
   }
 
   #
-  # Transition matrix: Tau
+  # Transition matrix: tau
   #
-  Tau_true <- matrix(0, indL, indL)
-  colnames(Tau_true) <- att_pat
-  row.names(Tau_true) <- att_pat
+  tau_true <- matrix(0, indL, indL)
+  colnames(tau_true) <- att_pat
+  row.names(tau_true) <- att_pat
 
   for(l in 1:indL){
     temp <- rep(0, indL)
@@ -93,14 +96,14 @@ hm_dcm_data_gen <- function(I = 500,
       temp[temp == 1]  <- 3/10
       temp[temp == -1] <- 1/10
       temp[temp == 0] <- 6/10
-      Tau_true[l, ld] <- prod(temp)
+      tau_true[l, ld] <- prod(temp)
 
     }
 
   }
 
-  Tau_true <- Tau_true / rowSums(Tau_true)
-  # Tau_true
+  tau_true <- tau_true / rowSums(tau_true)
+  # tau_true
 
   #
   # Alpha true, z_i
@@ -115,7 +118,7 @@ hm_dcm_data_gen <- function(I = 500,
   colnames(z_i_true[[1]]) <- att_pat
 
   for(time_t in 1:(indT-1)){
-    tansition_prob <- z_i_true[[time_t]] %*% Tau_true
+    tansition_prob <- z_i_true[[time_t]] %*% tau_true
     z_i_true[[time_t+1]] <- t(apply(tansition_prob, 1, function(p)stats::rmultinom(1,1,p) ))
     alpha_true[[time_t+1]] <- z_i_true[[time_t+1]] %*% A
     alpha_patt_true[[time_t+1]] <- apply(alpha_true[[time_t+1]], 1, function(x) paste0(x,collapse = ""))
@@ -184,8 +187,8 @@ hm_dcm_data_gen <- function(I = 500,
   }
 
   list(X = X,
-       alpha_patt_true = alpha_patt_true,
-       alpha_true = alpha_true)
+       attr_pat_string = alpha_patt_true,
+       attr_pat = alpha_true)
 }
 
 hmdcm_vb = function(
@@ -277,7 +280,7 @@ hmdcm_vb = function(
   }
 
   if(is.null(omega_0) ){
-    omega_0 = matrix(1,indL,indL)# For Tau matrix
+    omega_0 = matrix(1,indL,indL)# For tau matrix
 
   }
 
@@ -508,14 +511,14 @@ hmdcm_vb = function(
   names(pi_sd)  <- att_pat
 
   omega_sum <- rowSums(omega_ast)
-  Tau_est <-  omega_ast/omega_sum
-  Tau_sd <- matrix(0, indL, indL)
-  for(l in 1:indL) Tau_sd[,l] <- sqrt(omega_ast[,l]*(omega_sum - omega_ast[,l])/(omega_sum^2*(omega_sum+1)) )
+  tau_est <-  omega_ast/omega_sum
+  tau_sd <- matrix(0, indL, indL)
+  for(l in 1:indL) tau_sd[,l] <- sqrt(omega_ast[,l]*(omega_sum - omega_ast[,l])/(omega_sum^2*(omega_sum+1)) )
 
-  colnames(Tau_est) <- att_pat
-  row.names(Tau_est) <- att_pat
-  colnames(Tau_sd) <- att_pat
-  row.names(Tau_sd) <- att_pat
+  colnames(tau_est) <- att_pat
+  row.names(tau_est) <- att_pat
+  colnames(tau_sd) <- att_pat
+  row.names(tau_sd) <- att_pat
 
   theta_sd <- theta_est <- vector("list",indT)
   for(time_t in 1:indT){
@@ -545,8 +548,8 @@ hmdcm_vb = function(
        theta_sd = theta_sd,
        pi_est = pi_est,
        pi_sd = pi_sd,
-       Tau_est = Tau_est,
-       Tau_sd = Tau_sd,
+       tau_est = tau_est,
+       tau_sd = tau_sd,
        post_max_class = post_max_class,
        MAP_att_pat = MAP_att_pat,
        att_master_prob = att_master_prob,
@@ -663,8 +666,8 @@ hmdcm_vb_nondec= function(
   }
 
   if(is.null(omega_0) ){
-    omega_0 = matrix(1,indL,indL)# For Tau matrix
-    #omega_0 = matrix(1/indL,indL,indL)# For Tau matrix
+    omega_0 = matrix(1,indL,indL)# For tau matrix
+    #omega_0 = matrix(1/indL,indL,indL)# For tau matrix
 
     for(l in 1:indL){
       for(ld in 1:indL){
@@ -940,14 +943,14 @@ hmdcm_vb_nondec= function(
   names(pi_sd)  <- att_pat
 
   omega_sum <- rowSums(omega_ast)
-  Tau_est <-  omega_ast/omega_sum
-  Tau_sd <- matrix(0, indL, indL)
-  for(l in 1:indL) Tau_sd[,l] <- sqrt(omega_ast[,l]*(omega_sum - omega_ast[,l])/(omega_sum^2*(omega_sum+1)) )
+  tau_est <-  omega_ast/omega_sum
+  tau_sd <- matrix(0, indL, indL)
+  for(l in 1:indL) tau_sd[,l] <- sqrt(omega_ast[,l]*(omega_sum - omega_ast[,l])/(omega_sum^2*(omega_sum+1)) )
 
-  colnames(Tau_est) <- att_pat
-  row.names(Tau_est) <- att_pat
-  colnames(Tau_sd) <- att_pat
-  row.names(Tau_sd) <- att_pat
+  colnames(tau_est) <- att_pat
+  row.names(tau_est) <- att_pat
+  colnames(tau_sd) <- att_pat
+  row.names(tau_sd) <- att_pat
 
 
   theta_sd <- theta_est <- vector("list",indT)
@@ -978,8 +981,8 @@ hmdcm_vb_nondec= function(
        theta_sd = theta_sd,
        pi_est = pi_est,
        pi_sd = pi_sd,
-       Tau_est = Tau_est,
-       Tau_sd = Tau_sd,
+       tau_est = tau_est,
+       tau_sd = tau_sd,
        post_max_class = post_max_class,
        MAP_att_pat = MAP_att_pat,
        att_master_prob = att_master_prob,
@@ -1066,8 +1069,8 @@ hm_dcm = function(
   res = list(model_params = model_params,
        pi_est = res$pi_est,
        pi_sd = res$pi_sd,
-       Tau_est = res$Tau_est,
-       Tau_sd = res$Tau_sd,
+       tau_est = res$tau_est,
+       tau_sd = res$tau_sd,
        post_max_class = res$post_max_class,
        att_pat_est = res$MAP_att_pat,
        att_master_prob = res$att_master_prob,

@@ -51,13 +51,13 @@ make_G_mat <- function(Q){
 #' @description \code{mc_dina_data_gen()} returns the artificially generated item response data for the MC-DINA model
 #'
 #' @param Q the \eqn{J \times K} binary matrix
-#' @param I the number of assumed respondents
-#' @param att_cor the true value of the correlation among attributes (default: 0.1)
+#' @param N the number of assumed respondents
+#' @param attr_cor the true value of the correlation among attributes (default: 0.1)
 #' @param seed the seed value used for random number generation (default: 17)
 #' @return A list including:
 #' \describe{
 #'   \item{X}{the generated artificial item response data}
-#'   \item{att_pat}{the generated true vale of the attribute mastery pattern}
+#'   \item{attr_pat}{the generated true vale of the attribute mastery pattern}
 #' }
 #' @references Yamaguchi, K. (2020). Variational Bayesian inference for the
 #'   multiple-choice DINA model. \emph{Behaviormetrika}, 47(1), 159-187.
@@ -66,14 +66,21 @@ make_G_mat <- function(Q){
 #' @examples
 #' # load a simulated Q-matrix
 #' mc_Q = mc_sim_Q
-#' mc_sim_data = mc_dina_data_gen(Q=mc_Q,I=200)
+#' mc_sim_data = mc_dina_data_gen(Q=mc_Q,N=200)
 #'
 #' @export
 
 #
 # Data generation function------
 #
-mc_dina_data_gen <- function(I, Q, att_cor = 0.1, seed = 17){
+mc_dina_data_gen <- function(
+    N,
+    Q,
+    attr_cor = 0.1,
+    seed = 17
+    )
+  {
+
   set.seed(seed)
 
   J <- max(Q[,1])
@@ -154,7 +161,7 @@ mc_dina_data_gen <- function(I, Q, att_cor = 0.1, seed = 17){
 
 
   sigma <- diag(K)
-  sigma[sigma == 0] <- att_cor
+  sigma[sigma == 0] <- attr_cor
 
   if(any(att_threshold == "rand")){
     att_threshold = stats::rnorm(K, 0, 1)
@@ -163,26 +170,26 @@ mc_dina_data_gen <- function(I, Q, att_cor = 0.1, seed = 17){
   } else if(is.vector(att_threshold)){
 
   }
-  att_value <- mvtnorm::rmvnorm(n = I,mean = rep(0,K),sigma = sigma)
+  att_value <- mvtnorm::rmvnorm(n = N,mean = rep(0,K),sigma = sigma)
   att_threshold
   att_pat <- t((t(att_value) > att_threshold)*1)
   att_all_pat <- apply(A, 1, function(x)paste0(x,collapse = ""))
   cluss_num <- apply(att_pat, 1, function(x) which(paste0(x,collapse = "") == att_all_pat))
 
-  Z <- matrix(0, ncol=L,nrow=I)
-  for(i in 1:I){
+  Z <- matrix(0, ncol=L,nrow=N)
+  for(i in 1:N){
     Z[i,cluss_num[i]] <- 1
   }
 
-  X <- matrix(NA, ncol=J, nrow = I)
-  for(i in 1:I){
+  X <- matrix(NA, ncol=J, nrow = N)
+  for(i in 1:N){
     for(j in 1:J){
       jh_prob <- H[[j]]
       jh_prob <- i_par[[j]] %*% Z[i, ]
       X[i,j] <- sample(x = H[[j]],size = 1, prob = jh_prob)
     }
   }
-  list(X = X,att_pat = att_pat)
+  list(X = X,attr_pat = att_pat)
 }
 
 

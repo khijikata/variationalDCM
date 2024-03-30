@@ -4,14 +4,14 @@
 \alias{mc_dina_data_gen}
 \title{Artificial data generating function for the multiple-choice DINA model based on the given Q-matrix}
 \usage{
-mc_dina_data_gen(I, Q, att_cor = 0.1, seed = 17)
+mc_dina_data_gen(N, Q, attr_cor = 0.1, seed = 17)
 }
 \arguments{
-\item{I}{the number of assumed respondents}
+\item{N}{the number of assumed respondents}
 
 \item{Q}{the \eqn{J \times K} binary matrix}
 
-\item{att_cor}{the true value of the correlation among attributes (default: 0.1)}
+\item{attr_cor}{the true value of the correlation among attributes (default: 0.1)}
 
 \item{seed}{the seed value used for random number generation (default: 17)}
 }
@@ -19,7 +19,7 @@ mc_dina_data_gen(I, Q, att_cor = 0.1, seed = 17)
 A list including:
 \describe{
   \item{X}{the generated artificial item response data}
-  \item{att_pat}{the generated true vale of the attribute mastery pattern}
+  \item{attr_pat}{the generated true vale of the attribute mastery pattern}
 }
 }
 \description{
@@ -28,7 +28,7 @@ A list including:
 \examples{
 # load a simulated Q-matrix
 mc_Q = mc_sim_Q
-mc_sim_data = mc_dina_data_gen(Q=mc_Q,I=200)
+mc_sim_data = mc_dina_data_gen(Q=mc_Q,N=200)
 
 }
 \references{

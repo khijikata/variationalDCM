@@ -4,12 +4,12 @@
 \alias{dina_data_gen}
 \title{Artificial data generating function for the DINA model based on the given Q-matrix}
 \usage{
-dina_data_gen(Q, I, attr_cor = 0.1, s = 0.2, g = 0.2, seed = 17)
+dina_data_gen(Q, N, attr_cor = 0.1, s = 0.2, g = 0.2, seed = 17)
 }
 \arguments{
 \item{Q}{the \eqn{J \times K} binary matrix}
 
-\item{I}{the number of assumed respondents}
+\item{N}{the number of assumed respondents}
 
 \item{attr_cor}{the true value of the correlation among attributes (default: 0.1)}
 
@@ -23,7 +23,7 @@ dina_data_gen(Q, I, attr_cor = 0.1, s = 0.2, g = 0.2, seed = 17)
 A list including:
 \describe{
   \item{X}{the generated artificial item response data}
-  \item{att_pat}{the generated true vale of the attribute mastery pattern}
+  \item{attr_pat}{the generated true vale of the attribute mastery pattern}
 }
 }
 \description{
@@ -32,7 +32,7 @@ A list including:
 \examples{
 # load Q-matrix
 Q = sim_Q_J80K5
-sim_data = dina_data_gen(Q=Q,I=200)
+sim_data = dina_data_gen(Q=Q,N=200)
 }
 \references{
 Oka, M., & Okada, K. (2023). Scalable Bayesian Approach for the Dina
